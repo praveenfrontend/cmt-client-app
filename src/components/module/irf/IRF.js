@@ -8,7 +8,7 @@ import Overview from "./Overview";
 
 class IRF extends Component {
   state = {
-    step: 1,
+    step: 3,
     firstName: "",
     middleName: "",
     lastName: "",
@@ -29,35 +29,40 @@ class IRF extends Component {
     aboutUs: "",
     childProgram: "",
     afterSchoolProgram: "",
-    healthZumba: "",
-    healthYoga: "",
-    healthDental: "",
-    healthKarate: "",
-    healthMeditation: "",
-    healthFoodMarket: "",
-    healthBellyDancing: "",
-    healthAdultPlus: "",
-    healthEnglishCafe: "",
-    healthBasicEnglish: "",
-    healthHomeVistits: "",
-    healthSocialGroup: "",
-    healthHealthySmiles: "",
-    healthVolleyBall: "",
-    healthHeartAndStroke: "",
-    healthFoodShareBus: "",
-    healthDieticianSessions: "",
-    healthFoodHandling: "",
-    healthAdultNutrition: "",
-    healthDiabetesSessions: "",
-    healthHealthyChoices: "",
-    healthHomeManagement: "",
-    healthStressManagement: "",
-    healthCancerScreeningSpa: "",
-    healthDiabetesManagement: "",
-    healthSwimmingChildren: "",
-    healthSwimmingLadies: "",
-    healthSwimmingAquaFitMale: "",
-    healthSwimmingAquaFitFemale: "",
+
+    health: {
+      healthZumba: { isChecked: false, value: "Zumba" },
+      healthYoga: { isChecked: false, value: "Yoga" },
+      healthDental: { isChecked: false, value: "Dental" },
+      healthKarate: { isChecked: false, value: "Karate" },
+      healthMeditation: { isChecked: false, value: "Meditation" },
+      healthFoodMarket: { isChecked: false, value: "Food Market" },
+      healthBellyDancing: { isChecked: false, value: "Belly Dancing" },
+      healthAdultPlus: { isChecked: false, value: "Adult Plus" },
+      healthEnglishCafe: { isChecked: false, value: "English Cafe" },
+      healthBasicEnglish: { isChecked: false, value: "Basic English" },
+      healthHomeVistits: { isChecked: false, value: "Home Vistits" },
+      healthSocialGroup: { isChecked: false, value: "Social Group" },
+      healthHealthySmiles: { isChecked: false, value: "Healthy Smiles" },
+      healthVolleyBall: { isChecked: false, value: "Volley Ball" },
+      healthHeartAndStroke: { isChecked: false, value: "Heart and Stroke" },
+      healthBollywoodDance: { isChecked: false, value: "Bollywood Dance" },
+      healthFoodShareBus: { isChecked: false, value: "Food Share Bus" },
+      healthDieticianSessions: { isChecked: false, value: "Dietician Sessions" },
+      healthFoodHandling: { isChecked: false, value: "Food Handling" },
+      healthAdultNutrition: { isChecked: false, value: "Adult Nutrition" },
+      healthDiabetesSessions: { isChecked: false, value: "Diabetes Sessions" },
+      healthHealthyChoices: { isChecked: false, value: "Healthy Choices" },
+      healthHomeManagement: { isChecked: false, value: "Home Management" },
+      healthStressManagement: { isChecked: false, value: "Stress Management" },
+      healthCancerScreeningSpa: { isChecked: false, value: "Cancer Screening/Spa" },
+      healthDiabetesManagement: { isChecked: false, value: "Diabetes Management" },
+      healthSwimmingChildren: { isChecked: false, value: "Swimming Children" },
+      healthSwimmingLadies: { isChecked: false, value: "Swimming Ladies" },
+      healthSwimmingAquaFitMale: { isChecked: false, value: "Swimming AquaFit Male" },
+      healthSwimmingAquaFitFemale: { isChecked: false, value: "Swimming AquaFit Female" }
+    },
+
     healthTutoring: "",
     jobClub: "",
     childMinding: "",
@@ -97,9 +102,10 @@ class IRF extends Component {
   };
 
   inputCheckBoxHandler = input => e => {
-    this.setState({
-      [input]: !this.state[input]
-    });
+    const id = e.target.id;
+    let health = this.state.health;
+    health[id].isChecked = !health[id].isChecked;
+    this.setState({ [health]: health });
   };
 
   nextStep = () => {
