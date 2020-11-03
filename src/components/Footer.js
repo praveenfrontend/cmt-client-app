@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer className="border-top text-center small text-muted py-3">
       <p>
-        <Link to="/" className="mx-1 ">
+        <Link to="/home" className="mx-1 ">
           {" "}
           Home{" "}
         </Link>{" "}
