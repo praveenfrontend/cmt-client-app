@@ -14,7 +14,7 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
     prevStep();
   }
 
-  const { firstName, middleName, lastName, gender, age, address, city, province, postal, country, mobilePhone, homePhone, workPhone, emergencyContactName, emergencyContactNumber, email, firstLanguage, aboutUs, childProgram, afterSchoolProgram, health, healthTutoring, jobClub, childMinding, computerBasic, citizenshipRefugees, communityAssistant, computerIntermediate, interestedInVolunteering, publicSpeaking, foreignTrainedHealthProfessionals, staff, neighbourhoodNet, neighbourhoodIncomeTax, neighbourhoodOther, othersTextArea, agentNotesTextArea, memberHealth, memberSatisfaction, memberSocialNetwork, memberConnection, memberStress, memberPersonalHealth, memberFamilyDoctor, memberFamilyVisitFamilyDoctor, memberFamilyVisitClinic, memberFamilyVisitEmergencyRoom, memberFamilyVisitHospital, memberRiskFactors, memberFamilyhealthyLiving, memberFamilyPhysicallyActive } = values;
+  const { firstName, middleName, lastName, gender, age, address, city, province, postal, country, mobilePhone, homePhone, workPhone, emergencyContactName, emergencyContactNumber, email, firstLanguage, aboutUs, childProgram, afterSchoolProgram, health, employment, staff, neighbourhood, othersTextArea, agentNotesTextArea, memberHealth, memberSatisfaction, memberSocialNetwork, memberConnection, memberStress, memberPersonalHealth, memberFamilyDoctor, memberFamilyVisitFamilyDoctor, memberFamilyVisitClinic, memberFamilyVisitEmergencyRoom, memberFamilyVisitHospital, memberRiskFactors, memberFamilyhealthyLiving, memberFamilyPhysicallyActive } = values;
 
   return (
     <Page title="Overview" progress={100}>
@@ -73,9 +73,20 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
                   return health[key].isChecked ? health[key].value + ", " : null;
                 })}
               </ListGroup.Item>
-              <ListGroup.Item>Employment: {emergencyContactNumber}</ListGroup.Item>
+              <ListGroup.Item>
+                Employment:
+                {Object.keys(employment).map((key, value) => {
+                  return employment[key].isChecked ? employment[key].value + ", " : null;
+                })}
+              </ListGroup.Item>
               <ListGroup.Item>Staff: {staff}</ListGroup.Item>
-              <ListGroup.Item>Neighbourhood Net: {}</ListGroup.Item>
+              <ListGroup.Item>
+                Employment:
+                {Object.keys(neighbourhood).map((key, value) => {
+                  return neighbourhood[key].isChecked ? neighbourhood[key].value + ", " : null;
+                })}
+              </ListGroup.Item>
+
               <ListGroup.Item>Others, if any: {othersTextArea}</ListGroup.Item>
               <ListGroup.Item>Agent Notes: {agentNotesTextArea}</ListGroup.Item>
             </ListGroup>
@@ -86,7 +97,24 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
             <div className="text-white">Member Details</div>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="3">
-            <Card.Body>Hello! I'm another body</Card.Body>
+            <Card.Body>
+              <ListGroup>
+                <ListGroup.Item>My Overall health: {memberHealth}</ListGroup.Item>
+                <ListGroup.Item>My Satisfaction with life: {memberSatisfaction}</ListGroup.Item>
+                <ListGroup.Item>My social networks of family and friends are: {memberSocialNetwork}</ListGroup.Item>
+                <ListGroup.Item>My level of connection with my community is: {memberConnection}</ListGroup.Item>
+                <ListGroup.Item>My level of stress is: {memberStress}</ListGroup.Item>
+                <ListGroup.Item>I can talk to others about my personal health issues: {memberPersonalHealth}</ListGroup.Item>
+                <ListGroup.Item>Do you have a family doctor?: {memberFamilyDoctor}</ListGroup.Item>
+                <ListGroup.Item>Number of times each year I visit Family Doctor: {memberFamilyVisitFamilyDoctor}</ListGroup.Item>
+                <ListGroup.Item>Number of times each year I visit Walk in Clinic: {memberFamilyVisitClinic}</ListGroup.Item>
+                <ListGroup.Item>Number of times each year I visit Emergency Room: {memberFamilyVisitEmergencyRoom}</ListGroup.Item>
+                <ListGroup.Item>Number of times each year I visit Hospital: {memberFamilyVisitHospital}</ListGroup.Item>
+                <ListGroup.Item>Awareness of risk factor: {memberRiskFactors}</ListGroup.Item>
+                <ListGroup.Item>Awareness of healthy living and physical activity: {memberFamilyhealthyLiving}</ListGroup.Item>
+                <ListGroup.Item>I am physically active: {memberFamilyPhysicallyActive}</ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>
@@ -109,36 +137,3 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
 }
 
 export default Overview;
-
-/* 
-<Accordion defaultActiveKey="0">
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="0">
-            Click me!
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <div className="row">
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={inputChange("firstName")} value={values.firstName} />
-                </div>
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={inputChange("middleName")} value={values.middleName} />
-                </div>
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={inputChange("lastName")} value={values.lastName} />
-                </div>
-              </div>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="1">
-            Click me!
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>Hello! I'm another body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-*/

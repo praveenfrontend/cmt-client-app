@@ -52,12 +52,12 @@ function ContactDetails({ values, inputChange, nextStep, prevStep }) {
             <label className="text-muted mr-2">How did you learn about us?</label>
           </div>
           <div className="col">
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxFriend" inputValue="aboutUs" inputLabel="Friend" checkedValue={values.aboutUs} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxWebsite" inputValue="aboutUs" inputLabel="Website" checkedValue={values.aboutUs} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxNegibhour" inputValue="aboutUs" inputLabel="Neighbhour" checkedValue={values.aboutUs} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxFlyer" inputValue="aboutUs" inputLabel="Flyer" checkedValue={values.aboutUs} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxAgency" inputValue="aboutUs" inputLabel="Agency" checkedValue={values.aboutUs} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxOther" inputValue="aboutUs" inputLabel="Other" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxFriend" inputName="aboutUs" inputValue="Friend" inputLabel="Friend" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxWebsite" inputName="aboutUs" inputValue="Website" inputLabel="Website" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxNegibhour" inputName="aboutUs" inputValue="Neighbhour" inputLabel="Neighbhour" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxFlyer" inputName="aboutUs" inputValue="Flyer" inputLabel="Flyer" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxAgency" inputName="aboutUs" inputValue="Agency" inputLabel="Agency" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxOther" inputName="aboutUs" inputValue="Other" inputLabel="Other" checkedValue={values.aboutUs} />
           </div>
         </div>
       </div>
@@ -67,8 +67,8 @@ function ContactDetails({ values, inputChange, nextStep, prevStep }) {
           <label className="text-muted mr-2">Information if Registration for a Child's program</label>
         </div>
         <div className="col-md-3 col-lg-6">
-          <FormRadio classNameValue="" changeHandler={inputChange("childProgram")} inputId="childYes" inputValue="childProgram" inputLabel="Yes" checkedValue={values.childProgram} />
-          <FormRadio classNameValue="" changeHandler={inputChange("childProgram")} inputId="childNo" inputValue="childProgram" inputLabel="No" checkedValue={values.childProgram} />
+          <FormRadio classNameValue="" changeHandler={inputChange("childProgram")} inputId="childYes" inputName="childProgram" inputValue="Yes" inputLabel="Yes" checkedValue={values.childProgram} />
+          <FormRadio classNameValue="" changeHandler={inputChange("childProgram")} inputId="childNo" inputName="childProgram" inputValue="No" inputLabel="No" checkedValue={values.childProgram} />
         </div>
       </div>
 

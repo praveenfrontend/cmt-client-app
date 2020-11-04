@@ -32,8 +32,8 @@ function BasicDetails({ values, inputChange, nextStep }) {
                 <label className="text-muted mr-2">Gender</label>
               </div>
               <div>
-                <FormRadio changeHandler={inputChange("gender")} inputId="male" inputValue="gender" inputLabel="Male" checkedValue={values.gender} />
-                <FormRadio changeHandler={inputChange("gender")} inputId="female" inputValue="gender" inputLabel="Female" checkedValue={values.gender} />
+                <FormRadio changeHandler={inputChange("gender")} inputId="male" inputName="gender" inputValue="Male" inputLabel="Male" checkedValue={values.gender} />
+                <FormRadio changeHandler={inputChange("gender")} inputId="female" inputName="gender" inputValue="Female" inputLabel="Female" checkedValue={values.gender} />
               </div>
             </div>
           </div>
@@ -44,9 +44,9 @@ function BasicDetails({ values, inputChange, nextStep }) {
                 <label className="text-muted mr-2">Age</label>
               </div>
               <div>
-                <FormRadio changeHandler={inputChange("age")} inputId="upto12" inputValue="age" inputLabel="Child upto 12" checkedValue={values.age} />
-                <FormRadio changeHandler={inputChange("age")} inputId="13to25" inputValue="age" inputLabel="Youth 13-25" checkedValue={values.age} />
-                <FormRadio changeHandler={inputChange("age")} inputId="above25" inputValue="age" inputLabel="Adult Over 25" checkedValue={values.age} />
+                <FormRadio changeHandler={inputChange("age")} inputId="upto12" inputName="age" inputValue="Child upto 12" inputLabel="Child upto 12" checkedValue={values.age} />
+                <FormRadio changeHandler={inputChange("age")} inputId="13to25" inputName="age" inputValue="Youth 13-25" inputLabel="Youth 13-25" checkedValue={values.age} />
+                <FormRadio changeHandler={inputChange("age")} inputId="above25" inputName="age" inputValue="Adult Over 25" inputLabel="Adult Over 25" checkedValue={values.age} />
               </div>
             </div>
           </div>

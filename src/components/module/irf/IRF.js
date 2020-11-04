@@ -8,7 +8,7 @@ import Overview from "./Overview";
 
 class IRF extends Component {
   state = {
-    step: 3,
+    step: 1,
     firstName: "",
     middleName: "",
     lastName: "",
@@ -63,20 +63,27 @@ class IRF extends Component {
       healthSwimmingAquaFitFemale: { isChecked: false, value: "Swimming AquaFit Female" }
     },
 
-    healthTutoring: "",
-    jobClub: "",
-    childMinding: "",
-    computerBasic: "",
-    citizenshipRefugees: "",
-    communityAssistant: "",
-    computerIntermediate: "",
-    interestedInVolunteering: "",
-    publicSpeaking: "",
-    foreignTrainedHealthProfessionals: "",
+    employment: {
+      tutoring: { isChecked: false, value: "Tutoring" },
+      jobClub: { isChecked: false, value: "Job Club" },
+      childMinding: { isChecked: false, value: "Child Minding" },
+      computerBasic: { isChecked: false, value: "Computer Basic" },
+      citizenshipRefugees: { isChecked: false, value: "" },
+      communityAssistant: { isChecked: false, value: "Community Assistant" },
+      computerIntermediate: { isChecked: false, value: "Computer Intermediate" },
+      interestedInVolunteering: { isChecked: false, value: "Interested in Volunteering" },
+      publicSpeaking: { isChecked: false, value: "Public Speaking Level 1 & 2" },
+      foreignTrainedHealthProfessionals: { isChecked: false, value: "Foreign Trained Health Professionals" }
+    },
+
     staff: "",
-    neighbourhoodNet: "",
-    neighbourhoodIncomeTax: "",
-    neighbourhoodOther: "",
+
+    neighbourhood: {
+      neighbourhoodCitizenship: { isChecked: false, value: "Citizenship" },
+      neighbourhoodIncomeTax: { isChecked: false, value: "IncomeTax" },
+      neighbourhoodOther: { isChecked: false, value: "Other" }
+    },
+
     othersTextArea: "",
     agentNotesTextArea: "",
     memberHealth: "",
@@ -101,11 +108,11 @@ class IRF extends Component {
     });
   };
 
-  inputCheckBoxHandler = input => e => {
+  inputCheckBoxHandler = inputParam => e => {
     const id = e.target.id;
-    let health = this.state.health;
-    health[id].isChecked = !health[id].isChecked;
-    this.setState({ [health]: health });
+    let input = this.state[inputParam];
+    input[id].isChecked = !input[id].isChecked;
+    this.setState({ [input]: input });
   };
 
   nextStep = () => {

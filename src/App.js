@@ -2,7 +2,8 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
-import { BrowserRouter } from "react-router-dom";
+// import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import IRF from "./components/module/irf/IRF";
 
 import "./App.css";
@@ -87,17 +88,19 @@ function App() {
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
-        <BrowserRouter>
+        <HashRouter>
           <div className="App">
             <FlashMessages messages={state.flashMessages} />
             <Header loggedIn={state.loggedIn} />
             <Switch>
-              <Route path="/home">{state.loggedIn ? <Home /> : <HomeGuest signIn={state.signIn} />}</Route>
+              <Route exact path="/">
+                {state.loggedIn ? <Home /> : <HomeGuest signIn={state.signIn} />}
+              </Route>
               <Route path="/initial-registration-form" component={IRF} />
             </Switch>
             <Footer />
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </DispatchContext.Provider>
     </StateContext.Provider>
   );

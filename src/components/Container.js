@@ -26,6 +26,7 @@ function Container(props) {
           <br />
           <ProgressBar variant="success" animated now={props.progress} />
           <br />
+          {/* <div className="card col-md-12 col-lg-11"> */}
           <div className="card">
             <CardHeader cardHeaderValue={props.title} />
             <div className="card-body">{props.children}</div>
