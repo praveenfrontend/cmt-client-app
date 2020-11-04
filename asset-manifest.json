@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cmt-client-app/static/css/main.b1fe9fdd.chunk.css",
-    "main.js": "/cmt-client-app/static/js/main.b416194b.chunk.js",
-    "main.js.map": "/cmt-client-app/static/js/main.b416194b.chunk.js.map",
+    "main.js": "/cmt-client-app/static/js/main.56b534e7.chunk.js",
+    "main.js.map": "/cmt-client-app/static/js/main.56b534e7.chunk.js.map",
     "runtime-main.js": "/cmt-client-app/static/js/runtime-main.2a423154.js",
     "runtime-main.js.map": "/cmt-client-app/static/js/runtime-main.2a423154.js.map",
     "static/js/2.b6e370e9.chunk.js": "/cmt-client-app/static/js/2.b6e370e9.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.2a423154.js",
     "static/js/2.b6e370e9.chunk.js",
     "static/css/main.b1fe9fdd.chunk.css",
-    "static/js/main.b416194b.chunk.js"
+    "static/js/main.56b534e7.chunk.js"
   ]
 }
