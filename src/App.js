@@ -17,8 +17,8 @@ import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
-// Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
+// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
 function App() {
   const initialState = {
