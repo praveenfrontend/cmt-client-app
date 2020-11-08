@@ -17,7 +17,7 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
   const { firstName, middleName, lastName, gender, age, address, city, province, postal, country, mobilePhone, homePhone, workPhone, emergencyContactName, emergencyContactNumber, email, firstLanguage, aboutUs, childProgram, afterSchoolProgram, health, employment, staff, neighbourhood, othersTextArea, agentNotesTextArea, memberHealth, memberSatisfaction, memberSocialNetwork, memberConnection, memberStress, memberPersonalHealth, memberFamilyDoctor, memberFamilyVisitFamilyDoctor, memberFamilyVisitClinic, memberFamilyVisitEmergencyRoom, memberFamilyVisitHospital, memberRiskFactors, memberFamilyhealthyLiving, memberFamilyPhysicallyActive } = values;
 
   return (
-    <Page title="Overview" progress={100}>
+    <Page title="Overview" /* progress={100} */>
       <Accordion /* defaultActiveKey="0" */>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">

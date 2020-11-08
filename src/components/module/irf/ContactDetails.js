@@ -15,7 +15,7 @@ function ContactDetails({ values, inputChange, nextStep, prevStep }) {
   }
 
   return (
-    <Page title="Contact Details" progress={40}>
+    <Page title="Contact Details" /*  progress={40} */>
       <div className="row">
         <div className="col-md-4">
           <FormInput icon="fas fa-mobile" type="number" placeholder="Mobile Phone" changeHandler={inputChange("mobilePhone")} value={values.mobilePhone} />

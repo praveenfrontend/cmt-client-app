@@ -7,7 +7,6 @@ import { HashRouter } from "react-router-dom";
 import IRF from "./components/module/irf/IRF";
 
 import "./App.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Axios from "axios";
 import HomeGuest from "./components/HomeGuest";
@@ -15,10 +14,12 @@ import Home from "./components/Home";
 import FlashMessages from "./components/FlashMessages";
 import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
+import SideNavigation from "./components/SideNavigation";
+import Header from "./components/Header";
 
-// Axios.defaults.baseURL = "http://localhost:8080";
+Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
 function App() {
   const initialState = {
@@ -28,7 +29,8 @@ function App() {
     user: {
       token: localStorage.getItem("communityMattersToken"),
       username: localStorage.getItem("communityMattersUsername")
-    }
+    },
+    isToggled: true
   };
 
   // Immer Code
@@ -48,6 +50,9 @@ function App() {
         return;
       case "signIn":
         draft.signIn = action.value;
+        return;
+      case "toggleMenu":
+        draft.isToggled = action.value;
         return;
     }
   }
@@ -90,14 +95,21 @@ function App() {
       <DispatchContext.Provider value={dispatch}>
         <HashRouter>
           <div className="App">
-            <FlashMessages messages={state.flashMessages} />
-            <Header loggedIn={state.loggedIn} />
-            <Switch>
-              <Route exact path="/">
-                {state.loggedIn ? <Home /> : <HomeGuest signIn={state.signIn} />}
-              </Route>
-              <Route path="/initial-registration-form" component={IRF} />
-            </Switch>
+            <div className={`d-flex ${state.loggedIn && state.isToggled ? "" : "toggled"} `} id="wrapper">
+              <FlashMessages messages={state.flashMessages} />
+              <SideNavigation />
+              <div id="page-content-wrapper">
+                <Header loggedIn={state.loggedIn} />
+                <div className="container">
+                  <Switch>
+                    <Route exact path="/">
+                      {state.loggedIn ? <Home /> : <HomeGuest signIn={state.signIn} />}
+                    </Route>
+                    <Route path="/initial-registration-form" component={IRF} />
+                  </Switch>
+                </div>
+              </div>
+            </div>
             <Footer />
           </div>
         </HashRouter>
@@ -121,4 +133,8 @@ export default App;
   function addFlashMessage(msg) {
     setFlashMessages(prev => prev.concat(msg));
   }
+*/
+
+/* 
+<Header loggedIn={state.loggedIn} />
 */

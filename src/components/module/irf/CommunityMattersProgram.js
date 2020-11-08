@@ -15,7 +15,7 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
   }
 
   return (
-    <Page title="Community Matters Program" progress={60}>
+    <Page title="Community Matters Program" /* progress={60} */>
       <div className="row">
         <div className="col">
           <label className="text-muted">Please Select the following if you are registering</label>

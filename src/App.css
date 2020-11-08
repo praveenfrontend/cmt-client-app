@@ -6,7 +6,7 @@ Jio Mart color: background: #008ecc;
   /* min-height: 700px; */
 }
 
-header {
+.nav-header {
   background: linear-gradient(to left, #007bff, #1b4f74) fixed;
 }
 
@@ -186,3 +186,7 @@ header {
   }
 }
  */
+
+.stepperColor {
+  color: green !important;
+}

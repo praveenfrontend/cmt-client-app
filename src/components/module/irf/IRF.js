@@ -1,10 +1,13 @@
 /* eslint-disable default-case */
 import React, { Component } from "react";
+
 import BasicDetails from "./BasicDetails";
 import ContactDetails from "./ContactDetails";
 import CommunityMattersProgram from "./CommunityMattersProgram";
 import MemberDetails from "./MemberDetails";
 import Overview from "./Overview";
+
+import FormStepper from "./FormStepper";
 
 class IRF extends Component {
   state = {
@@ -129,22 +132,36 @@ class IRF extends Component {
     alert("Submit to be implemented");
   };
 
+  getSteps() {
+    return ["BasicDetails", "ContactDetails", "CommunityMattersProgram", "MemberDetails", "Overview"];
+  }
+
+  getStepContent = (step, values) => {
+    switch (step) {
+      case 0:
+        return <BasicDetails nextStep={this.nextStep} inputChange={this.inputChange} inputClick={this.inputClick} values={values} />;
+      case 1:
+        return <ContactDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} />;
+      case 2:
+        return <CommunityMattersProgram prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputCheckBoxHandler={this.inputCheckBoxHandler} />;
+      case 3:
+        return <MemberDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} />;
+      case 4:
+        return <Overview prevStep={this.prevStep} handleSubmit={this.handleSubmit} inputChange={this.inputChange} values={values} />;
+    }
+  };
+
   render() {
     const { step } = this.state;
     const values = this.state;
+    const steps = this.getSteps();
 
-    switch (step) {
-      case 1:
-        return <BasicDetails nextStep={this.nextStep} inputChange={this.inputChange} inputClick={this.inputClick} values={values} />;
-      case 2:
-        return <ContactDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} />;
-      case 3:
-        return <CommunityMattersProgram prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputCheckBoxHandler={this.inputCheckBoxHandler} />;
-      case 4:
-        return <MemberDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} />;
-      case 5:
-        return <Overview prevStep={this.prevStep} handleSubmit={this.handleSubmit} inputChange={this.inputChange} values={values} />;
-    }
+    return (
+      <React.Fragment>
+        <FormStepper step={step} steps={steps} />
+        {this.getStepContent(step, values)}
+      </React.Fragment>
+    );
   }
 }
 

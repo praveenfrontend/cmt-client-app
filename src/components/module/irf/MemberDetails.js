@@ -15,7 +15,7 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
   }
 
   return (
-    <Page title="Member Details" progress={80}>
+    <Page title="Member Details" /* progress={80} */>
       <div className="row">
         <div className="col">
           <label className="text-muted">Please Select accordingly</label>

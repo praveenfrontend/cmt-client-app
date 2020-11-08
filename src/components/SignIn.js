@@ -7,8 +7,8 @@ import FormInput from "./FormInput";
 import DispatchContext from "../DispatchContext";
 
 function SignIn() {
-  // const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
+  // const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const appDispatch = useContext(DispatchContext);
@@ -16,12 +16,12 @@ function SignIn() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      // const response = await Axios.post("/login", { username, password });
-      const response = await Axios.post("/login", { email, password });
+      const response = await Axios.post("/login", { username, password });
+      // const response = await Axios.post("/login", { email, password });
       if (response.data) {
         // console.log(response.data);
-        // console.log(username, password);
-        console.log(email, password);
+        console.log(username, password);
+        // console.log(email, password);
         appDispatch({ type: "login", data: response.data });
         appDispatch({ type: "flashMessage", value: "You have successfully logged in." });
       } else {
@@ -39,8 +39,8 @@ function SignIn() {
         <CardHeader cardHeaderValue="SignIn" />
         <div className="card-body ">
           <form onSubmit={handleSubmit}>
-            {/* <FormInput type="text" icon="fas fa-user" placeholder="Username" changeHandler={e => setUsername(e.target.value)} /> */}
-            <FormInput type="text" icon="fas fa-envelope" placeholder="Email" changeHandler={e => setEmail(e.target.value)} />
+            <FormInput type="text" icon="fas fa-user" placeholder="Username" changeHandler={e => setUsername(e.target.value)} />
+            {/* <FormInput type="text" icon="fas fa-envelope" placeholder="Email" changeHandler={e => setEmail(e.target.value)} /> */}
             <FormInput type="password" icon="fas fa-lock" placeholder="Password" changeHandler={e => setPassword(e.target.value)} />
 
             <input type="submit" value="SIGN IN" className="btn btn-success btn-block" />

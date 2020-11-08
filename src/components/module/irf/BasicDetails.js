@@ -12,7 +12,7 @@ function BasicDetails({ values, inputChange, nextStep }) {
 
   return (
     <div>
-      <Page title="Basic Details" progress={20}>
+      <Page title="Basic Details" /* progress={20} */>
         <div className="row">
           <div className="col-md-4">
             <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={inputChange("firstName")} value={values.firstName} />
