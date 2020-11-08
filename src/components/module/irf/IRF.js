@@ -11,7 +11,7 @@ import FormStepper from "./FormStepper";
 
 class IRF extends Component {
   state = {
-    step: 1,
+    step: 0,
     firstName: "",
     middleName: "",
     lastName: "",
