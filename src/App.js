@@ -105,6 +105,7 @@ function App() {
                     <Route exact path="/">
                       {state.loggedIn ? <Home /> : <HomeGuest signIn={state.signIn} />}
                     </Route>
+
                     <Route path="/initial-registration-form" component={IRF} />
                   </Switch>
                 </div>
