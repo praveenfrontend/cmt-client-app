@@ -1,6 +1,5 @@
 import React from "react";
 import CardHeader from "./CardHeader";
-import { ProgressBar } from "react-bootstrap";
 
 function Container(props) {
   return (

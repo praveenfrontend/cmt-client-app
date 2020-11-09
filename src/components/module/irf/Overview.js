@@ -1,6 +1,5 @@
 import React from "react";
 import Page from "../../Page";
-import FormInput from "../../FormInput";
 import { Accordion, Card, ListGroup } from "react-bootstrap";
 
 function Overview({ values, inputChange, prevStep, handleSubmit }) {
