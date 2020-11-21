@@ -400,7 +400,10 @@ function SignUp() {
           appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });
         } catch (e) {
           console.log("There was a problem or the request was cancelled.");
+          console.log(e.response);
           console.log(e.response.data);
+          console.log(e.response.data[1]);
+          dispatch({ type: "emailUniqueResults", value: e.response.data.email });
         }
       }
       fetchResults();
