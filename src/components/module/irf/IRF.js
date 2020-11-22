@@ -13,7 +13,7 @@ import Axios from "axios";
 class IRF extends Component {
   state = {
     // Stepper
-    step: 4,
+    step: 0,
 
     // Basic Details
     firstname: "",
@@ -141,6 +141,7 @@ class IRF extends Component {
         console.log(response.data);
       }
     } catch (e) {
+      alert("Error Message. Please fill all fields.");
       console.log(e.response.data);
     }
   };
