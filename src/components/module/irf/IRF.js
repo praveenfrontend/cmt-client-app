@@ -8,30 +8,40 @@ import MemberDetails from "./MemberDetails";
 import Overview from "./Overview";
 
 import FormStepper from "./FormStepper";
+import Axios from "axios";
 
 class IRF extends Component {
   state = {
-    step: 1,
-    firstName: "",
-    middleName: "",
-    lastName: "",
+    // Stepper
+    step: 4,
+
+    // Basic Details
+    firstname: "",
+    middlename: "",
+    lastname: "",
     gender: "",
     age: "",
     address: "",
     city: "",
     province: "",
-    postal: "",
+    postal_code: "",
     country: "",
-    mobilePhone: "",
-    homePhone: "",
-    workPhone: "",
-    emergencyContactName: "",
-    emergencyContactNumber: "",
-    email: "",
-    firstLanguage: "",
-    aboutUs: "",
-    afterSchoolProgram: "",
 
+    // Contact Details
+    cell_no: "",
+    home_no: "",
+    work_no: "",
+    emergency_cntName: "",
+    emergency_contNo: "",
+    email_id: "",
+    first_language: "",
+    refer_through: "",
+    child_program: "",
+    childProgramAddRemove: true,
+    child_program_rows: [],
+
+    // Community Matters Program
+    after_school_program: "",
     health: {
       healthZumba: { isChecked: false, value: "Zumba" },
       healthYoga: { isChecked: false, value: "Yoga" },
@@ -80,28 +90,155 @@ class IRF extends Component {
 
     staff: "",
 
-    neighbourhood: {
+    neighbourhood_net: {
       neighbourhoodCitizenship: { isChecked: false, value: "Citizenship" },
       neighbourhoodIncomeTax: { isChecked: false, value: "IncomeTax" },
       neighbourhoodOther: { isChecked: false, value: "Other" }
     },
 
-    othersTextArea: "",
-    agentNotesTextArea: "",
-    memberHealth: "",
-    memberSatisfaction: "",
-    memberSocialNetwork: "",
-    memberConnection: "",
-    memberStress: "",
-    memberPersonalHealth: "",
-    memberFamilyDoctor: "",
-    memberFamilyVisitFamilyDoctor: "",
-    memberFamilyVisitClinic: "",
-    memberFamilyVisitEmergencyRoom: "",
-    memberFamilyVisitHospital: "",
-    memberRiskFactors: "",
-    memberFamilyhealthyLiving: "",
-    memberFamilyPhysicallyActive: ""
+    others: "",
+    agent_notes: "",
+
+    // Member Details
+    ques_1: "",
+    ques_2: "",
+    ques_3: "",
+    ques_4: "",
+    ques_5: "",
+    ques_6: "",
+    ques_7: "",
+    family_doctor: "",
+    walkin_clinic: "",
+    emergency_room: "",
+    hospital: "",
+    ques_8: "",
+    ques_9: "",
+    ques_10: ""
+  };
+
+  handleSubmit = async e => {
+    e.preventDefault();
+
+    const { firstname, middlename, lastname, gender, age, address, city, province, postal_code, country, cell_no, home_no, work_no, emergency_cntName, emergency_contNo, email_id, first_language, refer_through, /* child_program, */ after_school_program, /* health, employment, */ staff, /* neighbourhood_net, */ others, agent_notes, ques_1, ques_2, ques_3, ques_4, ques_5, ques_6, ques_7, family_doctor, walkin_clinic, emergency_room, hospital, ques_8, ques_9, ques_10 } = this.state;
+
+    const child_program = "2";
+    const health = "NA";
+    const employment = "IT";
+    const neighbourhood_net = "NA";
+
+    /*  const testhealth = this.state.health;
+    const testemployment = this.state.employment;
+    const testneighbourhood_net = this.state.neighbourhood_net;
+
+    console.log("HEALTH: " + testhealth.healthZumba.value);
+    console.log("EMPLOYMENT: " + testemployment);
+    console.log("NEIGHBOUR: " + testneighbourhood_net); */
+
+    try {
+      const response = await Axios.post("/irf_register", { firstname, middlename, lastname, gender, age, address, city, province, postal_code, country, cell_no, home_no, work_no, emergency_cntName, emergency_contNo, email_id, first_language, refer_through, child_program, after_school_program, health, employment, staff, neighbourhood_net, others, agent_notes, ques_1, ques_2, ques_3, ques_4, ques_5, ques_6, ques_7, family_doctor, walkin_clinic, emergency_room, hospital, ques_8, ques_9, ques_10 });
+      if (response.data) {
+        alert("Submit Successfull.");
+        console.log(response.data);
+      }
+    } catch (e) {
+      console.log(e.response.data);
+    }
+  };
+
+  addChild = e => {
+    e.preventDefault();
+    const item = {
+      isChecked: true,
+      childFirstName: "",
+      childLastName: "",
+      childBirthDate: ""
+    };
+    this.setState({
+      child_program_rows: [...this.state.child_program_rows, item]
+    });
+  };
+
+  removeChild = e => {
+    e.preventDefault();
+
+    const child_program_rows = this.state.child_program_rows;
+    let filtered_child_program_rows = [];
+    let checked = false;
+
+    child_program_rows.map((item, idx) => {
+      if (item.isChecked) {
+        checked = true;
+      }
+    });
+
+    if (!checked) {
+      alert("Atleast 1 Child row has to be selected to remove!");
+      return;
+    }
+
+    filtered_child_program_rows = child_program_rows.filter(item => !item.isChecked);
+
+    this.setState({
+      child_program_rows: filtered_child_program_rows
+    });
+  };
+
+  handleChangeChildProgram = idx => e => {
+    const { name, value } = e.target;
+    const child_program_rows = [...this.state.child_program_rows];
+
+    let isChecked = child_program_rows[idx].isChecked;
+    let childFirstName = child_program_rows[idx].childFirstName;
+    let childLastName = child_program_rows[idx].childLastName;
+    let childBirthDate = child_program_rows[idx].childBirthDate;
+
+    if (parseInt(name) === idx) {
+      if (isChecked === false) {
+        isChecked = true;
+      } else {
+        isChecked = false;
+      }
+    }
+    if (name === "childFirstName") {
+      childFirstName = value;
+    }
+    if (name === "childLastName") {
+      childLastName = value;
+    }
+    if (name === "childBirthDate") {
+      childBirthDate = value;
+    }
+
+    child_program_rows[idx] = {
+      isChecked: isChecked,
+      childFirstName: childFirstName,
+      childLastName: childLastName,
+      childBirthDate: childBirthDate
+    };
+
+    this.setState({
+      child_program_rows: child_program_rows
+    });
+  };
+
+  inputChangeChildProgram = input => e => {
+    console.log("childprogram.............");
+    if (e.target.value === "No") {
+      // eslint-disable-next-line no-restricted-globals
+      const result = confirm("Are you sure you want to delete all your child information?");
+      if (result === true) {
+        this.setState({
+          [input]: e.target.value,
+          childProgramAddRemove: false,
+          child_program_rows: []
+        });
+      }
+    } else {
+      this.setState({
+        [input]: e.target.value,
+        childProgramAddRemove: true
+      });
+    }
   };
 
   inputChange = input => e => {
@@ -117,22 +254,20 @@ class IRF extends Component {
     this.setState({ [input]: input });
   };
 
-  nextStep = () => {
+  nextStep = e => {
+    e.preventDefault();
     const { step } = this.state;
     this.setState({ step: step + 1 });
   };
 
-  prevStep = () => {
+  prevStep = e => {
+    e.preventDefault();
     const { step } = this.state;
     this.setState({ step: step - 1 });
   };
 
-  handleSubmit = () => {
-    alert("Submit to be implemented");
-  };
-
   getSteps() {
-    return ["BasicDetails", "ContactDetails", "CommunityMattersProgram", "MemberDetails", "Overview"];
+    return ["Basic Details", "Contact Details", "Community Matters Program", "Member Details", "Overview"];
   }
 
   getStepContent = (step, values) => {
@@ -140,7 +275,7 @@ class IRF extends Component {
       case 0:
         return <BasicDetails nextStep={this.nextStep} inputChange={this.inputChange} inputClick={this.inputClick} values={values} />;
       case 1:
-        return <ContactDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} />;
+        return <ContactDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputChangeChildProgram={this.inputChangeChildProgram} handleChangeChildProgram={this.handleChangeChildProgram} addChild={this.addChild} removeChild={this.removeChild} />;
       case 2:
         return <CommunityMattersProgram prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputCheckBoxHandler={this.inputCheckBoxHandler} />;
       case 3:
@@ -166,8 +301,39 @@ class IRF extends Component {
 
 export default IRF;
 
-/* 
-const { firstName, middleName, lastName, gender, age, address, city, province, postal, country, mobilePhone, homePhone, workPhone, emergencyContactName, emergencyContactNumber, email, firstLanguage, aboutUs, childProgram, afterSchoolProgram, healthZumba, healthYoga, healthDental, healthKarate, healthMeditation, healthFoodMarket, healthBellyDancing, healthAdultPlus, healthEnglishCafe, healthBasicEnglish, healthHomeVistits, healthSocialGroup, healthHealthySmiles, healthVolleyBall, healthHeartAndStroke, healthFoodShareBus, healthDieticianSessions, healthFoodHandling, healthAdultNutrition, healthDiabetesSessions, healthHealthyChoices, healthHomeManagement, healthStressManagement, healthCancerScreeningSpa, healthDiabetesManagement, healthSwimmingChildren, healthSwimmingLadies, healthSwimmingAquaFitMale, healthSwimmingAquaFitFemale, healthTutoring, jobClub, childMinding, computerBasic, citizenshipRefugees, communityAssistant, computerIntermediate, interestedInVolunteering, publicSpeaking, foreignTrainedHealthProfessionals, staff, neighbourhoodNet, neighbourhoodIncomeTax, neighbourhoodOther, othersTextArea, agentNotesTextArea, memberHealth, memberSatisfaction, memberSocialNetwork, memberConnection, memberStress, memberPersonalHealth, memberFamilyDoctor, memberFamilyVisitFamilyDoctor, memberFamilyVisitClinic, memberFamilyVisitEmergencyRoom, memberFamilyVisitHospital, memberRiskFactors, memberFamilyhealthyLiving, memberFamilyPhysicallyActive } = this.state;
-
-const values = { firstName, middleName, lastName, gender, age, address, city, province, postal, country, mobilePhone, homePhone, workPhone, emergencyContactName, emergencyContactNumber, email, firstLanguage, aboutUs, childProgram, afterSchoolProgram, healthZumba, healthYoga, healthDental, healthKarate, healthMeditation, healthFoodMarket, healthBellyDancing, healthAdultPlus, healthEnglishCafe, healthBasicEnglish, healthHomeVistits, healthSocialGroup, healthHealthySmiles, healthVolleyBall, healthHeartAndStroke, healthFoodShareBus, healthDieticianSessions, healthFoodHandling, healthAdultNutrition, healthDiabetesSessions, healthHealthyChoices, healthHomeManagement, healthStressManagement, healthCancerScreeningSpa, healthDiabetesManagement, healthSwimmingChildren, healthSwimmingLadies, healthSwimmingAquaFitMale, healthSwimmingAquaFitFemale, healthTutoring, jobClub, childMinding, computerBasic, citizenshipRefugees, communityAssistant, computerIntermediate, interestedInVolunteering, publicSpeaking, foreignTrainedHealthProfessionals, staff, neighbourhoodNet, neighbourhoodIncomeTax, neighbourhoodOther, othersTextArea, agentNotesTextArea, memberHealth, memberSatisfaction, memberSocialNetwork, memberConnection, memberStress, memberPersonalHealth, memberFamilyDoctor, memberFamilyVisitFamilyDoctor, memberFamilyVisitClinic, memberFamilyVisitEmergencyRoom, memberFamilyVisitHospital, memberRiskFactors, memberFamilyhealthyLiving, memberFamilyPhysicallyActive };     
-*/
+/* const firstname = "Arun";
+    const lastname = "Arun";
+    const middlename = "arun";
+    const gender = "male";
+    const age = "32";
+    const address = "Palay";
+    const city = "Tvl";
+    const province = "TN";
+    const postal_code = "627002";
+    const country = "IND";
+    const home_no = "04622";
+    const cell_no = "1234567890";
+    const work_no = "123456789";
+    const emergency_cntName = "Arun";
+    const emergency_contNo = "0123456789";
+    const email_id = "pppp@gmail.com";
+    const first_language = "TAMIL";
+    const refer_through = "WEB";
+    const after_school_program = "YES";
+    const staff = "NA";
+    const agent_notes = "NIL";
+    const others = "NA";
+    const ques_1 = "Avg";
+    const ques_2 = "Avg";
+    const ques_3 = "Avg";
+    const ques_4 = "Avg";
+    const ques_5 = "Avg";
+    const ques_6 = "Avg";
+    const ques_7 = "Avg";
+    const family_doctor = "NA";
+    const walkin_clinic = "NA";
+    const emergency_room = "NA";
+    const hospital = "NA";
+    const ques_8 = "Avg";
+    const ques_9 = "Avg";
+    const ques_10 = "Avg"; */

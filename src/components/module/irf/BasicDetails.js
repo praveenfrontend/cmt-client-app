@@ -5,23 +5,18 @@ import Page from "../../Page";
 import FormRadio from "../../FormRadio";
 
 function BasicDetails({ values, inputChange, nextStep }) {
-  function continueButton(e) {
-    e.preventDefault();
-    nextStep();
-  }
-
   return (
     <div>
-      <Page title="Basic Details" /* progress={20} */>
+      <Page title="Basic Details">
         <div className="row">
           <div className="col-md-4">
-            <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={inputChange("firstName")} value={values.firstName} />
+            <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={inputChange("firstname")} value={values.firstname} />
           </div>
           <div className="col-md-4">
-            <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={inputChange("middleName")} value={values.middleName} />
+            <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={inputChange("middlename")} value={values.middlename} />
           </div>
           <div className="col-md-4">
-            <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={inputChange("lastName")} value={values.lastName} />
+            <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={inputChange("lastname")} value={values.lastname} />
           </div>
         </div>
 
@@ -66,7 +61,7 @@ function BasicDetails({ values, inputChange, nextStep }) {
             <FormInput icon="fas fa-address-card" type="text" placeholder="Province" changeHandler={inputChange("province")} value={values.province} />
           </div>
           <div className="col-sm-6 col-lg-3">
-            <FormInput icon="fas fa-address-card" type="number" placeholder="Postal code" changeHandler={inputChange("postal")} value={values.postal} />
+            <FormInput icon="fas fa-address-card" type="number" placeholder="Postal code" changeHandler={inputChange("postal_code")} value={values.postal_code} />
           </div>
           <div className="col-sm-6 col-lg-3">
             <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={inputChange("country")} value={values.country} />
@@ -76,7 +71,7 @@ function BasicDetails({ values, inputChange, nextStep }) {
         <br />
         <div className="row justify-content-center">
           <div className="col col-sm-4 col-md-3 col-lg-2">
-            <button className="btn btn-block btn-primary" onClick={continueButton}>
+            <button className="btn btn-block btn-primary" onClick={nextStep}>
               Continue
             </button>
           </div>

@@ -1,0 +1,145 @@
+import React, { Component } from "react";
+import FormInput from "../../FormInput";
+import Page from "../../Page";
+import FormRadio from "../../FormRadio";
+import FormCheckbox from "../../FormCheckbox";
+
+class ContactDetails extends Component {
+  continueButton = e => {
+    e.preventDefault();
+    this.props.nextStep();
+  };
+
+  back = e => {
+    e.preventDefault();
+    this.props.prevStep();
+  };
+
+  render() {
+    const { values, inputChange } = this.props;
+
+    return (
+      <Page title="Contact Details">
+        <div className="row">
+          <div className="col-md-4">
+            <FormInput icon="fas fa-mobile" type="number" placeholder="Mobile Phone" changeHandler={inputChange("cell_no")} value={values.cell_no} />
+          </div>
+          <div className="col-md-4">
+            <FormInput icon="fas fa-phone" type="number" placeholder="Home Phone" changeHandler={inputChange("home_no")} value={values.home_no} />
+          </div>
+          <div className="col-md-4">
+            <FormInput icon="fas fa-phone" type="number" placeholder="Work Phone" changeHandler={inputChange("work_no")} value={values.work_no} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-12 col-md-6 col-lg-8">
+            <FormInput icon="fas fa-user" type="text" placeholder="Emergency Contact Name" changeHandler={inputChange("emergency_cntName")} value={values.emergency_cntName} />
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-4">
+            <FormInput icon="fas fa-phone" type="number" placeholder="Emergency Contact No." changeHandler={inputChange("emergency_contNo")} value={values.emergency_contNo} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-12 col-md-6 col-lg-8">
+            <FormInput icon="fas fa-envelope" type="text" placeholder="Email" changeHandler={inputChange("email_id")} value={values.email_id} />
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-4">
+            <FormInput icon="fas fa-language" type="text" placeholder="First Language" changeHandler={inputChange("first_language")} value={values.first_language} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="form-group">
+            <div className="col">
+              <label className="text-muted mr-2">How did you learn about us?</label>
+            </div>
+            <div className="col">
+              <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxFriend" inputName="refer_through" inputValue="Friend" inputLabel="Friend" checkedValue={values.refer_through} />
+              <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxWebsite" inputName="refer_through" inputValue="Website" inputLabel="Website" checkedValue={values.refer_through} />
+              <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxNegibhour" inputName="refer_through" inputValue="Neighbhour" inputLabel="Neighbhour" checkedValue={values.refer_through} />
+              <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxFlyer" inputName="refer_through" inputValue="Flyer" inputLabel="Flyer" checkedValue={values.refer_through} />
+              <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxAgency" inputName="refer_through" inputValue="Agency" inputLabel="Agency" checkedValue={values.refer_through} />
+              <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxOther" inputName="refer_through" inputValue="Other" inputLabel="Other" checkedValue={values.refer_through} />
+            </div>
+          </div>
+        </div>
+
+        <div className="row form-group">
+          <div className="col-md-7 col-lg-6">
+            <label className="text-muted mr-2">Information if Registration for a Child's program</label>
+          </div>
+          <div className="col-md-3 col-lg-6">
+            <FormRadio classNameValue="" changeHandler={this.props.inputChangeChildProgram("child_program")} inputId="childYes" inputName="child_program" inputValue="Yes" inputLabel="Yes" checkedValue={this.props.values.child_program} />
+            <FormRadio classNameValue="" changeHandler={this.props.inputChangeChildProgram("child_program")} inputId="childNo" inputName="child_program" inputValue="No" inputLabel="No" checkedValue={this.props.values.child_program} />
+          </div>
+        </div>
+
+        {this.props.values.childProgramAddRemove ? (
+          <div className="row form-group">
+            <div className="col col-sm-4 col-md-3 col-lg-2">
+              <button className="btn  btn-outline-success" onClick={this.props.addChild}>
+                Add Child
+              </button>
+            </div>
+            <div className="col col-sm-4 col-md-3 col-lg-2">
+              <button className="btn  btn-outline-danger" onClick={this.props.removeChild}>
+                Remove Child
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        {this.props.values.childProgramAddRemove && this.props.values.child_program_rows.length ? (
+          <div className="card">
+            <div className="card-body">
+              <table className="table">
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Select</th>
+                    <th scope="col">Child First Name</th>
+                    <th scope="col">Child Last Name</th>
+                    <th scope="col">Date of Birth</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.values.child_program_rows.map((item, idx) => (
+                    <tr id="addr0" key={idx}>
+                      <td>{<FormCheckbox classNameValue="col col-sm-4 col-md-3 col-lg-2" changeHandler={this.props.handleChangeChildProgram(idx)} inputId={idx} inputValue={"child_program" + idx} checkedValue={this.props.values.child_program_rows[idx].isChecked} />}</td>
+                      <td>
+                        <FormInput icon="fas fa-child" type="text" placeholder="Child First Name" changeHandler={this.props.handleChangeChildProgram(idx)} value={this.props.values.child_program_rows[idx].childFirstName} name="childFirstName" />
+                      </td>
+                      <td>
+                        <FormInput icon="fas fa-child" type="text" placeholder="Child Last Name" changeHandler={this.props.handleChangeChildProgram(idx)} value={this.props.values.child_program_rows[idx].childLastName} name="childLastName" />
+                      </td>
+                      <td>
+                        <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={this.props.handleChangeChildProgram(idx)} value={this.props.values.child_program_rows[idx].childBirthDate} name="childBirthDate" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null}
+
+        <br />
+        <div className="row justify-content-center">
+          <div className="col col-sm-4 col-md-3 col-lg-2">
+            <button className="btn btn-block btn-danger" onClick={this.back}>
+              Back
+            </button>
+          </div>
+          <div className="col col-sm-4 col-md-3 col-lg-2">
+            <button className="btn btn-block btn-primary" onClick={this.continueButton}>
+              Continue
+            </button>
+          </div>
+        </div>
+      </Page>
+    );
+  }
+}
+
+export default ContactDetails;

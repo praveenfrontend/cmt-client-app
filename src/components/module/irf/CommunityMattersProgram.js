@@ -4,18 +4,8 @@ import FormRadio from "../../FormRadio";
 import FormCheckbox from "../../FormCheckbox";
 
 function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, nextStep, prevStep }) {
-  function continueButton(e) {
-    e.preventDefault();
-    nextStep();
-  }
-
-  function back(e) {
-    e.preventDefault();
-    prevStep();
-  }
-
   return (
-    <Page title="Community Matters Program" /* progress={60} */>
+    <Page title="Community Matters Program">
       <div className="row">
         <div className="col">
           <label className="text-muted">Please Select the following if you are registering</label>
@@ -27,8 +17,8 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
           <label className="text-muted mr-2">After School Program (3:30 - 6):</label>
         </div>
         <div className="col-md-3 col-lg-6">
-          <FormRadio changeHandler={inputChange("afterSchoolProgram")} inputId="afterSchoolProgramYes" inputName="afterSchoolProgram" inputValue="Yes" inputLabel="Yes" checkedValue={values.afterSchoolProgram} />
-          <FormRadio changeHandler={inputChange("afterSchoolProgram")} inputId="afterSchoolProgramNo" inputName="afterSchoolProgram" inputValue="No" inputLabel="No" checkedValue={values.afterSchoolProgram} />
+          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_yes" inputName="after_school_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.after_school_program} />
+          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_no" inputName="after_school_program" inputValue="No" inputLabel="No" checkedValue={values.after_school_program} />
         </div>
       </div>
 
@@ -108,9 +98,9 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
             <label className="text-muted mr-2">Neighbourhood Net:</label>
           </div>
           <div className="col">
-            <FormCheckbox classNameValue="col col-sm-3" changeHandler={inputCheckBoxHandler("neighbourhood")} inputId="neighbourhoodCitizenship" inputValue="neighbourhoodCitizenship" inputLabel="Citizenship" checkedValue={values.neighbourhood.neighbourhoodCitizenship.isChecked} />
-            <FormCheckbox classNameValue="col col-sm-3" changeHandler={inputCheckBoxHandler("neighbourhood")} inputId="neighbourhoodIncomeTax" inputValue="neighbourhoodIncomeTax" inputLabel="IncomeTax" checkedValue={values.neighbourhood.neighbourhoodIncomeTax.isChecked} />
-            <FormCheckbox classNameValue="col col-sm-3" changeHandler={inputCheckBoxHandler("neighbourhood")} inputId="neighbourhoodOther" inputValue="neighbourhoodOther" inputLabel="Other" checkedValue={values.neighbourhood.neighbourhoodOther.isChecked} />
+            <FormCheckbox classNameValue="col col-sm-3" changeHandler={inputCheckBoxHandler("neighbourhood_net")} inputId="neighbourhoodCitizenship" inputValue="neighbourhoodCitizenship" inputLabel="Citizenship" checkedValue={values.neighbourhood_net.neighbourhoodCitizenship.isChecked} />
+            <FormCheckbox classNameValue="col col-sm-3" changeHandler={inputCheckBoxHandler("neighbourhood_net")} inputId="neighbourhoodIncomeTax" inputValue="neighbourhoodIncomeTax" inputLabel="IncomeTax" checkedValue={values.neighbourhood_net.neighbourhoodIncomeTax.isChecked} />
+            <FormCheckbox classNameValue="col col-sm-3" changeHandler={inputCheckBoxHandler("neighbourhood_net")} inputId="neighbourhoodOther" inputValue="neighbourhoodOther" inputLabel="Other" checkedValue={values.neighbourhood_net.neighbourhoodOther.isChecked} />
           </div>
         </div>
       </div>
@@ -119,24 +109,24 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         <label htmlFor="othersTextArea" className="text-muted">
           Others, if any
         </label>
-        <textarea className="form-control col col-md-6" id="othersTextArea" rows="2" col="10" placeholder="Your interests" onChange={inputChange("othersTextArea")} value={values.othersTextArea}></textarea>
+        <textarea className="form-control col col-md-6" id="others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("others")} value={values.others}></textarea>
       </div>
       <div className="form-group">
-        <label htmlFor="agentNotesTextArea" className="text-muted">
+        <label htmlFor="agent_notes" className="text-muted">
           Agent Notes
         </label>
-        <textarea className="form-control col col-md-10" id="agentNotesTextArea" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("agentNotesTextArea")} value={values.agentNotesTextArea}></textarea>
+        <textarea className="form-control col col-md-10" id="agent_notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("agent_notes")} value={values.agent_notes}></textarea>
       </div>
 
       <br />
       <div className="row justify-content-center">
         <div className="col col-sm-4 col-md-3 col-lg-2">
-          <button className="btn btn-block btn-danger" onClick={back}>
+          <button className="btn btn-block btn-danger" onClick={prevStep}>
             Back
           </button>
         </div>
         <div className="col col-sm-4 col-md-3 col-lg-2">
-          <button className="btn btn-block btn-primary" onClick={continueButton}>
+          <button className="btn btn-block btn-primary" onClick={nextStep}>
             Continue
           </button>
         </div>
