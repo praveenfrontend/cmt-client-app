@@ -8,7 +8,7 @@ function Page(props) {
     window.scrollTo(0, 0);
   }, [props.title]);
 
-  return <Container title={props.title} /* progress={props.progress} */>{props.children}</Container>;
+  return <Container title={props.title}>{props.children}</Container>;
 }
 
 export default Page;

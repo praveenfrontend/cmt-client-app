@@ -1,6 +1,6 @@
 /* eslint-disable default-case */
 import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
 // import { BrowserRouter } from "react-router-dom";
 import { HashRouter } from "react-router-dom";
@@ -16,10 +16,15 @@ import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
 import SideNavigation from "./components/SideNavigation";
 import Header from "./components/Header";
+import Feed from "./components/module/feed/Feed";
+import Profile from "./components/module/profile/Profile";
+import Search from "./components/module/search/Search";
+import Reports from "./components/module/reports/Reports";
+import Schedule from "./components/module/schedule/Schedule";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
 function App() {
   const initialState = {
@@ -103,10 +108,15 @@ function App() {
                 <div className="container">
                   <Switch>
                     <Route exact path="/">
-                      {state.loggedIn ? <Home /> : <HomeGuest signIn={state.signIn} />}
+                      {state.loggedIn ? /* <Home /> */ <Redirect to="/initial-registration-form" /> : <HomeGuest signIn={state.signIn} />}
                     </Route>
 
+                    <Route path="/feed" component={Feed} />
+                    <Route path="/profile" component={Profile} />
                     <Route path="/initial-registration-form" component={IRF} />
+                    <Route path="/search" component={Search} />
+                    <Route path="/reports" component={Reports} />
+                    <Route path="/schedule" component={Schedule} />
                   </Switch>
                 </div>
               </div>
