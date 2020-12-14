@@ -24,7 +24,7 @@ import Schedule from "./components/module/schedule/Schedule";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
 function App() {
   const initialState = {
@@ -100,7 +100,7 @@ function App() {
       <DispatchContext.Provider value={dispatch}>
         <HashRouter>
           <div className="App">
-            <div className={`d-flex ${state.loggedIn && state.isToggled ? "" : "toggled"} `} id="wrapper">
+            <div className={`d-flex ${state.loggedIn && state.isToggled ? "" : "toggled"}`} id="wrapper">
               <FlashMessages messages={state.flashMessages} />
               <SideNavigation />
               <div id="page-content-wrapper">

@@ -158,9 +158,9 @@ function SignUp() {
         }
         return;
       case "passwordAfterDelay":
-        if (draft.password.value.length < 12) {
+        if (draft.password.value.length < 6) {
           draft.password.hasErrors = true;
-          draft.password.message = "Password must be atleast 12 characters.";
+          draft.password.message = "Password must be atleast 6 characters.";
         }
         return;
       case "confirmPasswordImmediately":
@@ -172,9 +172,9 @@ function SignUp() {
         }
         return;
       case "confirmPasswordAfterDelay":
-        if (draft.confirmPassword.value.length < 12) {
+        if (draft.confirmPassword.value.length < 6) {
           draft.confirmPassword.hasErrors = true;
-          draft.confirmPassword.message = "Password must be atleast 12 characters.";
+          draft.confirmPassword.message = "Password must be atleast 6 characters.";
         }
         if (draft.confirmPassword.value !== draft.password.value) {
           draft.confirmPassword.hasErrors = true;

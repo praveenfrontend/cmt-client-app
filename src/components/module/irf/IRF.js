@@ -9,6 +9,7 @@ import Overview from "./Overview";
 
 import FormStepper from "./FormStepper";
 import Axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
 
 class IRF extends Component {
   state = {
@@ -269,6 +270,7 @@ class IRF extends Component {
 
   getSteps() {
     return ["Basic Details", "Contact Details", "Community Matters Program", "Member Details", "Overview"];
+    // return ["", "", "", "", ""];
   }
 
   getStepContent = (step, values) => {
@@ -295,6 +297,7 @@ class IRF extends Component {
       <React.Fragment>
         <FormStepper step={step} steps={steps} />
         {this.getStepContent(step, values)}
+        {/* <Spinner animation="border" /> */}
       </React.Fragment>
     );
   }
