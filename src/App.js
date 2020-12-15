@@ -21,6 +21,8 @@ import Profile from "./components/module/profile/Profile";
 import Search from "./components/module/search/Search";
 import Reports from "./components/module/reports/Reports";
 import Schedule from "./components/module/schedule/Schedule";
+import EditUserDetails from "./components/module/search/userDetails/EditUserDetails";
+import AddGoal from "./components/module/search/userDetails/AddGoal";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
@@ -117,6 +119,8 @@ function App() {
                     <Route path="/search" component={Search} />
                     <Route path="/reports" component={Reports} />
                     <Route path="/schedule" component={Schedule} />
+                    <Route path="/editUserDetails" component={EditUserDetails} />
+                    <Route path="/addGoal" component={AddGoal} />
                   </Switch>
                 </div>
               </div>

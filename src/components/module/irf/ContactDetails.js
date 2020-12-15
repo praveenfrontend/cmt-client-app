@@ -4,7 +4,7 @@ import Page from "../../Page";
 import FormRadio from "../../FormRadio";
 import FormCheckbox from "../../FormCheckbox";
 
-function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, removeChild, inputChangeChildProgram, handleChangeChildProgram }) {
+function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, removeChild, inputChangeChildProgram, handleChangeChildProgram, page }) {
   return (
     <Page title="Contact Details">
       <div className="row">
@@ -110,20 +110,23 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
           </div>
         </div>
       ) : null}
-
-      <br />
-      <div className="row justify-content-center">
-        <div className="col col-sm-4 col-md-3 col-lg-2">
-          <button className="btn btn-block btn-danger" onClick={prevStep}>
-            Back
-          </button>
-        </div>
-        <div className="col col-sm-4 col-md-3 col-lg-2">
-          <button className="btn btn-block btn-primary" onClick={nextStep}>
-            Continue
-          </button>
-        </div>
-      </div>
+      {page === "IRF" ? (
+        <>
+          <br />
+          <div className="row justify-content-center">
+            <div className="col col-sm-4 col-md-3 col-lg-2">
+              <button className="btn btn-block btn-danger" onClick={prevStep}>
+                Back
+              </button>
+            </div>
+            <div className="col col-sm-4 col-md-3 col-lg-2">
+              <button className="btn btn-block btn-primary" onClick={nextStep}>
+                Continue
+              </button>
+            </div>
+          </div>
+        </>
+      ) : null}
     </Page>
   );
 }

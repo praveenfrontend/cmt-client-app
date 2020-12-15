@@ -4,7 +4,7 @@ import FormInput from "../../FormInput";
 import Page from "../../Page";
 import FormRadio from "../../FormRadio";
 
-function BasicDetails({ values, inputChange, nextStep }) {
+function BasicDetails({ values, inputChange, nextStep, page }) {
   return (
     <div>
       <Page title="Basic Details">
@@ -19,7 +19,6 @@ function BasicDetails({ values, inputChange, nextStep }) {
             <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={inputChange("lastname")} value={values.lastname} />
           </div>
         </div>
-
         <div className="row">
           <div className="col-sm-12 col-md-12 col-lg-4">
             <div className="form-group d-flex">
@@ -46,13 +45,11 @@ function BasicDetails({ values, inputChange, nextStep }) {
             </div>
           </div>
         </div>
-
         <div className="row">
           <div className="col">
             <FormInput icon="fas fa-address-card" type="text" placeholder="Enter your street address" changeHandler={inputChange("address")} value={values.address} />
           </div>
         </div>
-
         <div className="row">
           <div className="col-sm-6 col-lg-3">
             <FormInput icon="fas fa-address-card" type="text" placeholder="City" changeHandler={inputChange("city")} value={values.city} />
@@ -67,15 +64,18 @@ function BasicDetails({ values, inputChange, nextStep }) {
             <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={inputChange("country")} value={values.country} />
           </div>
         </div>
-
-        <br />
-        <div className="row justify-content-center">
-          <div className="col col-sm-4 col-md-3 col-lg-2">
-            <button className="btn btn-block btn-primary" onClick={nextStep}>
-              Continue
-            </button>
-          </div>
-        </div>
+        {page === "IRF" ? (
+          <>
+            <br />
+            <div className="row justify-content-center">
+              <div className="col col-sm-4 col-md-3 col-lg-2">
+                <button className="btn btn-block btn-primary" onClick={nextStep}>
+                  Continue
+                </button>
+              </div>
+            </div>
+          </>
+        ) : null}
       </Page>
     </div>
   );

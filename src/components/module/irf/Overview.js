@@ -7,7 +7,7 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
 
   return (
     <Page title="Overview">
-      <Accordion>
+      <Accordion defaultActiveKey="0">
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">
             <div className="text-white">Basic Details</div>
