@@ -9,7 +9,7 @@ import Overview from "./Overview";
 
 import FormStepper from "./FormStepper";
 import Axios from "axios";
-import Spinner from "react-bootstrap/Spinner";
+// import Spinner from "react-bootstrap/Spinner";
 
 class IRF extends Component {
   state = {
@@ -167,11 +167,7 @@ class IRF extends Component {
     let filtered_child_program_rows = [];
     let checked = false;
 
-    child_program_rows.map((item, idx) => {
-      if (item.isChecked) {
-        checked = true;
-      }
-    });
+    child_program_rows.map((item, idx) => (item.isChecked ? (checked = true) : null));
 
     if (!checked) {
       alert("Atleast 1 Child row has to be selected to remove!");
@@ -294,11 +290,13 @@ class IRF extends Component {
     const steps = this.getSteps();
 
     return (
-      <React.Fragment>
-        <FormStepper step={step} steps={steps} />
-        {this.getStepContent(step, values)}
-        {/* <Spinner animation="border" /> */}
-      </React.Fragment>
+      <section className="forms">
+        <div className="container-fluid">
+          <FormStepper step={step} steps={steps} />
+          {this.getStepContent(step, values)}
+          {/* <Spinner animation="border" /> */}
+        </div>
+      </section>
     );
   }
 }

@@ -2,24 +2,15 @@
 import React, { useContext, useEffect } from "react";
 import Axios from "axios";
 import { useImmerReducer } from "use-immer";
-
-import CardHeader from "./CardHeader";
-import CardFooter from "./CardFooter";
-import FormInput from "./FormInput";
-import DispatchContext from "../DispatchContext";
+import FormInput from "../FormFields/FormInput";
+import FormButton from "../FormFields/FormButton";
+import DispatchContext from "../../DispatchContext";
 import { CSSTransition } from "react-transition-group";
 
 function SignUp() {
   const appDispatch = useContext(DispatchContext);
 
   const initialState = {
-    username: {
-      value: "",
-      hasErrors: false,
-      message: "",
-      isUnique: false,
-      checkCount: 0
-    },
     email: {
       value: "",
       hasErrors: false,
@@ -28,11 +19,6 @@ function SignUp() {
       checkCount: 0
     },
     password: {
-      value: "",
-      hasErrors: false,
-      message: ""
-    },
-    confirmPassword: {
       value: "",
       hasErrors: false,
       message: ""
@@ -97,36 +83,6 @@ function SignUp() {
 
   function ourReducer(draft, action) {
     switch (action.type) {
-      case "usernameImmediately":
-        draft.username.hasErrors = false;
-        draft.username.value = action.value;
-        if (draft.username.value.length > 30) {
-          draft.username.hasErrors = true;
-          draft.username.message = "Username cannot exceed 30 characters.";
-        }
-        if (draft.username.value && !/^([a-zA-Z0-9]+)$/.test(draft.username.value)) {
-          draft.username.hasErrors = true;
-          draft.username.message = "Username can only contain letters and numbers.";
-        }
-        return;
-      case "usernameAfterDelay":
-        if (draft.username.value.length < 3) {
-          draft.username.hasErrors = true;
-          draft.username.message = "Username must be atleast 3 characters.";
-        }
-        if (!draft.hasErrors && !action.noRequest) {
-          draft.username.checkCount++;
-        }
-        return;
-      case "usernameUniqueResults":
-        if (action.value) {
-          draft.username.hasErrors = true;
-          draft.username.isUnique = false;
-          draft.username.message = "That username is already taken.";
-        } else {
-          draft.username.isUnique = true;
-        }
-        return;
       case "emailImmediately":
         draft.email.hasErrors = false;
         draft.email.value = action.value;
@@ -161,24 +117,6 @@ function SignUp() {
         if (draft.password.value.length < 6) {
           draft.password.hasErrors = true;
           draft.password.message = "Password must be atleast 6 characters.";
-        }
-        return;
-      case "confirmPasswordImmediately":
-        draft.confirmPassword.hasErrors = false;
-        draft.confirmPassword.value = action.value;
-        if (draft.confirmPassword.value.length > 50) {
-          draft.confirmPassword.hasErrors = true;
-          draft.confirmPassword.message = "Password cannot exceed 50 characters.";
-        }
-        return;
-      case "confirmPasswordAfterDelay":
-        if (draft.confirmPassword.value.length < 6) {
-          draft.confirmPassword.hasErrors = true;
-          draft.confirmPassword.message = "Password must be atleast 6 characters.";
-        }
-        if (draft.confirmPassword.value !== draft.password.value) {
-          draft.confirmPassword.hasErrors = true;
-          draft.confirmPassword.message = "Passwords do not match.";
         }
         return;
       case "firstnameImmediately":
@@ -291,13 +229,6 @@ function SignUp() {
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
 
   useEffect(() => {
-    if (state.username.value) {
-      const delay = setTimeout(() => dispatch({ type: "usernameAfterDelay" }), 800);
-      return () => clearTimeout(delay);
-    }
-  }, [dispatch, state.username.value]);
-
-  useEffect(() => {
     if (state.email.value) {
       const delay = setTimeout(() => dispatch({ type: "emailAfterDelay" }), 800);
       return () => clearTimeout(delay);
@@ -312,13 +243,6 @@ function SignUp() {
   }, [dispatch, state.password.value]);
 
   useEffect(() => {
-    if (state.confirmPassword.value) {
-      const delay = setTimeout(() => dispatch({ type: "confirmPasswordAfterDelay" }), 800);
-      return () => clearTimeout(delay);
-    }
-  }, [dispatch, state.confirmPassword.value]);
-
-  useEffect(() => {
     if (state.phone.value) {
       const delay = setTimeout(() => dispatch({ type: "phoneAfterDelay" }), 800);
       return () => clearTimeout(delay);
@@ -331,22 +255,6 @@ function SignUp() {
       return () => clearTimeout(delay);
     }
   }, [dispatch, state.birthdate.value]);
-
-  useEffect(() => {
-    if (state.username.checkCount) {
-      const ourRequest = Axios.CancelToken.source();
-      async function fetchResults() {
-        try {
-          const response = await Axios.post("/doesUsernameExist", { username: state.username.value }, { cancelToken: ourRequest.token });
-          dispatch({ type: "usernameUniqueResults", value: response.data });
-        } catch (e) {
-          console.log("There was a problem or the request was cancelled.");
-        }
-      }
-      fetchResults();
-      return () => ourRequest.cancel();
-    }
-  }, [dispatch, state.username.checkCount, state.username.value]);
 
   useEffect(() => {
     if (state.email.checkCount) {
@@ -378,7 +286,6 @@ function SignUp() {
           const response = await Axios.post(
             "/register",
             {
-              // username: state.username.value,
               email: state.email.value,
               password: state.password.value,
               firstname: state.firstname.value,
@@ -409,12 +316,10 @@ function SignUp() {
       fetchResults();
       return () => ourRequest.cancel();
     }
-  }, [dispatch, state.email.value, state.password.value, state.submitCount, state.username.value, state.roletype, appDispatch]);
+  }, [dispatch, state.email.value, state.password.value, state.submitCount, state.roletype, appDispatch]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    /* dispatch({ type: "usernameImmediately", value: state.username.value });
-    dispatch({ type: "usernameAfterDelay", value: state.username.value, noRequest: true }); */
     dispatch({ type: "firstnameImmediately", value: state.firstname.value });
     dispatch({ type: "middlenameImmediately", value: state.middlename.value });
     dispatch({ type: "lastnameImmediately", value: state.lastname.value });
@@ -422,8 +327,6 @@ function SignUp() {
     dispatch({ type: "emailAfterDelay", value: state.email.value, noRequest: true });
     dispatch({ type: "passwordImmediately", value: state.password.value });
     dispatch({ type: "passwordAfterDelay", value: state.password.value });
-    dispatch({ type: "confirmPasswordImmediately", value: state.confirmPassword.value });
-    dispatch({ type: "confirmPasswordAfterDelay", value: state.confirmPassword.value });
     dispatch({ type: "phoneImmediately", value: state.phone.value });
     dispatch({ type: "birthdateImmediately", value: state.birthdate.value });
     dispatch({ type: "cityImmediately", value: state.city.value });
@@ -436,108 +339,114 @@ function SignUp() {
   }
 
   return (
-    <div className="col-md-6 col-lg-4">
-      <div className="card h-100">
-        <CardHeader cardHeaderValue="SignUp" />
-        <div className="card-body">
-          <form onSubmit={handleSubmit}>
-            {/* <FormInput icon="fas fa-user" type="text" placeholder="Username" changeHandler={e => dispatch({ type: "usernameImmediately", value: e.target.value })} message={state.username.message} inputField={state.username.hasErrors} /> */}
-
-            <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={e => dispatch({ type: "firstnameImmediately", value: e.target.value })} message={state.firstname.message} inputField={state.firstname.hasErrors} />
-
-            <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={e => dispatch({ type: "middlenameImmediately", value: e.target.value })} message={state.middlename.message} inputField={state.middlename.hasErrors} />
-
-            <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={e => dispatch({ type: "lastnameImmediately", value: e.target.value })} message={state.lastname.message} inputField={state.lastname.hasErrors} />
-
-            <FormInput icon="fas fa-envelope" type="email" placeholder="Email Address" changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} />
-
-            <FormInput icon="fas fa-lock" type="password" placeholder="Password" changeHandler={e => dispatch({ type: "passwordImmediately", value: e.target.value })} message={state.password.message} inputField={state.password.hasErrors} />
-
-            <FormInput icon="fas fa-lock" type="password" placeholder="Confirm Password" changeHandler={e => dispatch({ type: "confirmPasswordImmediately", value: e.target.value })} message={state.confirmPassword.message} inputField={state.confirmPassword.hasErrors} />
-
-            <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
-
-            <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthdateImmediately", value: e.target.value })} message={state.birthdate.message} inputField={state.birthdate.hasErrors} />
-
-            <FormInput icon="fas fa-address-card" type="text" placeholder="City" changeHandler={e => dispatch({ type: "cityImmediately", value: e.target.value })} message={state.city.message} inputField={state.city.hasErrors} />
-
-            <FormInput icon="fas fa-address-card" type="text" placeholder="Province" changeHandler={e => dispatch({ type: "provinceImmediately", value: e.target.value })} message={state.province.message} inputField={state.province.hasErrors} />
-
-            <FormInput icon="fas fa-address-card" type="text" placeholder="Postal code" changeHandler={e => dispatch({ type: "postalImmediately", value: e.target.value })} message={state.postal.message} inputField={state.postal.hasErrors} />
-
-            <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={e => dispatch({ type: "countryImmediately", value: e.target.value })} message={state.country.message} inputField={state.country.hasErrors} />
-
-            <div className="form-group">
-              <label className="text-muted mr-2">
-                <small>Gender</small>
-              </label>
-              <div className="btn-group btn-group-dispose" data-toggle="buttons">
-                <label className="btn btn-outline-primary">
-                  <input type="radio" name="gender" id="male" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Male
-                </label>
-                <label className="btn btn-outline-primary">
-                  <input type="radio" name="gender" id="female" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
-                </label>
-              </div>
-              <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
-              </CSSTransition>
+    <div className="page register-page">
+      <div className="container">
+        <div className="form-outer text-center d-flex align-items-center">
+          <div className="form-inner">
+            <div className="logo text-uppercase">
+              <span className="text-bold">Community</span>
+              <strong className="text-primary">Matters</strong>
             </div>
-
-            <div className="form-group">
-              <label className="text-muted mr-2">
-                <small>Role Type</small>
-              </label>
-              <div className="btn-group btn-group-dispose" data-toggle="buttons">
-                <label className="btn btn-outline-primary">
-                  <input type="radio" name="roletype" id="user" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> User
-                </label>
-                <label className="btn btn-outline-primary">
-                  <input type="radio" name="roletype" id="agent" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> Agent
-                </label>
-                <label className="btn btn-outline-primary">
-                  <input type="radio" name="roletype" id="admin" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> Admin
-                </label>
+            <p>
+              A Platform for your local community to share, collaborate, learn, inspire and progress. <br /> Promote your programs and connect with local community Participants in your area. <br /> Share program progress with your community participants, share views to improve programs, activities, and take control of community building.
+            </p>
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-md-4">
+                  <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={e => dispatch({ type: "firstnameImmediately", value: e.target.value })} message={state.firstname.message} inputField={state.firstname.hasErrors} />
+                </div>
+                <div className="col-md-4">
+                  <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={e => dispatch({ type: "middlenameImmediately", value: e.target.value })} message={state.middlename.message} inputField={state.middlename.hasErrors} />
+                </div>
+                <div className="col-md-4">
+                  <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={e => dispatch({ type: "lastnameImmediately", value: e.target.value })} message={state.lastname.message} inputField={state.lastname.hasErrors} />
+                </div>
               </div>
-              <CSSTransition in={state.roletype.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                <div className="alert alert-danger small liveValidateMessage">{state.roletype.message}</div>
-              </CSSTransition>
-            </div>
 
-            <input type="submit" value="SIGN UP" className="btn btn-success btn-block" />
-          </form>
+              <div className="row">
+                <div className="col-md-8">
+                  <FormInput icon="fas fa-envelope" type="email" placeholder="Email Address" changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} />
+                </div>
+                <div className="col-md-4">
+                  <FormInput icon="fas fa-lock" type="password" placeholder="Password" changeHandler={e => dispatch({ type: "passwordImmediately", value: e.target.value })} message={state.password.message} inputField={state.password.hasErrors} />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
+                </div>
+                <div className="col-md-6">
+                  <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthdateImmediately", value: e.target.value })} message={state.birthdate.message} inputField={state.birthdate.hasErrors} />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-3">
+                  <FormInput icon="fas fa-address-card" type="text" placeholder="City" changeHandler={e => dispatch({ type: "cityImmediately", value: e.target.value })} message={state.city.message} inputField={state.city.hasErrors} />
+                </div>
+                <div className="col-md-3">
+                  <FormInput icon="fas fa-address-card" type="text" placeholder="Province" changeHandler={e => dispatch({ type: "provinceImmediately", value: e.target.value })} message={state.province.message} inputField={state.province.hasErrors} />
+                </div>
+                <div className="col-md-3">
+                  <FormInput icon="fas fa-address-card" type="text" placeholder="Postal code" changeHandler={e => dispatch({ type: "postalImmediately", value: e.target.value })} message={state.postal.message} inputField={state.postal.hasErrors} />
+                </div>
+                <div className="col-md-3">
+                  <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={e => dispatch({ type: "countryImmediately", value: e.target.value })} message={state.country.message} inputField={state.country.hasErrors} />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-5">
+                  <div className="form-group d-flex align-items-center">
+                    <label className="text-muted mr-2">
+                      <p className="text-bold">Gender</p>
+                    </label>
+                    <div className="btn-group btn-group-dispose" data-toggle="buttons">
+                      <label className="btn btn-outline-primary btn-sm">
+                        <input type="radio" name="gender" id="male" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Male
+                      </label>
+                      <label className="btn btn-outline-primary btn-sm">
+                        <input type="radio" name="gender" id="female" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
+                      </label>
+                    </div>
+                    <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
+                    </CSSTransition>
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div className="form-group d-flex align-items-center ">
+                    <label className="text-muted mr-2">
+                      <p className="text-bold">Role Type</p>
+                    </label>
+                    <div className="btn-group btn-group-dispose" data-toggle="buttons">
+                      <label className="btn btn-outline-primary btn-sm">
+                        <input type="radio" name="roletype" id="user" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> User
+                      </label>
+                      <label className="btn btn-outline-primary btn-sm">
+                        <input type="radio" name="roletype" id="agent" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> Agent
+                      </label>
+                      <label className="btn btn-outline-primary btn-sm">
+                        <input type="radio" name="roletype" id="admin" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> Admin
+                      </label>
+                    </div>
+                    <CSSTransition in={state.roletype.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.roletype.message}</div>
+                    </CSSTransition>
+                  </div>
+                </div>
+              </div>
+
+              <input type="submit" value="Register" className="btn btn-primary btn-block col-md-4 col-sm-4 mx-auto" />
+            </form>
+            <small>Already have an account? </small>
+            <FormButton buttonValue="Login" />
+          </div>
         </div>
-        <CardFooter buttonValue="SIGN IN" footerText="Already have an account?" />
       </div>
     </div>
   );
 }
 
 export default SignUp;
-
-/* 
-const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-  const [fname, setfirstname] = useState();
-  const [lname, setlastname] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [roletype, setRoleType] = useState();
-
-  const { addFlashMessage } = useContext(AppContext);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      await Axios.post("/register", { username: username, password: password, fname: fname, lname: lname, email: email, phone: phone, roletype: roletype });
-      addFlashMessage("Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email.");
-      console.log("User was successfully created");
-      console.log(password);
-    } catch (e) {
-      console.log(e.response.data);
-    }
-  }
-*/
-
-/* onChange={e => setRoleType(e.target.id)} */

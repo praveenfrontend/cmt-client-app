@@ -1,8 +1,8 @@
 import React from "react";
-import FormInput from "../../FormInput";
-import Page from "../../Page";
-import FormRadio from "../../FormRadio";
-import FormCheckbox from "../../FormCheckbox";
+import FormInput from "../../FormFields/FormInput";
+import Page from "../../common/Page";
+import FormRadio from "../../FormFields/FormRadio";
+import FormCheckbox from "../../FormFields/FormCheckbox";
 
 function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, removeChild, inputChangeChildProgram, handleChangeChildProgram, page }) {
   return (

@@ -2,6 +2,12 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/irf_search", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/login", {
       target: "https://test4cmt.000webhostapp.com/api",
       changeOrigin: true

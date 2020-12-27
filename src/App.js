@@ -1,21 +1,16 @@
 /* eslint-disable default-case */
 import React, { useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
 // import { BrowserRouter } from "react-router-dom";
-import { HashRouter } from "react-router-dom";
 import IRF from "./components/module/irf/IRF";
 
-import "./App.css";
-import Footer from "./components/Footer";
+import "./App.scss";
 import Axios from "axios";
-import HomeGuest from "./components/HomeGuest";
-import Home from "./components/Home";
-import FlashMessages from "./components/FlashMessages";
 import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
-import SideNavigation from "./components/SideNavigation";
-import Header from "./components/Header";
+import SideNavigation from "./components/navs/SideNavigation";
+import Header from "./components/navs/Header";
 import Feed from "./components/module/feed/Feed";
 import Profile from "./components/module/profile/Profile";
 import Search from "./components/module/search/Search";
@@ -23,12 +18,16 @@ import Reports from "./components/module/reports/Reports";
 import Schedule from "./components/module/schedule/Schedule";
 import EditUserDetails from "./components/module/search/userDetails/EditUserDetails";
 import AddGoal from "./components/module/search/userDetails/AddGoal";
+import GuardedRoute from "./components/auth/GuardedRoute";
+import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
+import { useState } from "react";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
 Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
-function App() {
+function App(props) {
   const initialState = {
     signIn: true,
     flashMessages: [],
@@ -76,56 +75,40 @@ function App() {
     }
   });
 
-  // Check if token has expired or not on first render
-  /*  useEffect(() => {
-    if (state.loggedIn) {
-      const ourRequest = Axios.CancelToken.source();
-      async function fetchResults() {
-        try {
-          const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token });
-          console.log("Check token:" + response.data);
-          if (!response.data) {
-            dispatch({ type: "logout" });
-            dispatch({ type: "flashMessage", value: "Your session has expired. Please log in again." });
-          }
-        } catch (e) {
-          console.log("There was a problem or the request was cancelled.");
-        }
-      }
-      fetchResults();
-      return () => ourRequest.cancel();
+  const [menuHandleValue, setMenuHandleValue] = useState("");
+  const [pageValue, setPageValue] = useState("");
+
+  const menuToggle = () => {
+    if (window.outerWidth > 991) {
+      setMenuHandleValue(menuHandleValue === "shrink" ? "" : "shrink");
+      setPageValue(pageValue === "active" ? "" : "active");
+    } else {
+      setMenuHandleValue(menuHandleValue === "show-sm" ? "" : "show-sm");
+      setPageValue(pageValue === "active-sm" ? "" : "active-sm");
     }
-  }, [dispatch, state.loggedIn, state.user.token]); */
+  };
 
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <HashRouter>
-          <div className="App">
-            <div className={`d-flex ${state.loggedIn && state.isToggled ? "" : "toggled"}`} id="wrapper">
-              <FlashMessages messages={state.flashMessages} />
-              <SideNavigation />
-              <div id="page-content-wrapper">
-                <Header loggedIn={state.loggedIn} />
-                <div className="container">
-                  <Switch>
-                    <Route exact path="/">
-                      {state.loggedIn ? /* <Home /> */ <Redirect to="/initial-registration-form" /> : <HomeGuest signIn={state.signIn} />}
-                    </Route>
+          {state.loggedIn ? <SideNavigation menuHandleValue={menuHandleValue} /> : null}
+          <div className={`${state.loggedIn ? `${"page " + pageValue}` : ""}`}>
+            {state.loggedIn ? <Header menuHandle={menuToggle} /> : null}
+            <Switch>
+              <Route exact path="/">
+                {!state.loggedIn ? state.signIn ? <SignIn /> : <SignUp /> : <Redirect to="/initial-registration-form" />}
+              </Route>
 
-                    <Route path="/feed" component={Feed} />
-                    <Route path="/profile" component={Profile} />
-                    <Route path="/initial-registration-form" component={IRF} />
-                    <Route path="/search" component={Search} />
-                    <Route path="/reports" component={Reports} />
-                    <Route path="/schedule" component={Schedule} />
-                    <Route path="/editUserDetails" component={EditUserDetails} />
-                    <Route path="/addGoal" component={AddGoal} />
-                  </Switch>
-                </div>
-              </div>
-            </div>
-            <Footer />
+              <GuardedRoute path="/initial-registration-form" component={IRF} auth={state.loggedIn} />
+              <GuardedRoute path="/search" component={Search} auth={state.loggedIn} />
+              <GuardedRoute path="/feed" component={Feed} auth={state.loggedIn} />
+              <GuardedRoute path="/profile" component={Profile} auth={state.loggedIn} />
+              <GuardedRoute path="/reports" component={Reports} auth={state.loggedIn} />
+              <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />
+              <GuardedRoute path="/editUserDetails" component={EditUserDetails} auth={state.loggedIn} />
+              <GuardedRoute path="/addGoal" component={AddGoal} auth={state.loggedIn} />
+            </Switch>
           </div>
         </HashRouter>
       </DispatchContext.Provider>
@@ -134,22 +117,3 @@ function App() {
 }
 
 export default App;
-
-/* 
-<AppContext.Provider value={{ addFlashMessage, setLoggedIn, setSignIn }}>
-...
-</AppContext.Provider>
-*/
-
-/* 
-  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("communityMattersToken")));
-  const [flashMessages, setFlashMessages] = useState([]);
-
-  function addFlashMessage(msg) {
-    setFlashMessages(prev => prev.concat(msg));
-  }
-*/
-
-/* 
-<Header loggedIn={state.loggedIn} />
-*/

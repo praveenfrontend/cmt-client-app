@@ -1,7 +1,7 @@
 import React from "react";
-import Page from "../../Page";
-import FormRadio from "../../FormRadio";
-import FormInput from "../../FormInput";
+import Page from "../../common/Page";
+import FormRadio from "../../FormFields/FormRadio";
+import FormInput from "../../FormFields/FormInput";
 
 function MemberDetails({ values, inputChange, nextStep, prevStep }) {
   return (

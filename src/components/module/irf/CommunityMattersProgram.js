@@ -1,7 +1,7 @@
 import React from "react";
-import Page from "../../Page";
-import FormRadio from "../../FormRadio";
-import FormCheckbox from "../../FormCheckbox";
+import Page from "../../common/Page";
+import FormRadio from "../../FormFields/FormRadio";
+import FormCheckbox from "../../FormFields/FormCheckbox";
 
 function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, nextStep, prevStep }) {
   return (

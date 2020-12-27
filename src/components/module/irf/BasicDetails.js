@@ -1,8 +1,8 @@
 import React from "react";
 
-import FormInput from "../../FormInput";
-import Page from "../../Page";
-import FormRadio from "../../FormRadio";
+import FormInput from "../../FormFields/FormInput";
+import Page from "../../common/Page";
+import FormRadio from "../../FormFields/FormRadio";
 
 function BasicDetails({ values, inputChange, nextStep, page }) {
   return (
