@@ -280,7 +280,7 @@ class Search extends Component {
           </Container>
           <div className="row mb-5">
             <div className="col-md-2 m-auto">
-              <button className="btn btn-block btn-success">Print All</button>
+              <button className="btn btn-block btn-success">Print</button>
             </div>
           </div>
         </div>
