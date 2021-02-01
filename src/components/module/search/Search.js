@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { useContext, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
+import Loader from "react-loader-spinner";
 
 import Page from "../../common/Page";
 import Container from "../../common/Container";
@@ -8,62 +10,76 @@ import FormInput from "../../FormFields/FormInput";
 import { Accordion, Card, Row, Col } from "react-bootstrap";
 import Table from "../../Table/Table";
 import TableRow from "../../Table/TableRow";
+import DispatchContext from "../../../DispatchContext";
 
-class Search extends Component {
-  state = {
-    registrationId: "",
-    emailId: "",
-    searchData: {}
+function Search() {
+  const [loading, setLoading] = useState(false);
+  const [registrationId, setRegistrationId] = useState();
+  const [emailId, setEmailId] = useState();
+  const [searchData, setSearchData] = useState({});
+
+  const appDispatch = useContext(DispatchContext);
+
+  const registrationChange = e => {
+    setRegistrationId(e.target.value);
+  };
+  const emailChange = e => {
+    setEmailId(e.target.value);
   };
 
-  inputChange = input => e => {
-    this.setState({
-      [input]: e.target.value
-    });
-  };
-
-  handleSearch = async e => {
+  const handleSearch = async e => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      let responseData;
-      const data = this.state.registrationId || this.state.emailId;
+      const searchInput = registrationId || emailId;
+      const response = await Axios.get(`/irf_search/${searchInput}`);
+      setLoading(false);
+      console.log(response.data);
 
-      const response = await Axios.post("/irf_search", { data });
-      response.data.map(item => (responseData = item));
-
-      if (responseData !== undefined) {
-        this.setState({ searchData: responseData });
+      if (response.data.success === true) {
+        setSearchData(response.data.data);
+        appDispatch({ type: "userDetails", value: response.data.data.User_Details });
       } else {
-        console.log("Incorrect Registration Id or Email Id.");
+        alert("Incorrect Registration Id or Email Id.");
       }
     } catch (e) {
-      if (e.response == null) {
-        console.log("Something went wrong.");
+      if (e.response === null) {
+        alert("Something went wrong.");
       }
+      setLoading(false);
     }
   };
 
-  render() {
-    const searchResult = this.state.searchData;
+  const { User_Details, Child_Details, GoalDetails, Program_Details, Health_Details } = searchData;
 
-    const tableHeader = ["S.No", "Label", "Value"];
-    const childProgramHeader = ["S.No", "Child First Name", "Child Last Name", "Child DoB"];
-    const programDetailsHeader = ["S.No", "Category", "Program Name"];
-    const healthDetailsHeader = ["S.No", "Health Question", "Initial Status", "Current Status", "Current Program"];
+  const tableHeader = ["S.No", "Label", "Value"];
+  const childProgramHeader = ["S.No", "Child First Name", "Child Last Name", "Child DoB"];
+  const programDetailsHeader = ["S.No", "Category", "Program Name"];
+  const healthDetailsHeader = ["S.No", "Health Question", "Initial Status", "Current Status", "Current Program"];
 
-    const userDetailsRows = {
-      "Reg Id": searchResult.id,
-      "First Name": searchResult.firstname,
-      "Last Name": searchResult.lastname,
-      Address: this.state.searchData.address !== undefined ? searchResult.address + ", " + searchResult.city + ", " + searchResult.province + ", " + searchResult.postal_code + ", " + searchResult.country : "",
-      Email: searchResult.email_id,
-      "First Language": searchResult.first_language,
-      "Contact Number": searchResult.cell_no,
-      Children: searchResult.child_program,
-      "Agent Notes": searchResult.agent_notesy
+  let userDetailsRows = "",
+    goalDetailsRows = "",
+    programDetailsRows = "",
+    healthDetailsRows = "",
+    regId = "";
+
+  if (Object.keys(searchData).length !== 0) {
+    regId = registrationId;
+
+    userDetailsRows = {
+      "Reg Id": regId,
+      "First Name": User_Details.firstName,
+      "Last Name": User_Details.lastName,
+      Address: User_Details.streetAddress !== undefined ? User_Details.streetAddress + ", " + User_Details.city + ", " + User_Details.province + ", " + User_Details.zipCode + ", " + User_Details.country : "",
+      Email: User_Details.email,
+      "First Language": User_Details.firstLang,
+      "Contact Number": User_Details.phoneCell,
+      Children: User_Details.ChildValue,
+      "Agent Notes": User_Details.notes
     };
 
-    const goalDetailsRows = {
+    goalDetailsRows = {
       Category: "No Data Available",
       Program: "No Data Available",
       Location: "No Data Available",
@@ -75,34 +91,36 @@ class Search extends Component {
       "End Date": "No Data Available"
     };
 
-    const programDetailsRows = {
+    programDetailsRows = {
       "After School": "No Data Available",
       Health: "No Data Available",
       Employment: "No Data Available",
       Staff: "No Data Available"
     };
 
-    const healthDetailsRows = {
+    healthDetailsRows = {
       "Overall Health": "No Data Available",
       "Satisfaction with Life": "No Data Available",
       "Social Network of Family and Friends": "No Data Available",
       "Connection with community": "No Data Available"
     };
+  }
 
-    return (
+  return (
+    <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <section className="forms">
         <div className="container-fluid">
           <Page title="SEARCH">
-            <form onSubmit={this.handleSearch}>
+            <form onSubmit={e => handleSearch(e)}>
               <div className="row">
                 <div className="col-md-4">
-                  <FormInput icon="fa fa-id-card-o" type="text" placeholder="Search by Registration ID" changeHandler={this.inputChange("registrationId")} />
+                  <FormInput icon="fa fa-id-card-o" type="text" placeholder="Search by Registration ID" changeHandler={e => registrationChange(e)} />
                 </div>
                 <div className="col-md-1">
                   <p className="display-6 text-muted mt-2">[ OR ]</p>
                 </div>
                 <div className="col-md-4">
-                  <FormInput icon="fas fa-envelope" type="text" placeholder="Search by Email ID" changeHandler={this.inputChange("emailId")} />
+                  <FormInput icon="fas fa-envelope" type="text" placeholder="Search by Email ID" changeHandler={e => emailChange(e)} />
                 </div>
                 <div className="col-md-2">
                   <button className="btn btn-block btn-primary">Search</button>
@@ -111,12 +129,12 @@ class Search extends Component {
             </form>
           </Page>
           <Container title="Member Details - CMT">
-            <Accordion /* defaultActiveKey="0" */>
+            <Accordion defaultActiveKey="0">
               <div className="card">
                 <Accordion.Toggle as={Card.Header} eventKey="0">
                   <Row className="card-header bg-primary">
                     <Col sm={8}>
-                      <h5 className="text-white text-left">User Details - {searchResult.id}</h5>
+                      <h5 className="text-white text-left">User Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit"></i>
@@ -147,7 +165,7 @@ class Search extends Component {
                 <Accordion.Toggle as={Card.Header} eventKey="1">
                   <Row className="card-header bg-primary">
                     <Col sm={8}>
-                      <h5 className="text-white text-left">Goal Details - {searchResult.id}</h5>
+                      <h5 className="text-white text-left">Goal Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit"></i>
@@ -178,7 +196,7 @@ class Search extends Component {
                 <Accordion.Toggle as={Card.Header} eventKey="2">
                   <Row className="card-header bg-primary">
                     <Col sm={8}>
-                      <h5 className="text-white text-left">Child Details - {searchResult.id}</h5>
+                      <h5 className="text-white text-left">Child Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit"></i>
@@ -209,7 +227,7 @@ class Search extends Component {
                 <Accordion.Toggle as={Card.Header} eventKey="3">
                   <Row className="card-header bg-primary">
                     <Col sm={8}>
-                      <h5 className="text-white text-left">Prog Details - {searchResult.id}</h5>
+                      <h5 className="text-white text-left">Prog Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit"></i>
@@ -240,7 +258,7 @@ class Search extends Component {
                 <Accordion.Toggle as={Card.Header} eventKey="4">
                   <Row className="card-header bg-primary">
                     <Col sm={8}>
-                      <h5 className="text-white text-left">Health Details - {searchResult.id}</h5>
+                      <h5 className="text-white text-left">Health Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit"></i>
@@ -285,10 +303,10 @@ class Search extends Component {
           </div>
         </div>
       </section>
-    );
-  }
+    </LoadingOverlay>
+  );
 }
 
 export default Search;
 
-// Search ID: 20201046
+// Search ID: 20201046 || 20160007

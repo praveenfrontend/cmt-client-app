@@ -9,37 +9,40 @@ import Overview from "./Overview";
 
 import FormStepper from "./FormStepper";
 import Axios from "axios";
-// import Spinner from "react-bootstrap/Spinner";
+import LoadingOverlay from "react-loading-overlay";
+import Loader from "react-loader-spinner";
+// import * as ReactBootStrap from "react-bootstrap";
 
 class IRF extends Component {
   state = {
     // Stepper
     step: 0,
+    loading: false,
 
     // Basic Details
-    firstname: "",
-    middlename: "",
-    lastname: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
     gender: "",
     age: "",
-    address: "",
+    streetAddress: "",
     city: "",
     province: "",
-    postal_code: "",
+    zipCode: "",
     country: "",
 
     // Contact Details
-    cell_no: "",
-    home_no: "",
-    work_no: "",
-    emergency_cntName: "",
-    emergency_contNo: "",
-    email_id: "",
-    first_language: "",
-    refer_through: "",
-    child_program: "",
+    phoneCell: "",
+    phoneHome: "",
+    phoneWork: "",
+    EmerContactName: "",
+    EmerContactNo: "",
+    email: "",
+    firstLang: "",
+    aboutUs: "",
+    ChildValue: "",
     childProgramAddRemove: true,
-    child_program_rows: [],
+    child_program: [],
 
     // Community Matters Program
     after_school_program: "",
@@ -89,7 +92,10 @@ class IRF extends Component {
       foreignTrainedHealthProfessionals: { isChecked: false, value: "Foreign Trained Health Professionals" }
     },
 
-    staff: "",
+    staff: {
+      staffVolunteer: { isChecked: false, value: "Volunteer" },
+      staffCommunityAssistant: { isChecked: false, value: "Community Assistant" }
+    },
 
     neighbourhood_net: {
       neighbourhoodCitizenship: { isChecked: false, value: "Citizenship" },
@@ -97,53 +103,53 @@ class IRF extends Component {
       neighbourhoodOther: { isChecked: false, value: "Other" }
     },
 
-    others: "",
-    agent_notes: "",
+    Others: "",
+    notes: "",
 
     // Member Details
-    ques_1: "",
-    ques_2: "",
-    ques_3: "",
-    ques_4: "",
-    ques_5: "",
-    ques_6: "",
-    ques_7: "",
-    family_doctor: "",
-    walkin_clinic: "",
-    emergency_room: "",
-    hospital: "",
-    ques_8: "",
-    ques_9: "",
-    ques_10: ""
+    myHealth: "",
+    myLifeSatisfaction: "",
+    mySocialNetwork: "",
+    myCommunityNetwork: "",
+    myStressLevel: "",
+    myHealthIssues: "",
+    myFamilyDoctor: "",
+    myVisitToFamilyDoctor: "",
+    myVisitToClinic: "",
+    myVisitToEmergency: "",
+    myVisitToHospital: "",
+    myDiseaseAwareness: "",
+    myCmtProgramAwareness: "",
+    myPhysicalActiveness: ""
   };
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    const { firstname, middlename, lastname, gender, age, address, city, province, postal_code, country, cell_no, home_no, work_no, emergency_cntName, emergency_contNo, email_id, first_language, refer_through, /* child_program, */ after_school_program, /* health, employment, */ staff, /* neighbourhood_net, */ others, agent_notes, ques_1, ques_2, ques_3, ques_4, ques_5, ques_6, ques_7, family_doctor, walkin_clinic, emergency_room, hospital, ques_8, ques_9, ques_10 } = this.state;
+    const { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, health, employment, staff, neighbourhood_net, Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness } = this.state;
 
-    const child_program = "2";
-    const health = "NA";
-    const employment = "IT";
-    const neighbourhood_net = "NA";
-
-    /*  const testhealth = this.state.health;
-    const testemployment = this.state.employment;
-    const testneighbourhood_net = this.state.neighbourhood_net;
-
-    console.log("HEALTH: " + testhealth.healthZumba.value);
-    console.log("EMPLOYMENT: " + testemployment);
-    console.log("NEIGHBOUR: " + testneighbourhood_net); */
+    const userprograms = {
+      health,
+      employment,
+      neighbourhood_net,
+      staff
+    };
 
     try {
-      const response = await Axios.post("/irf_register", { firstname, middlename, lastname, gender, age, address, city, province, postal_code, country, cell_no, home_no, work_no, emergency_cntName, emergency_contNo, email_id, first_language, refer_through, child_program, after_school_program, health, employment, staff, neighbourhood_net, others, agent_notes, ques_1, ques_2, ques_3, ques_4, ques_5, ques_6, ques_7, family_doctor, walkin_clinic, emergency_room, hospital, ques_8, ques_9, ques_10 });
-      if (response.data) {
-        alert("Submit Successfull.");
+      this.setState({ loading: true });
+      const response = await Axios.post("/irf_register", { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, userprograms, Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness });
+
+      if (response.data.success === true) {
+        const regId = response.data.id;
+        console.log("regId: ", regId);
         console.log(response.data);
+        this.setState({ loading: false });
+        alert("Your Registration ID is: " + regId);
       }
     } catch (e) {
       alert("Error Message. Please fill all fields.");
       console.log(e.response.data);
+      this.setState({ loading: false });
     }
   };
 
@@ -156,39 +162,39 @@ class IRF extends Component {
       childBirthDate: ""
     };
     this.setState({
-      child_program_rows: [...this.state.child_program_rows, item]
+      child_program: [...this.state.child_program, item]
     });
   };
 
   removeChild = e => {
     e.preventDefault();
 
-    const child_program_rows = this.state.child_program_rows;
-    let filtered_child_program_rows = [];
+    const child_program = this.state.child_program;
+    let filtered_child_program = [];
     let checked = false;
 
-    child_program_rows.map((item, idx) => (item.isChecked ? (checked = true) : null));
+    child_program.map((item, idx) => (item.isChecked ? (checked = true) : null));
 
     if (!checked) {
       alert("Atleast 1 Child row has to be selected to remove!");
       return;
     }
 
-    filtered_child_program_rows = child_program_rows.filter(item => !item.isChecked);
+    filtered_child_program = child_program.filter(item => !item.isChecked);
 
     this.setState({
-      child_program_rows: filtered_child_program_rows
+      child_program: filtered_child_program
     });
   };
 
   handleChangeChildProgram = idx => e => {
     const { name, value } = e.target;
-    const child_program_rows = [...this.state.child_program_rows];
+    const child_program = [...this.state.child_program];
 
-    let isChecked = child_program_rows[idx].isChecked;
-    let childFirstName = child_program_rows[idx].childFirstName;
-    let childLastName = child_program_rows[idx].childLastName;
-    let childBirthDate = child_program_rows[idx].childBirthDate;
+    let isChecked = child_program[idx].isChecked;
+    let childFirstName = child_program[idx].childFirstName;
+    let childLastName = child_program[idx].childLastName;
+    let childBirthDate = child_program[idx].childBirthDate;
 
     if (parseInt(name) === idx) {
       if (isChecked === false) {
@@ -207,7 +213,7 @@ class IRF extends Component {
       childBirthDate = value;
     }
 
-    child_program_rows[idx] = {
+    child_program[idx] = {
       isChecked: isChecked,
       childFirstName: childFirstName,
       childLastName: childLastName,
@@ -215,12 +221,12 @@ class IRF extends Component {
     };
 
     this.setState({
-      child_program_rows: child_program_rows
+      child_program: child_program
     });
   };
 
   inputChangeChildProgram = input => e => {
-    console.log("childprogram.............");
+    console.log("childprogram.............", input);
     if (e.target.value === "No") {
       // eslint-disable-next-line no-restricted-globals
       const result = confirm("Are you sure you want to delete all your child information?");
@@ -228,7 +234,7 @@ class IRF extends Component {
         this.setState({
           [input]: e.target.value,
           childProgramAddRemove: false,
-          child_program_rows: []
+          child_program: []
         });
       }
     } else {
@@ -290,52 +296,16 @@ class IRF extends Component {
     const steps = this.getSteps();
 
     return (
-      <section className="forms">
-        <div className="container-fluid">
-          <FormStepper step={step} steps={steps} />
-          {this.getStepContent(step, values)}
-          {/* <Spinner animation="border" /> */}
-        </div>
-      </section>
+      <LoadingOverlay active={this.state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
+        <section className="forms">
+          <div className="container-fluid">
+            <FormStepper step={step} steps={steps} />
+            {this.getStepContent(step, values)}
+          </div>
+        </section>
+      </LoadingOverlay>
     );
   }
 }
 
 export default IRF;
-
-/* const firstname = "Arun";
-    const lastname = "Arun";
-    const middlename = "arun";
-    const gender = "male";
-    const age = "32";
-    const address = "Palay";
-    const city = "Tvl";
-    const province = "TN";
-    const postal_code = "627002";
-    const country = "IND";
-    const home_no = "04622";
-    const cell_no = "1234567890";
-    const work_no = "123456789";
-    const emergency_cntName = "Arun";
-    const emergency_contNo = "0123456789";
-    const email_id = "pppp@gmail.com";
-    const first_language = "TAMIL";
-    const refer_through = "WEB";
-    const after_school_program = "YES";
-    const staff = "NA";
-    const agent_notes = "NIL";
-    const others = "NA";
-    const ques_1 = "Avg";
-    const ques_2 = "Avg";
-    const ques_3 = "Avg";
-    const ques_4 = "Avg";
-    const ques_5 = "Avg";
-    const ques_6 = "Avg";
-    const ques_7 = "Avg";
-    const family_doctor = "NA";
-    const walkin_clinic = "NA";
-    const emergency_room = "NA";
-    const hospital = "NA";
-    const ques_8 = "Avg";
-    const ques_9 = "Avg";
-    const ques_10 = "Avg"; */

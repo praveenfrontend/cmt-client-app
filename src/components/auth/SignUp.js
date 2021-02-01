@@ -23,17 +23,17 @@ function SignUp() {
       hasErrors: false,
       message: ""
     },
-    firstname: {
+    firstName: {
       value: "",
       hasErrors: false,
       message: ""
     },
-    middlename: {
+    middleName: {
       value: "",
       hasErrors: false,
       message: ""
     },
-    lastname: {
+    lastName: {
       value: "",
       hasErrors: false,
       message: ""
@@ -43,7 +43,7 @@ function SignUp() {
       hasErrors: false,
       message: ""
     },
-    birthdate: {
+    birthDate: {
       value: "",
       hasErrors: false,
       message: ""
@@ -73,7 +73,7 @@ function SignUp() {
       hasErrors: false,
       message: ""
     },
-    roletype: {
+    roleType: {
       value: "",
       hasErrors: false,
       message: ""
@@ -119,28 +119,28 @@ function SignUp() {
           draft.password.message = "Password must be atleast 6 characters.";
         }
         return;
-      case "firstnameImmediately":
-        draft.firstname.hasErrors = false;
-        draft.firstname.value = action.value;
-        if (!/^[a-zA-Z]+$/.test(draft.firstname.value)) {
-          draft.firstname.hasErrors = true;
-          draft.firstname.message = "Please enter only alphabets without space.";
+      case "firstNameImmediately":
+        draft.firstName.hasErrors = false;
+        draft.firstName.value = action.value;
+        if (!/^[a-zA-Z]+$/.test(draft.firstName.value)) {
+          draft.firstName.hasErrors = true;
+          draft.firstName.message = "Please enter only alphabets without space.";
         }
         return;
-      case "middlenameImmediately":
-        draft.middlename.hasErrors = false;
-        draft.middlename.value = action.value;
-        if (!/^[a-zA-Z]+$/.test(draft.middlename.value)) {
-          draft.middlename.hasErrors = true;
-          draft.middlename.message = "Please enter only alphabets without space.";
+      case "middleNameImmediately":
+        draft.middleName.hasErrors = false;
+        draft.middleName.value = action.value;
+        if (!/^[a-zA-Z]+$/.test(draft.middleName.value)) {
+          draft.middleName.hasErrors = true;
+          draft.middleName.message = "Please enter only alphabets without space.";
         }
         return;
-      case "lastnameImmediately":
-        draft.lastname.hasErrors = false;
-        draft.lastname.value = action.value;
-        if (!/^[a-zA-Z]+$/.test(draft.lastname.value)) {
-          draft.lastname.hasErrors = true;
-          draft.lastname.message = "Please enter only alphabets without space.";
+      case "lastNameImmediately":
+        draft.lastName.hasErrors = false;
+        draft.lastName.value = action.value;
+        if (!/^[a-zA-Z]+$/.test(draft.lastName.value)) {
+          draft.lastName.hasErrors = true;
+          draft.lastName.message = "Please enter only alphabets without space.";
         }
         return;
       case "phoneImmediately":
@@ -153,14 +153,14 @@ function SignUp() {
           draft.phone.message = "Please enter 10 digits phone number.";
         }
         return;
-      case "birthdateImmediately":
-        draft.birthdate.hasErrors = false;
-        draft.birthdate.value = action.value;
+      case "birthDateImmediately":
+        draft.birthDate.hasErrors = false;
+        draft.birthDate.value = action.value;
         return;
-      case "birthdateAfterDelay":
-        if (!/^(0[1-9]|[12][0-9]|3[01])[\\/](0[1-9]|1[012])[\\/](19|20)\d\d$/.test(draft.birthdate.value)) {
-          draft.birthdate.hasErrors = true;
-          draft.birthdate.message = "Please enter date of birth in DD/MM/YYYY format.";
+      case "birthDateAfterDelay":
+        if (!/^(0[1-9]|[12][0-9]|3[01])[\\/](0[1-9]|1[012])[\\/](19|20)\d\d$/.test(draft.birthDate.value)) {
+          draft.birthDate.hasErrors = true;
+          draft.birthDate.message = "Please enter date of birth in DD/MM/YYYY format.";
         }
         return;
       case "cityImmediately":
@@ -205,20 +205,20 @@ function SignUp() {
           draft.gender.message = "Please select the gender";
         }
         return;
-      case "roletypeImmediately":
+      case "roleTypeImmediately":
         console.log("Inside role type");
-        draft.roletype.hasErrors = false;
-        draft.roletype.value = action.value;
-        console.log("role type value:" + draft.roletype.value);
-        if (draft.roletype.value === "") {
+        draft.roleType.hasErrors = false;
+        draft.roleType.value = action.value;
+        console.log("role type value:" + draft.roleType.value);
+        if (draft.roleType.value === "") {
           console.log("role type has errorssssssssssssss............");
-          draft.roletype.hasErrors = true;
-          draft.roletype.message = "Please select the Role Type";
+          draft.roleType.hasErrors = true;
+          draft.roleType.message = "Please select the Role Type";
         }
         return;
       case "submitForm":
         console.log("inside submitform");
-        if (/* !draft.username.hasErrors && draft.username.isUnique && */ /* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors && !draft.firstname.hasErrors && !draft.middlename.hasErrors && !draft.lastname.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthdate.hasErrors && !draft.gender.hasErrors && !draft.roletype.hasErrors) {
+        if (/* !draft.username.hasErrors && draft.username.isUnique && */ /* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
           console.log("inside submitform error count");
           draft.submitCount++;
         }
@@ -250,11 +250,11 @@ function SignUp() {
   }, [dispatch, state.phone.value]);
 
   useEffect(() => {
-    if (state.birthdate.value) {
-      const delay = setTimeout(() => dispatch({ type: "birthdateAfterDelay" }), 800);
+    if (state.birthDate.value) {
+      const delay = setTimeout(() => dispatch({ type: "birthDateAfterDelay" }), 800);
       return () => clearTimeout(delay);
     }
-  }, [dispatch, state.birthdate.value]);
+  }, [dispatch, state.birthDate.value]);
 
   useEffect(() => {
     if (state.email.checkCount) {
@@ -281,24 +281,24 @@ function SignUp() {
       const ourRequest = Axios.CancelToken.source();
       async function fetchResults() {
         try {
-          console.log("role type: " + state.roletype);
+          console.log("role type: " + state.roleType);
           console.log("role type: " + state.gender);
           const response = await Axios.post(
             "/register",
             {
               email: state.email.value,
               password: state.password.value,
-              firstname: state.firstname.value,
-              middlename: state.middlename.value,
-              lastname: state.lastname.value,
+              firstName: state.firstName.value,
+              middleName: state.middleName.value,
+              lastName: state.lastName.value,
               phone: state.phone.value,
-              birthdate: state.birthdate.value,
+              birthDate: state.birthDate.value,
               country: state.country.value,
               province: state.province.value,
               city: state.city.value,
               postal: state.postal.value,
               gender: state.gender.value,
-              roletype: state.roletype.value
+              roleType: state.roleType.value
             },
             { cancelToken: ourRequest.token }
           );
@@ -316,25 +316,25 @@ function SignUp() {
       fetchResults();
       return () => ourRequest.cancel();
     }
-  }, [dispatch, state.email.value, state.password.value, state.submitCount, state.roletype, appDispatch]);
+  }, [dispatch, state.email.value, state.password.value, state.submitCount, state.roleType, appDispatch]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch({ type: "firstnameImmediately", value: state.firstname.value });
-    dispatch({ type: "middlenameImmediately", value: state.middlename.value });
-    dispatch({ type: "lastnameImmediately", value: state.lastname.value });
+    dispatch({ type: "firstNameImmediately", value: state.firstName.value });
+    dispatch({ type: "middleNameImmediately", value: state.middleName.value });
+    dispatch({ type: "lastNameImmediately", value: state.lastName.value });
     dispatch({ type: "emailImmediately", value: state.email.value });
     dispatch({ type: "emailAfterDelay", value: state.email.value, noRequest: true });
     dispatch({ type: "passwordImmediately", value: state.password.value });
     dispatch({ type: "passwordAfterDelay", value: state.password.value });
     dispatch({ type: "phoneImmediately", value: state.phone.value });
-    dispatch({ type: "birthdateImmediately", value: state.birthdate.value });
+    dispatch({ type: "birthDateImmediately", value: state.birthDate.value });
     dispatch({ type: "cityImmediately", value: state.city.value });
     dispatch({ type: "provinceImmediately", value: state.province.value });
     dispatch({ type: "postalImmediately", value: state.postal.value });
     dispatch({ type: "countryImmediately", value: state.country.value });
     dispatch({ type: "genderImmediately", value: state.gender.value });
-    dispatch({ type: "roletypeImmediately", value: state.roletype.value });
+    dispatch({ type: "roleTypeImmediately", value: state.roleType.value });
     dispatch({ type: "submitForm" });
   }
 
@@ -353,13 +353,13 @@ function SignUp() {
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={e => dispatch({ type: "firstnameImmediately", value: e.target.value })} message={state.firstname.message} inputField={state.firstname.hasErrors} />
+                  <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={e => dispatch({ type: "firstNameImmediately", value: e.target.value })} message={state.firstName.message} inputField={state.firstName.hasErrors} />
                 </div>
                 <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={e => dispatch({ type: "middlenameImmediately", value: e.target.value })} message={state.middlename.message} inputField={state.middlename.hasErrors} />
+                  <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={e => dispatch({ type: "middleNameImmediately", value: e.target.value })} message={state.middleName.message} inputField={state.middleName.hasErrors} />
                 </div>
                 <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={e => dispatch({ type: "lastnameImmediately", value: e.target.value })} message={state.lastname.message} inputField={state.lastname.hasErrors} />
+                  <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={e => dispatch({ type: "lastNameImmediately", value: e.target.value })} message={state.lastName.message} inputField={state.lastName.hasErrors} />
                 </div>
               </div>
 
@@ -377,7 +377,7 @@ function SignUp() {
                   <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
                 </div>
                 <div className="col-md-6">
-                  <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthdateImmediately", value: e.target.value })} message={state.birthdate.message} inputField={state.birthdate.hasErrors} />
+                  <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
                 </div>
               </div>
 
@@ -422,17 +422,17 @@ function SignUp() {
                     </label>
                     <div className="btn-group btn-group-dispose" data-toggle="buttons">
                       <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="roletype" id="user" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> User
+                        <input type="radio" name="roleType" id="user" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
                       </label>
                       <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="roletype" id="agent" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> Agent
+                        <input type="radio" name="roleType" id="agent" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Agent
                       </label>
                       <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="roletype" id="admin" onChange={e => dispatch({ type: "roletypeImmediately", value: e.target.id })} /> Admin
+                        <input type="radio" name="roleType" id="admin" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Admin
                       </label>
                     </div>
-                    <CSSTransition in={state.roletype.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                      <div className="alert alert-danger small liveValidateMessage">{state.roletype.message}</div>
+                    <CSSTransition in={state.roleType.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.roleType.message}</div>
                     </CSSTransition>
                   </div>
                 </div>

@@ -1,10 +1,10 @@
 import React from "react";
 
-import FormInput from "../../FormFields/FormInput";
-import Page from "../../common/Page";
-import FormRadio from "../../FormFields/FormRadio";
+import FormInput from "../../../FormFields/FormInput";
+import Page from "../../../common/Page";
+import FormRadio from "../../../FormFields/FormRadio";
 
-function BasicDetails({ values, inputChange, nextStep, page }) {
+function EditBasicDetails({ values, inputChange }) {
   return (
     <div>
       <Page title="Basic Details">
@@ -64,21 +64,9 @@ function BasicDetails({ values, inputChange, nextStep, page }) {
             <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={inputChange("country")} value={values.country} />
           </div>
         </div>
-        {page === "IRF" ? (
-          <>
-            <br />
-            <div className="row justify-content-center">
-              <div className="col col-sm-4 col-md-3 col-lg-2">
-                <button className="btn btn-block btn-primary" onClick={nextStep}>
-                  Continue
-                </button>
-              </div>
-            </div>
-          </>
-        ) : null}
       </Page>
     </div>
   );
 }
 
-export default BasicDetails;
+export default EditBasicDetails;

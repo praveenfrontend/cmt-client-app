@@ -9,31 +9,31 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
     <Page title="Contact Details">
       <div className="row">
         <div className="col-md-4">
-          <FormInput icon="fas fa-mobile" type="number" placeholder="Mobile Phone" changeHandler={inputChange("cell_no")} value={values.cell_no} />
+          <FormInput icon="fas fa-mobile" type="number" placeholder="Mobile Phone" changeHandler={inputChange("phoneCell")} value={values.phoneCell} />
         </div>
         <div className="col-md-4">
-          <FormInput icon="fas fa-phone" type="number" placeholder="Home Phone" changeHandler={inputChange("home_no")} value={values.home_no} />
+          <FormInput icon="fas fa-phone" type="number" placeholder="Home Phone" changeHandler={inputChange("phoneHome")} value={values.phoneHome} />
         </div>
         <div className="col-md-4">
-          <FormInput icon="fas fa-phone" type="number" placeholder="Work Phone" changeHandler={inputChange("work_no")} value={values.work_no} />
+          <FormInput icon="fas fa-phone" type="number" placeholder="Work Phone" changeHandler={inputChange("phoneWork")} value={values.phoneWork} />
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm-12 col-md-6 col-lg-8">
-          <FormInput icon="fas fa-user" type="text" placeholder="Emergency Contact Name" changeHandler={inputChange("emergency_cntName")} value={values.emergency_cntName} />
+          <FormInput icon="fas fa-user" type="text" placeholder="Emergency Contact Name" changeHandler={inputChange("EmerContactName")} value={values.EmerContactName} />
         </div>
         <div className="col-sm-12 col-md-6 col-lg-4">
-          <FormInput icon="fas fa-phone" type="number" placeholder="Emergency Contact No." changeHandler={inputChange("emergency_contNo")} value={values.emergency_contNo} />
+          <FormInput icon="fas fa-phone" type="number" placeholder="Emergency Contact No." changeHandler={inputChange("EmerContactNo")} value={values.EmerContactNo} />
         </div>
       </div>
 
       <div className="row">
         <div className="col-sm-12 col-md-6 col-lg-8">
-          <FormInput icon="fas fa-envelope" type="text" placeholder="Email" changeHandler={inputChange("email_id")} value={values.email_id} />
+          <FormInput icon="fas fa-envelope" type="text" placeholder="Email" changeHandler={inputChange("email")} value={values.email} />
         </div>
         <div className="col-sm-12 col-md-6 col-lg-4">
-          <FormInput icon="fas fa-language" type="text" placeholder="First Language" changeHandler={inputChange("first_language")} value={values.first_language} />
+          <FormInput icon="fas fa-language" type="text" placeholder="First Language" changeHandler={inputChange("firstLang")} value={values.firstLang} />
         </div>
       </div>
 
@@ -43,12 +43,12 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
             <label className="text-muted mr-2">How did you learn about us?</label>
           </div>
           <div className="col">
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxFriend" inputName="refer_through" inputValue="Friend" inputLabel="Friend" checkedValue={values.refer_through} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxWebsite" inputName="refer_through" inputValue="Website" inputLabel="Website" checkedValue={values.refer_through} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxNegibhour" inputName="refer_through" inputValue="Neighbhour" inputLabel="Neighbhour" checkedValue={values.refer_through} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxFlyer" inputName="refer_through" inputValue="Flyer" inputLabel="Flyer" checkedValue={values.refer_through} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxAgency" inputName="refer_through" inputValue="Agency" inputLabel="Agency" checkedValue={values.refer_through} />
-            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("refer_through")} inputId="checkboxOther" inputName="refer_through" inputValue="Other" inputLabel="Other" checkedValue={values.refer_through} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxFriend" inputName="aboutUs" inputValue="Friend" inputLabel="Friend" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxWebsite" inputName="aboutUs" inputValue="Website" inputLabel="Website" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxNegibhour" inputName="aboutUs" inputValue="Neighbhour" inputLabel="Neighbhour" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxFlyer" inputName="aboutUs" inputValue="Flyer" inputLabel="Flyer" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxAgency" inputName="aboutUs" inputValue="Agency" inputLabel="Agency" checkedValue={values.aboutUs} />
+            <FormRadio classNameValue="col-sm-5 col-md-3" changeHandler={inputChange("aboutUs")} inputId="checkboxOther" inputName="aboutUs" inputValue="Other" inputLabel="Other" checkedValue={values.aboutUs} />
           </div>
         </div>
       </div>
@@ -58,8 +58,8 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
           <label className="text-muted mr-2">Information if Registration for a Child's program</label>
         </div>
         <div className="col-md-3 col-lg-6">
-          <FormRadio classNameValue="" changeHandler={inputChangeChildProgram("child_program")} inputId="childYes" inputName="child_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.child_program} />
-          <FormRadio classNameValue="" changeHandler={inputChangeChildProgram("child_program")} inputId="childNo" inputName="child_program" inputValue="No" inputLabel="No" checkedValue={values.child_program} />
+          <FormRadio classNameValue="" changeHandler={inputChangeChildProgram("ChildValue")} inputId="childYes" inputName="ChildValue" inputValue="Yes" inputLabel="Yes" checkedValue={values.ChildValue} />
+          <FormRadio classNameValue="" changeHandler={inputChangeChildProgram("ChildValue")} inputId="childNo" inputName="ChildValue" inputValue="No" inputLabel="No" checkedValue={values.ChildValue} />
         </div>
       </div>
 
@@ -78,7 +78,7 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
         </div>
       ) : null}
 
-      {values.childProgramAddRemove && values.child_program_rows.length ? (
+      {values.childProgramAddRemove && values.child_program.length ? (
         <div className="card">
           <div className="card-body">
             <table className="table">
@@ -91,17 +91,17 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
                 </tr>
               </thead>
               <tbody>
-                {values.child_program_rows.map((item, idx) => (
+                {values.child_program.map((item, idx) => (
                   <tr id="addr0" key={idx}>
-                    <td>{<FormCheckbox classNameValue="col col-sm-4 col-md-3 col-lg-2" changeHandler={handleChangeChildProgram(idx)} inputId={idx} inputValue={"child_program" + idx} checkedValue={values.child_program_rows[idx].isChecked} />}</td>
+                    <td>{<FormCheckbox classNameValue="col col-sm-4 col-md-3 col-lg-2" changeHandler={handleChangeChildProgram(idx)} inputId={idx} inputValue={"child_program" + idx} checkedValue={values.child_program[idx].isChecked} />}</td>
                     <td>
-                      <FormInput icon="fas fa-child" type="text" placeholder="Child First Name" changeHandler={handleChangeChildProgram(idx)} value={values.child_program_rows[idx].childFirstName} name="childFirstName" />
+                      <FormInput icon="fas fa-child" type="text" placeholder="Child First Name" changeHandler={handleChangeChildProgram(idx)} value={values.child_program[idx].childFirstName} name="childFirstName" />
                     </td>
                     <td>
-                      <FormInput icon="fas fa-child" type="text" placeholder="Child Last Name" changeHandler={handleChangeChildProgram(idx)} value={values.child_program_rows[idx].childLastName} name="childLastName" />
+                      <FormInput icon="fas fa-child" type="text" placeholder="Child Last Name" changeHandler={handleChangeChildProgram(idx)} value={values.child_program[idx].childLastName} name="childLastName" />
                     </td>
                     <td>
-                      <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={handleChangeChildProgram(idx)} value={values.child_program_rows[idx].childBirthDate} name="childBirthDate" />
+                      <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={handleChangeChildProgram(idx)} value={values.child_program[idx].childBirthDate} name="childBirthDate" />
                     </td>
                   </tr>
                 ))}

@@ -22,6 +22,7 @@ import GuardedRoute from "./components/auth/GuardedRoute";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import { useState } from "react";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
@@ -36,7 +37,8 @@ function App(props) {
       token: localStorage.getItem("communityMattersToken"),
       username: localStorage.getItem("communityMattersUsername")
     },
-    isToggled: true
+    isToggled: true,
+    userDetails: {}
   };
 
   // Immer Code
@@ -59,6 +61,9 @@ function App(props) {
         return;
       case "toggleMenu":
         draft.isToggled = action.value;
+        return;
+      case "userDetails":
+        draft.userDetails = action.value;
         return;
     }
   }
@@ -106,7 +111,7 @@ function App(props) {
               <GuardedRoute path="/profile" component={Profile} auth={state.loggedIn} />
               <GuardedRoute path="/reports" component={Reports} auth={state.loggedIn} />
               <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />
-              <GuardedRoute path="/editUserDetails" component={EditUserDetails} auth={state.loggedIn} />
+              <GuardedRoute path="/editUserDetails" component={EditUserDetails} auth={state.loggedIn} userDetails={state.userDetails} />
               <GuardedRoute path="/addGoal" component={AddGoal} auth={state.loggedIn} />
             </Switch>
           </div>

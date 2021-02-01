@@ -87,8 +87,8 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
           <label className="text-muted">Staff:</label>
         </div>
         <div className="col-sm-7 col-lg-4">
-          <FormRadio changeHandler={inputChange("staff")} inputId="staffVolunteer" inputName="staff" inputValue="Volunteer" inputLabel="Volunteer" checkedValue={values.staff} />
-          <FormRadio changeHandler={inputChange("staff")} inputId="staffCommunityAssistant" inputName="staff" inputValue="Community Assistant" inputLabel="Community Assistant" checkedValue={values.staff} />
+          <FormCheckbox /* classNameValue="col col-sm-3" */ changeHandler={inputCheckBoxHandler("staff")} inputId="staffVolunteer" inputValue="staffVolunteer" inputLabel="Volunteer" checkedValue={values.staff.staffVolunteer.isChecked} />
+          <FormCheckbox /* classNameValue="col col-sm-3" */ changeHandler={inputCheckBoxHandler("staff")} inputId="staffCommunityAssistant" inputValue="staffCommunityAssistant" inputLabel="Community Assistant" checkedValue={values.staff.staffCommunityAssistant.isChecked} />
         </div>
       </div>
 
@@ -109,13 +109,13 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         <label htmlFor="othersTextArea" className="text-muted">
           Others, if any
         </label>
-        <textarea className="form-control col col-md-6" id="others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("others")} value={values.others}></textarea>
+        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} value={values.Others}></textarea>
       </div>
       <div className="form-group">
-        <label htmlFor="agent_notes" className="text-muted">
+        <label htmlFor="notes" className="text-muted">
           Agent Notes
         </label>
-        <textarea className="form-control col col-md-10" id="agent_notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("agent_notes")} value={values.agent_notes}></textarea>
+        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")} value={values.notes}></textarea>
       </div>
 
       <br />

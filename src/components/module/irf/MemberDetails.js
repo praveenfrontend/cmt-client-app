@@ -20,11 +20,11 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_1")} inputId="ques_1_poor" inputName="ques_1" inputValue="Poor" inputLabel="Poor" checkedValue={values.ques_1} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_1")} inputId="ques_1_fair" inputName="ques_1" inputValue="Fair" inputLabel="Fair" checkedValue={values.ques_1} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_1")} inputId="ques_1_good" inputName="ques_1" inputValue="Good" inputLabel="Good" checkedValue={values.ques_1} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_1")} inputId="ques_1_very_good" inputName="ques_1" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.ques_1} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_1")} inputId="ques_1_excellent" inputName="ques_1" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.ques_1} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealth")} inputId="myHealth_poor" inputName="myHealth" inputValue="Poor" inputLabel="Poor" checkedValue={values.myHealth} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealth")} inputId="myHealth_fair" inputName="myHealth" inputValue="Fair" inputLabel="Fair" checkedValue={values.myHealth} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealth")} inputId="myHealth_good" inputName="myHealth" inputValue="Good" inputLabel="Good" checkedValue={values.myHealth} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealth")} inputId="myHealth_very_good" inputName="myHealth" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.myHealth} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealth")} inputId="myHealth_excellent" inputName="myHealth" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.myHealth} />
           </div>
         </div>
       </div>
@@ -37,11 +37,11 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_2")} inputId="ques_2_poor" inputName="ques_2" inputValue="Poor" inputLabel="Poor" checkedValue={values.ques_2} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_2")} inputId="ques_2_fair" inputName="ques_2" inputValue="Fair" inputLabel="Fair" checkedValue={values.ques_2} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_2")} inputId="ques_2_good" inputName="ques_2" inputValue="Good" inputLabel="Good" checkedValue={values.ques_2} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_2")} inputId="ques_2_very_good" inputName="ques_2" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.ques_2} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_2")} inputId="ques_2_excellent" inputName="ques_2" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.ques_2} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myLifeSatisfaction")} inputId="myLifeSatisfaction_poor" inputName="myLifeSatisfaction" inputValue="Poor" inputLabel="Poor" checkedValue={values.myLifeSatisfaction} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myLifeSatisfaction")} inputId="myLifeSatisfaction_fair" inputName="myLifeSatisfaction" inputValue="Fair" inputLabel="Fair" checkedValue={values.myLifeSatisfaction} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myLifeSatisfaction")} inputId="myLifeSatisfaction_good" inputName="myLifeSatisfaction" inputValue="Good" inputLabel="Good" checkedValue={values.myLifeSatisfaction} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myLifeSatisfaction")} inputId="myLifeSatisfaction_very_good" inputName="myLifeSatisfaction" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.myLifeSatisfaction} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myLifeSatisfaction")} inputId="myLifeSatisfaction_excellent" inputName="myLifeSatisfaction" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.myLifeSatisfaction} />
           </div>
         </div>
       </div>
@@ -54,11 +54,11 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_3")} inputId="ques_3_poor" inputName="ques_3" inputValue="Poor" inputLabel="Poor" checkedValue={values.ques_3} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_3")} inputId="ques_3_fair" inputName="ques_3" inputValue="Fair" inputLabel="Fair" checkedValue={values.ques_3} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_3")} inputId="ques_3_good" inputName="ques_3" inputValue="Good" inputLabel="Good" checkedValue={values.ques_3} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_3")} inputId="ques_3_very_good" inputName="ques_3" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.ques_3} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_3")} inputId="ques_3_excellent" inputName="ques_3" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.ques_3} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("mySocialNetwork")} inputId="mySocialNetwork_poor" inputName="mySocialNetwork" inputValue="Poor" inputLabel="Poor" checkedValue={values.mySocialNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("mySocialNetwork")} inputId="mySocialNetwork_fair" inputName="mySocialNetwork" inputValue="Fair" inputLabel="Fair" checkedValue={values.mySocialNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("mySocialNetwork")} inputId="mySocialNetwork_good" inputName="mySocialNetwork" inputValue="Good" inputLabel="Good" checkedValue={values.mySocialNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("mySocialNetwork")} inputId="mySocialNetwork_very_good" inputName="mySocialNetwork" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.mySocialNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("mySocialNetwork")} inputId="mySocialNetwork_excellent" inputName="mySocialNetwork" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.mySocialNetwork} />
           </div>
         </div>
       </div>
@@ -70,11 +70,11 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_4")} inputId="ques_4_poor" inputName="ques_4" inputValue="Poor" inputLabel="Poor" checkedValue={values.ques_4} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_4")} inputId="ques_4_fair" inputName="ques_4" inputValue="Fair" inputLabel="Fair" checkedValue={values.ques_4} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_4")} inputId="ques_4_good" inputName="ques_4" inputValue="Good" inputLabel="Good" checkedValue={values.ques_4} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_4")} inputId="ques_4_very_good" inputName="ques_4" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.ques_4} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_4")} inputId="ques_4_excellent" inputName="ques_4" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.ques_4} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCommunityNetwork")} inputId="myCommunityNetwork_poor" inputName="myCommunityNetwork" inputValue="Poor" inputLabel="Poor" checkedValue={values.myCommunityNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCommunityNetwork")} inputId="myCommunityNetwork_fair" inputName="myCommunityNetwork" inputValue="Fair" inputLabel="Fair" checkedValue={values.myCommunityNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCommunityNetwork")} inputId="myCommunityNetwork_good" inputName="myCommunityNetwork" inputValue="Good" inputLabel="Good" checkedValue={values.myCommunityNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCommunityNetwork")} inputId="myCommunityNetwork_very_good" inputName="myCommunityNetwork" inputValue="Very Good" inputLabel="Very Good" checkedValue={values.myCommunityNetwork} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCommunityNetwork")} inputId="myCommunityNetwork_excellent" inputName="myCommunityNetwork" inputValue="Excellent" inputLabel="Excellent" checkedValue={values.myCommunityNetwork} />
           </div>
         </div>
       </div>
@@ -86,11 +86,11 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_5")} inputId="ques_5_high" inputName="ques_5" inputValue="High" inputLabel="High" checkedValue={values.ques_5} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_5")} inputId="ques_5_lot" inputName="ques_5" inputValue="Quite a lot" inputLabel="Quite a lot" checkedValue={values.ques_5} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_5")} inputId="ques_5_depends" inputName="ques_5" inputValue="Depends" inputLabel="Depends" checkedValue={values.ques_5} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_5")} inputId="ques_5_manageable" inputName="ques_5" inputValue="Manageable" inputLabel="Manageable" checkedValue={values.ques_5} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_5")} inputId="ques_5_low" inputName="ques_5" inputValue="Low" inputLabel="Low" checkedValue={values.ques_5} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myStressLevel")} inputId="myStressLevel_high" inputName="myStressLevel" inputValue="High" inputLabel="High" checkedValue={values.myStressLevel} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myStressLevel")} inputId="myStressLevel_lot" inputName="myStressLevel" inputValue="Quite a lot" inputLabel="Quite a lot" checkedValue={values.myStressLevel} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myStressLevel")} inputId="myStressLevel_depends" inputName="myStressLevel" inputValue="Depends" inputLabel="Depends" checkedValue={values.myStressLevel} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myStressLevel")} inputId="myStressLevel_manageable" inputName="myStressLevel" inputValue="Manageable" inputLabel="Manageable" checkedValue={values.myStressLevel} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myStressLevel")} inputId="myStressLevel_low" inputName="myStressLevel" inputValue="Low" inputLabel="Low" checkedValue={values.myStressLevel} />
           </div>
         </div>
       </div>
@@ -102,11 +102,11 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_6")} inputId="ques_6_never" inputName="ques_6" inputValue="Never" inputLabel="Never" checkedValue={values.ques_6} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_6")} inputId="ques_6_urgent" inputName="ques_6" inputValue="When it is urgent" inputLabel="When it is urgent" checkedValue={values.ques_6} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_6")} inputId="ques_6_upset" inputName="ques_6" inputValue="If I am upset" inputLabel="If I am upset" checkedValue={values.ques_6} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_6")} inputId="ques_6_sometimes" inputName="ques_6" inputValue="Sometimes" inputLabel="Sometimes" checkedValue={values.ques_6} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_6")} inputId="ques_6_all_time" inputName="ques_6" inputValue="All the time" inputLabel="All the time" checkedValue={values.ques_6} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealthIssues")} inputId="myHealthIssues_never" inputName="myHealthIssues" inputValue="Never" inputLabel="Never" checkedValue={values.myHealthIssues} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealthIssues")} inputId="myHealthIssues_urgent" inputName="myHealthIssues" inputValue="When it is urgent" inputLabel="When it is urgent" checkedValue={values.myHealthIssues} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealthIssues")} inputId="myHealthIssues_upset" inputName="myHealthIssues" inputValue="If I am upset" inputLabel="If I am upset" checkedValue={values.myHealthIssues} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealthIssues")} inputId="myHealthIssues_sometimes" inputName="myHealthIssues" inputValue="Sometimes" inputLabel="Sometimes" checkedValue={values.myHealthIssues} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myHealthIssues")} inputId="myHealthIssues_all_time" inputName="myHealthIssues" inputValue="All the time" inputLabel="All the time" checkedValue={values.myHealthIssues} />
           </div>
         </div>
       </div>
@@ -119,8 +119,8 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_7")} inputId="ques_7_yes" inputName="ques_7" inputValue="Yes" inputLabel="Yes" checkedValue={values.ques_7} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_7")} inputId="ques_7_no" inputName="ques_7" inputValue="No" inputLabel="No" checkedValue={values.ques_7} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myFamilyDoctor")} inputId="myFamilyDoctor_yes" inputName="myFamilyDoctor" inputValue="Yes" inputLabel="Yes" checkedValue={values.myFamilyDoctor} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myFamilyDoctor")} inputId="myFamilyDoctor_no" inputName="myFamilyDoctor" inputValue="No" inputLabel="No" checkedValue={values.myFamilyDoctor} />
           </div>
         </div>
       </div>
@@ -133,16 +133,16 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col-sm-6 col-lg-3">
-            <FormInput icon="fas fa-hospital" type="number" placeholder="Family Doctor" changeHandler={inputChange("family_doctor")} value={values.family_doctor} />
+            <FormInput icon="fas fa-hospital" type="number" placeholder="Family Doctor" changeHandler={inputChange("myVisitToFamilyDoctor")} value={values.myVisitToFamilyDoctor} />
           </div>
           <div className="col-sm-6 col-lg-3">
-            <FormInput icon="fas fa-hospital" type="number" placeholder="Walk in Clinic" changeHandler={inputChange("walkin_clinic")} value={values.walkin_clinic} />
+            <FormInput icon="fas fa-hospital" type="number" placeholder="Walk in Clinic" changeHandler={inputChange("myVisitToClinic")} value={values.myVisitToClinic} />
           </div>
           <div className="col-sm-6 col-lg-3">
-            <FormInput icon="fas fa-hospital" type="number" placeholder="Emergency Room" changeHandler={inputChange("emergency_room")} value={values.emergency_room} />
+            <FormInput icon="fas fa-hospital" type="number" placeholder="Emergency Room" changeHandler={inputChange("myVisitToEmergency")} value={values.myVisitToEmergency} />
           </div>
           <div className="col-sm-6 col-lg-3">
-            <FormInput icon="fas fa-hospital" type="number" placeholder="Hospital" changeHandler={inputChange("hospital")} value={values.hospital} />
+            <FormInput icon="fas fa-hospital" type="number" placeholder="Hospital" changeHandler={inputChange("myVisitToHospital")} value={values.myVisitToHospital} />
           </div>
         </div>
       </div>
@@ -155,8 +155,8 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_8")} inputId="ques_8_yes" inputName="ques_8" inputValue="Yes" inputLabel="Yes" checkedValue={values.ques_8} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_8")} inputId="ques_8_no" inputName="ques_8" inputValue="No" inputLabel="No" checkedValue={values.ques_8} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myDiseaseAwareness")} inputId="myDiseaseAwareness_yes" inputName="myDiseaseAwareness" inputValue="Yes" inputLabel="Yes" checkedValue={values.myDiseaseAwareness} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myDiseaseAwareness")} inputId="myDiseaseAwareness_no" inputName="myDiseaseAwareness" inputValue="No" inputLabel="No" checkedValue={values.myDiseaseAwareness} />
           </div>
         </div>
       </div>
@@ -169,8 +169,8 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_9")} inputId="ques_9_yes" inputName="ques_9" inputValue="Yes" inputLabel="Yes" checkedValue={values.ques_9} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_9")} inputId="ques_9_no" inputName="ques_9" inputValue="No" inputLabel="No" checkedValue={values.ques_9} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCmtProgramAwareness")} inputId="myCmtProgramAwareness_yes" inputName="myCmtProgramAwareness" inputValue="Yes" inputLabel="Yes" checkedValue={values.myCmtProgramAwareness} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myCmtProgramAwareness")} inputId="myCmtProgramAwareness_no" inputName="myCmtProgramAwareness" inputValue="No" inputLabel="No" checkedValue={values.myCmtProgramAwareness} />
           </div>
         </div>
       </div>
@@ -183,8 +183,8 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
         </div>
         <div className="row">
           <div className="col">
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_10")} inputId="ques_10_yes" inputName="ques_10" inputValue="Yes" inputLabel="Yes" checkedValue={values.ques_10} />
-            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("ques_10")} inputId="ques_10_no" inputName="ques_10" inputValue="No" inputLabel="No" checkedValue={values.ques_10} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myPhysicalActiveness")} inputId="myPhysicalActiveness_yes" inputName="myPhysicalActiveness" inputValue="Yes" inputLabel="Yes" checkedValue={values.myPhysicalActiveness} />
+            <FormRadio classNameValue="col-md-2 col-lg-2 col-xl-2" changeHandler={inputChange("myPhysicalActiveness")} inputId="myPhysicalActiveness_no" inputName="myPhysicalActiveness" inputValue="No" inputLabel="No" checkedValue={values.myPhysicalActiveness} />
           </div>
         </div>
       </div>
