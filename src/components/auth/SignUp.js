@@ -1,14 +1,18 @@
 /* eslint-disable default-case */
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import FormInput from "../FormFields/FormInput";
 import FormButton from "../FormFields/FormButton";
 import DispatchContext from "../../DispatchContext";
 import { CSSTransition } from "react-transition-group";
+import LoadingOverlay from "react-loading-overlay";
+import Loader from "react-loader-spinner";
 
 function SignUp() {
   const appDispatch = useContext(DispatchContext);
+
+  const [loading, setLoading] = useState(false);
 
   const initialState = {
     email: {
@@ -280,6 +284,7 @@ function SignUp() {
     if (state.submitCount) {
       const ourRequest = Axios.CancelToken.source();
       async function fetchResults() {
+        setLoading(true);
         try {
           console.log("role type: " + state.roleType);
           console.log("role type: " + state.gender);
@@ -302,14 +307,17 @@ function SignUp() {
             },
             { cancelToken: ourRequest.token }
           );
-          console.log("User was successfully created");
+          setLoading(false);
+          alert("User was successfully created");
           console.log(response.data);
           appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });
         } catch (e) {
           console.log("There was a problem or the request was cancelled.");
-          console.log(e.response);
-          console.log(e.response.data);
-          console.log(e.response.data[1]);
+          // console.log(e.response);
+          // console.log(e.response.data);
+          alert(e.response.data);
+          // console.log(e.response.data[1]);
+          setLoading(false);
           dispatch({ type: "emailUniqueResults", value: e.response.data.email });
         }
       }
@@ -320,6 +328,7 @@ function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     dispatch({ type: "firstNameImmediately", value: state.firstName.value });
     dispatch({ type: "middleNameImmediately", value: state.middleName.value });
     dispatch({ type: "lastNameImmediately", value: state.lastName.value });
@@ -339,113 +348,115 @@ function SignUp() {
   }
 
   return (
-    <div className="page register-page">
-      <div className="container">
-        <div className="form-outer text-center d-flex align-items-center">
-          <div className="form-inner">
-            <div className="logo text-uppercase">
-              <span className="text-bold">Community</span>
-              <strong className="text-primary">Matters</strong>
+    <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
+      <div className="page register-page">
+        <div className="container">
+          <div className="form-outer text-center d-flex align-items-center">
+            <div className="form-inner">
+              <div className="logo text-uppercase">
+                <span className="text-bold">Community</span>
+                <strong className="text-primary">Matters</strong>
+              </div>
+              <p>
+                A Platform for your local community to share, collaborate, learn, inspire and progress. <br /> Promote your programs and connect with local community Participants in your area. <br /> Share program progress with your community participants, share views to improve programs, activities, and take control of community building.
+              </p>
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-md-4">
+                    <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={e => dispatch({ type: "firstNameImmediately", value: e.target.value })} message={state.firstName.message} inputField={state.firstName.hasErrors} />
+                  </div>
+                  <div className="col-md-4">
+                    <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={e => dispatch({ type: "middleNameImmediately", value: e.target.value })} message={state.middleName.message} inputField={state.middleName.hasErrors} />
+                  </div>
+                  <div className="col-md-4">
+                    <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={e => dispatch({ type: "lastNameImmediately", value: e.target.value })} message={state.lastName.message} inputField={state.lastName.hasErrors} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-8">
+                    <FormInput icon="fas fa-envelope" type="email" placeholder="Email Address" changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} />
+                  </div>
+                  <div className="col-md-4">
+                    <FormInput icon="fas fa-lock" type="password" placeholder="Password" changeHandler={e => dispatch({ type: "passwordImmediately", value: e.target.value })} message={state.password.message} inputField={state.password.hasErrors} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
+                  </div>
+                  <div className="col-md-6">
+                    <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-3">
+                    <FormInput icon="fas fa-address-card" type="text" placeholder="City" changeHandler={e => dispatch({ type: "cityImmediately", value: e.target.value })} message={state.city.message} inputField={state.city.hasErrors} />
+                  </div>
+                  <div className="col-md-3">
+                    <FormInput icon="fas fa-address-card" type="text" placeholder="Province" changeHandler={e => dispatch({ type: "provinceImmediately", value: e.target.value })} message={state.province.message} inputField={state.province.hasErrors} />
+                  </div>
+                  <div className="col-md-3">
+                    <FormInput icon="fas fa-address-card" type="text" placeholder="Postal code" changeHandler={e => dispatch({ type: "postalImmediately", value: e.target.value })} message={state.postal.message} inputField={state.postal.hasErrors} />
+                  </div>
+                  <div className="col-md-3">
+                    <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={e => dispatch({ type: "countryImmediately", value: e.target.value })} message={state.country.message} inputField={state.country.hasErrors} />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-5">
+                    <div className="form-group d-flex align-items-center">
+                      <label className="text-muted mr-2">
+                        <p className="text-bold">Gender</p>
+                      </label>
+                      <div className="btn-group btn-group-dispose" data-toggle="buttons">
+                        <label className="btn btn-outline-primary btn-sm">
+                          <input type="radio" name="gender" id="male" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Male
+                        </label>
+                        <label className="btn btn-outline-primary btn-sm">
+                          <input type="radio" name="gender" id="female" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
+                        </label>
+                      </div>
+                      <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                        <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
+                      </CSSTransition>
+                    </div>
+                  </div>
+                  <div className="col-md-7">
+                    <div className="form-group d-flex align-items-center ">
+                      <label className="text-muted mr-2">
+                        <p className="text-bold">Role Type</p>
+                      </label>
+                      <div className="btn-group btn-group-dispose" data-toggle="buttons">
+                        <label className="btn btn-outline-primary btn-sm">
+                          <input type="radio" name="roleType" id="user" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
+                        </label>
+                        <label className="btn btn-outline-primary btn-sm">
+                          <input type="radio" name="roleType" id="agent" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Agent
+                        </label>
+                        <label className="btn btn-outline-primary btn-sm">
+                          <input type="radio" name="roleType" id="admin" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Admin
+                        </label>
+                      </div>
+                      <CSSTransition in={state.roleType.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                        <div className="alert alert-danger small liveValidateMessage">{state.roleType.message}</div>
+                      </CSSTransition>
+                    </div>
+                  </div>
+                </div>
+
+                <input type="submit" value="Register" className="btn btn-primary btn-block col-md-4 col-sm-4 mx-auto" />
+              </form>
+              <small>Already have an account? </small>
+              <FormButton buttonValue="Login" />
             </div>
-            <p>
-              A Platform for your local community to share, collaborate, learn, inspire and progress. <br /> Promote your programs and connect with local community Participants in your area. <br /> Share program progress with your community participants, share views to improve programs, activities, and take control of community building.
-            </p>
-            <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="First Name" changeHandler={e => dispatch({ type: "firstNameImmediately", value: e.target.value })} message={state.firstName.message} inputField={state.firstName.hasErrors} />
-                </div>
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="Middle Name" changeHandler={e => dispatch({ type: "middleNameImmediately", value: e.target.value })} message={state.middleName.message} inputField={state.middleName.hasErrors} />
-                </div>
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-user" type="text" placeholder="Last Name" changeHandler={e => dispatch({ type: "lastNameImmediately", value: e.target.value })} message={state.lastName.message} inputField={state.lastName.hasErrors} />
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-8">
-                  <FormInput icon="fas fa-envelope" type="email" placeholder="Email Address" changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} />
-                </div>
-                <div className="col-md-4">
-                  <FormInput icon="fas fa-lock" type="password" placeholder="Password" changeHandler={e => dispatch({ type: "passwordImmediately", value: e.target.value })} message={state.password.message} inputField={state.password.hasErrors} />
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-6">
-                  <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
-                </div>
-                <div className="col-md-6">
-                  <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-3">
-                  <FormInput icon="fas fa-address-card" type="text" placeholder="City" changeHandler={e => dispatch({ type: "cityImmediately", value: e.target.value })} message={state.city.message} inputField={state.city.hasErrors} />
-                </div>
-                <div className="col-md-3">
-                  <FormInput icon="fas fa-address-card" type="text" placeholder="Province" changeHandler={e => dispatch({ type: "provinceImmediately", value: e.target.value })} message={state.province.message} inputField={state.province.hasErrors} />
-                </div>
-                <div className="col-md-3">
-                  <FormInput icon="fas fa-address-card" type="text" placeholder="Postal code" changeHandler={e => dispatch({ type: "postalImmediately", value: e.target.value })} message={state.postal.message} inputField={state.postal.hasErrors} />
-                </div>
-                <div className="col-md-3">
-                  <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={e => dispatch({ type: "countryImmediately", value: e.target.value })} message={state.country.message} inputField={state.country.hasErrors} />
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-5">
-                  <div className="form-group d-flex align-items-center">
-                    <label className="text-muted mr-2">
-                      <p className="text-bold">Gender</p>
-                    </label>
-                    <div className="btn-group btn-group-dispose" data-toggle="buttons">
-                      <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="gender" id="male" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Male
-                      </label>
-                      <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="gender" id="female" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
-                      </label>
-                    </div>
-                    <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                      <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
-                    </CSSTransition>
-                  </div>
-                </div>
-                <div className="col-md-7">
-                  <div className="form-group d-flex align-items-center ">
-                    <label className="text-muted mr-2">
-                      <p className="text-bold">Role Type</p>
-                    </label>
-                    <div className="btn-group btn-group-dispose" data-toggle="buttons">
-                      <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="roleType" id="user" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
-                      </label>
-                      <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="roleType" id="agent" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Agent
-                      </label>
-                      <label className="btn btn-outline-primary btn-sm">
-                        <input type="radio" name="roleType" id="admin" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Admin
-                      </label>
-                    </div>
-                    <CSSTransition in={state.roleType.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                      <div className="alert alert-danger small liveValidateMessage">{state.roleType.message}</div>
-                    </CSSTransition>
-                  </div>
-                </div>
-              </div>
-
-              <input type="submit" value="Register" className="btn btn-primary btn-block col-md-4 col-sm-4 mx-auto" />
-            </form>
-            <small>Already have an account? </small>
-            <FormButton buttonValue="Login" />
           </div>
         </div>
       </div>
-    </div>
+    </LoadingOverlay>
   );
 }
 

@@ -1,6 +1,9 @@
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import LoadingOverlay from "react-loading-overlay";
+import Loader from "react-loader-spinner";
+
 import FormInput from "../FormFields/FormInput";
 import FormButton from "../FormFields/FormButton";
 import DispatchContext from "../../DispatchContext";
@@ -8,24 +11,31 @@ import DispatchContext from "../../DispatchContext";
 function SignIn() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
   const appDispatch = useContext(DispatchContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    // setLoading(true);
+    appDispatch({ type: "loading", value: true });
+
     try {
       const response = await Axios.post("/login", { email, password });
+      setLoading(false);
       if (response.data) {
-        // console.log(response.data);
         console.log(email, password);
         appDispatch({ type: "login", data: response.data });
+        appDispatch({ type: "loading", value: false });
         appDispatch({ type: "flashMessage", value: "You have successfully logged in." });
       } else {
-        console.log("Incorrect username or password.");
+        alert("Incorrect username or password.");
         appDispatch({ type: "flashMessage", value: "Invalid login credentials." });
       }
     } catch (e) {
       console.log(e.response.data);
+      // setLoading(false);
+      appDispatch({ type: "loading", value: false });
     }
   }
 
