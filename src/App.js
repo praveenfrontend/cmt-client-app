@@ -28,8 +28,8 @@ import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
-// Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
+// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
 function App(props) {
   const initialState = {

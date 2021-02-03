@@ -33,9 +33,12 @@ function Search() {
 
     try {
       const searchInput = registrationId || emailId;
-      const response = await Axios.get(`/irf_search/${searchInput}`);
+      // const response = await Axios.get(`/irf_search/${searchInput}`);
+      const result = await fetch(`/irf_search/${searchInput}`);
+      const response = await result.json();
+
       setLoading(false);
-      console.log(response.data);
+      console.log(response);
 
       if (response.data.success === true) {
         setSearchData(response.data.data);
