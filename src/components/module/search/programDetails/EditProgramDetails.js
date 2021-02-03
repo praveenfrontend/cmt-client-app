@@ -162,7 +162,7 @@ class EditProgramDetails extends Component {
 
               <div className="row justify-content-center">
                 <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/" onClick={this.handleSubmit}>
+                  <Link to="/search" /* onClick={this.handleSubmit} */>
                     <button className="btn btn-block btn-success">Submit</button>
                   </Link>
                 </div>
