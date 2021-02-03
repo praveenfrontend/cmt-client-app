@@ -1,13 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 
 import Page from "../../../common/Page";
 import Container from "../../../common/Container";
 import FormInput from "../../../FormFields/FormInput";
 import FormRadio from "../../../FormFields/FormRadio";
+import FormDropDown from "../../../FormFields/FormDropDown";
 
 class AddGoal extends Component {
-  state = {};
+  state = {
+    loading: false,
+    registrationId: this.props.registrationId
+  };
+
+  async componentDidMount() {
+    const response = await Axios.get(`/getprograms/${this.state.registrationId}`);
+    console.log("response:::: ", response);
+  }
 
   nextStep = e => {};
 
@@ -30,7 +40,7 @@ class AddGoal extends Component {
           <Page title="Add Goal">
             <div className="row">
               <div className="col-md-4">
-                <FormInput icon="fa fa-id-card-o" type="text" placeholder="20201045" disabled />
+                <FormInput icon="fa fa-id-card-o" type="text" placeholder={values.registrationId} disabled />
               </div>
               <div className="col-md-2">
                 <Link to="/search">
@@ -42,10 +52,10 @@ class AddGoal extends Component {
             <Container title="Goal Details">
               <div className="row">
                 <div className="col-md-4">
-                  <FormInput icon="fa fa-id-card-o" type="text" placeholder="Category Name" />
+                  <FormDropDown icon="fa fa-id-card-o" inputLabel="Category Name" />
                 </div>
                 <div className="col-md-4">
-                  <FormInput icon="fas fa-envelope" type="text" placeholder="Programs List" />
+                  <FormDropDown icon="fa fa-id-card-o" inputLabel="Programs List" />
                 </div>
               </div>
               <div className="row">

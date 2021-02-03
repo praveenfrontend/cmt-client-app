@@ -17,7 +17,8 @@ import Search from "./components/module/search/Search";
 import Reports from "./components/module/reports/Reports";
 import Schedule from "./components/module/schedule/Schedule";
 import EditUserDetails from "./components/module/search/userDetails/EditUserDetails";
-import AddGoal from "./components/module/search/userDetails/AddGoal";
+import AddGoal from "./components/module/search/goals/AddGoal";
+import EditProgramDetails from "./components/module/search/programDetails/EditProgramDetails";
 import GuardedRoute from "./components/auth/GuardedRoute";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
@@ -28,7 +29,7 @@ import Loader from "react-loader-spinner";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
 
 function App(props) {
   const initialState = {
@@ -40,7 +41,10 @@ function App(props) {
       username: localStorage.getItem("communityMattersUsername")
     },
     isToggled: true,
+    registrationId: "",
     userDetails: {},
+    goalDetails: [],
+    programDetails: [],
     loading: false
   };
 
@@ -65,8 +69,17 @@ function App(props) {
       case "toggleMenu":
         draft.isToggled = action.value;
         return;
+      case "registrationId":
+        draft.registrationId = action.value;
+        return;
       case "userDetails":
         draft.userDetails = action.value;
+        return;
+      case "goalDetails":
+        draft.goalDetails = action.value;
+        return;
+      case "programDetails":
+        draft.programDetails = action.value;
         return;
       case "loading":
         draft.loading = action.value;
@@ -119,7 +132,8 @@ function App(props) {
                 <GuardedRoute path="/reports" component={Reports} auth={state.loggedIn} />
                 <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />
                 <GuardedRoute path="/editUserDetails" component={EditUserDetails} auth={state.loggedIn} userDetails={state.userDetails} />
-                <GuardedRoute path="/addGoal" component={AddGoal} auth={state.loggedIn} />
+                <GuardedRoute path="/addGoal" component={AddGoal} auth={state.loggedIn} goalDetails={state.goalDetails} registrationId={state.registrationId} />
+                <GuardedRoute path="/editProgram" component={EditProgramDetails} auth={state.loggedIn} programDetails={state.programDetails} registrationId={state.registrationId} />
               </Switch>
             </div>
           </LoadingOverlay>

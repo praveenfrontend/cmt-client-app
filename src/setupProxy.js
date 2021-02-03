@@ -1,6 +1,12 @@
-/* const { createProxyMiddleware } = require("http-proxy-middleware");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
+  app.use(
+    createProxyMiddleware("/getprograms", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
   app.use(
     createProxyMiddleware("/irf_userUpdate", {
       target: "https://test4cmt.000webhostapp.com/api",
@@ -52,4 +58,3 @@ module.exports = function (app) {
     })
   );
 };
- */

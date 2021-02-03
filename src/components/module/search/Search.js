@@ -40,6 +40,9 @@ function Search() {
       if (response.data.success === true) {
         setSearchData(response.data.data);
         appDispatch({ type: "userDetails", value: response.data.data.User_Details });
+        appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
+        appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
+        appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
       } else {
         alert("Incorrect Registration Id or Email Id.");
       }
@@ -65,7 +68,7 @@ function Search() {
     regId = "";
 
   if (Object.keys(searchData).length !== 0) {
-    regId = registrationId;
+    regId = User_Details.userId;
 
     userDetailsRows = {
       "Reg Id": regId,
@@ -150,9 +153,40 @@ function Search() {
                       <div className="col-lg-12">
                         <div className="card">
                           <div className="card-body">
-                            <Table tableHeader={tableHeader}>
-                              <TableRow rows={userDetailsRows} />
-                            </Table>
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Reg Id</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+                                    <th>First Language</th>
+                                    <th>Contact Number</th>
+                                    <th>Children</th>
+                                    <th>Agent Notes</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {Object.keys(searchData).length !== 0 ? (
+                                    <tr>
+                                      <th scope="row">{User_Details.userId}</th>
+                                      <td>{User_Details.firstName}</td>
+                                      <td>{User_Details.lastName}</td>
+                                      <td>{User_Details.streetAddress !== undefined ? User_Details.streetAddress + ", " + User_Details.city + ", " + User_Details.province + ", " + User_Details.zipCode + ", " + User_Details.country : ""}</td>
+                                      <td>{User_Details.email}</td>
+                                      <td>{User_Details.firstLang}</td>
+                                      <td>{User_Details.phoneCell}</td>
+                                      <td>{User_Details.ChildValue}</td>
+                                      <td>{User_Details.notes}</td>
+                                    </tr>
+                                  ) : (
+                                    ""
+                                  )}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -181,9 +215,44 @@ function Search() {
                       <div className="col-lg-12">
                         <div className="card">
                           <div className="card-body">
-                            <Table tableHeader={tableHeader}>
-                              <TableRow rows={goalDetailsRows} />
-                            </Table>
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Sl.No:</th>
+                                    <th>Category</th>
+                                    <th>Program</th>
+                                    <th>Location</th>
+                                    <th>Instructor</th>
+                                    <th>Status</th>
+                                    <th>Rating: Before</th>
+                                    <th>Rating: After</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {Object.keys(searchData).length !== 0 && searchData.GoalDetails.length !== 0
+                                    ? GoalDetails.map((goal, val) => {
+                                        return (
+                                          <tr key={val}>
+                                            <td>{val + 1}</td>
+                                            <td>{goal.user_goal_category_name}</td>
+                                            <td>{goal.user_goal_program_name}</td>
+                                            <td>{goal.user_goal_program_location}</td>
+                                            <td>{goal.user_goal_program_instructor}</td>
+                                            <td>{goal.user_goal_program_status}</td>
+                                            <td>{goal.user_goal_program_RatingBefore}</td>
+                                            <td>{goal.user_goal_program_RatingAfter}</td>
+                                            <td>{goal.user_goal_program_startdate}</td>
+                                            <td>{goal.user_goal_program_enddate}</td>
+                                          </tr>
+                                        );
+                                      })
+                                    : ""}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -231,7 +300,7 @@ function Search() {
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit"></i>
-                      <Link to="/addGoal">
+                      <Link to="/editProgram">
                         <p className="ml-1 text-white text-left">Edit</p>
                       </Link>
                     </Col>
@@ -243,9 +312,30 @@ function Search() {
                       <div className="col-lg-12">
                         <div className="card">
                           <div className="card-body">
-                            <Table tableHeader={programDetailsHeader}>
-                              <TableRow rows={programDetailsRows} />
-                            </Table>
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>S.No:</th>
+                                    <th>Program Name</th>
+                                    <th>Category</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {Object.keys(searchData).length !== 0 && searchData.Program_Details.length !== 0
+                                    ? Program_Details.map((program, val) => {
+                                        return (
+                                          <tr key={val}>
+                                            <td>{val + 1}</td>
+                                            <td>{program.programName}</td>
+                                            <td>{program.category}</td>
+                                          </tr>
+                                        );
+                                      })
+                                    : ""}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
                       </div>
