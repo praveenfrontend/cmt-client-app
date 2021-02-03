@@ -21,22 +21,11 @@ function SignIn() {
     appDispatch({ type: "loading", value: true });
 
     try {
-      // const response = await Axios.post("/login", { email, password });
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, password: password })
-      };
-      // const response = await fetch("/login", requestOptions);
-      const response = await fetch("https://development.d3rvgrkkwgv6tq.amplifyapp.com/#/https://test4cmt.000webhostapp.com/api/login", requestOptions);
-      const result = await response.json();
-      console.log("data: ", result.data);
-
+      const response = await Axios.post("/login", { email, password });
       setLoading(false);
-      if (result.data.token) {
+      if (response.data) {
         console.log(email, password);
-        // appDispatch({ type: "login", data: response.data });
-        appDispatch({ type: "login", data: result.data });
+        appDispatch({ type: "login", data: response.data });
         appDispatch({ type: "loading", value: false });
         appDispatch({ type: "flashMessage", value: "You have successfully logged in." });
       } else {
