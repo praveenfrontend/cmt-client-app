@@ -27,7 +27,7 @@ function SignIn() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email, password: password })
       };
-      const response = await fetch("/login", requestOptions);
+      const response = await fetch("https://test4cmt.000webhostapp.com/api/login", requestOptions);
       const result = await response.json();
       console.log("data: ", result.data);
 
