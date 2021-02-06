@@ -94,8 +94,7 @@ function App(props) {
       localStorage.setItem("communityMattersToken", state.user.token);
       localStorage.setItem("communityMattersUsername", state.user.username);
     } else {
-      localStorage.removeItem("communityMattersToken");
-      localStorage.removeItem("communityMattersUsername");
+      localStorage.clear();
     }
   });
 

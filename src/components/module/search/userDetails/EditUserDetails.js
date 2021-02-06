@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
@@ -12,6 +12,7 @@ import EditContactDetails from "./EditContactDetails";
 
 class EditUserDetails extends Component {
   state = {
+    response: false,
     loading: false,
     userId: this.props.userDetails.userId,
     firstName: this.props.userDetails.firstName,
@@ -50,11 +51,8 @@ class EditUserDetails extends Component {
       const response = await Axios.post("/irf_userUpdate", { userId, firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, notes });
 
       if (response.data.success === true) {
-        const regId = response.data.id;
-        console.log("regId: ", regId);
-        console.log(response.data);
-
         this.setState({ loading: false });
+        this.setState({ response: true });
       }
     } catch (e) {
       alert("Error Message. Please update all fields.");
@@ -66,7 +64,9 @@ class EditUserDetails extends Component {
   render() {
     const values = this.state;
 
-    return (
+    return this.state.response ? (
+      <Redirect to={{ pathname: "/search" }} />
+    ) : (
       <LoadingOverlay active={this.state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
         <section className="forms">
           <div className="container-fluid">

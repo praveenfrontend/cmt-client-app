@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
@@ -27,17 +27,47 @@ function Search() {
     setEmailId(e.target.value);
   };
 
+  useEffect(() => {
+    let regIdAfterUpdate = "";
+
+    const irfSearch = async () => {
+      if (localStorage && localStorage.getItem("regIdAfterUpdate")) {
+        regIdAfterUpdate = JSON.parse(localStorage.getItem("regIdAfterUpdate"));
+        setLoading(true);
+        try {
+          const response = await Axios.get(`/irf_search/${regIdAfterUpdate}`);
+          if (response.data.success === true) {
+            setSearchData(response.data.data);
+            appDispatch({ type: "userDetails", value: response.data.data.User_Details });
+            appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
+            appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
+            appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
+            setLoading(false);
+          }
+        } catch (e) {
+          if (e.response === null) {
+            alert("Something went wrong.");
+          }
+          setLoading(false);
+        }
+      }
+    };
+
+    irfSearch();
+  }, [appDispatch]);
+
   const handleSearch = async e => {
     e.preventDefault();
+    localStorage.removeItem("regIdAfterUpdate");
     setLoading(true);
 
     try {
       const searchInput = registrationId || emailId;
       const response = await Axios.get(`/irf_search/${searchInput}`);
       setLoading(false);
-      console.log(response.data);
 
       if (response.data.success === true) {
+        localStorage.setItem("regIdAfterUpdate", JSON.stringify(registrationId));
         setSearchData(response.data.data);
         appDispatch({ type: "userDetails", value: response.data.data.User_Details });
         appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
@@ -53,6 +83,11 @@ function Search() {
       setLoading(false);
     }
   };
+
+  // const clearData = () => {
+  //   localStorage.removeItem("regIdAfterUpdate");
+  //   setSearchData({});
+  // };
 
   const { User_Details, Child_Details, GoalDetails, Program_Details, Health_Details } = searchData;
 
@@ -116,11 +151,11 @@ function Search() {
           <Page title="SEARCH">
             <form onSubmit={e => handleSearch(e)}>
               <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <FormInput icon="fa fa-id-card-o" type="text" placeholder="Search by Registration ID" changeHandler={e => registrationChange(e)} />
                 </div>
                 <div className="col-md-1">
-                  <p className="display-6 text-muted mt-2">[ OR ]</p>
+                  <p className="display-6 text-muted mt-2">[OR]</p>
                 </div>
                 <div className="col-md-4">
                   <FormInput icon="fas fa-envelope" type="text" placeholder="Search by Email ID" changeHandler={e => emailChange(e)} />
@@ -128,6 +163,11 @@ function Search() {
                 <div className="col-md-2">
                   <button className="btn btn-block btn-primary">Search</button>
                 </div>
+                {/* <div className="col-md-2">
+                  <button className="btn btn-block btn-danger" onClick={() => clearData()}>
+                    Clear
+                  </button>
+                </div> */}
               </div>
             </form>
           </Page>
