@@ -2,6 +2,42 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/irf_childDelete", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_childUpdate", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_childAdd", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_deleteGoal", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_updateGoal", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_addGoal", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/getprograms", {
       target: "https://test4cmt.000webhostapp.com/api",
       changeOrigin: true

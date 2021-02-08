@@ -10,17 +10,11 @@ import FormInput from "../../../FormFields/FormInput";
 import FormRadio from "../../../FormFields/FormRadio";
 import FormDropDown from "../../../FormFields/FormDropDown";
 
-class AddGoal extends Component {
+class EditGoal extends Component {
   state = {
     response: false,
     loading: false,
     userId: this.props.registrationId,
-    categoryList: [],
-    afterSchoolList: [],
-    healthList: [],
-    employmentList: [],
-    neighbourhoodList: [],
-    staffList: [],
     CategoryName: "",
     ProgramName: "",
     Location: "",
@@ -34,80 +28,25 @@ class AddGoal extends Component {
     RatingAfter: ""
   };
 
-  async componentDidMount() {
-    const response = await Axios.get(`/getprograms/${this.state.userId}`);
-    const categoryAndPrograms = response.data.data;
+  componentDidMount() {
+    const { editGoalDetails } = this.props.location.state;
 
-    Object.keys(categoryAndPrograms).map((key, value) => {
-      if (key === "AfterschoolResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "After School"] });
-        this.setState({ afterSchoolList: [...this.state.afterSchoolList, categoryAndPrograms[key]] });
-
-        // setting the default option
-        // After School by default returns yes even though no is selected in irf_submit. needs to be fixed.
-        // after that logic needs to be modified with alert.
-        this.setState({ CategoryName: "After School" });
-        if (categoryAndPrograms[key] === "yes" || "Yes") {
-          this.setState({ ProgramName: categoryAndPrograms[key] });
-        } else {
-          alert("You should enroll for the program before you add a goal");
-        }
-      }
-      if (key === "HealthResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Health"] });
-        this.setState({ healthList: [...this.state.healthList, ...categoryAndPrograms[key]] });
-      }
-      if (key === "EmploymentResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Employment"] });
-        this.setState({ employmentList: [...this.state.employmentList, ...categoryAndPrograms[key]] });
-      }
-      if (key === "NeighbourhoodResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Neighbourhood Net"] });
-        this.setState({ neighbourhoodList: [...this.state.neighbourhoodList, ...categoryAndPrograms[key]] });
-      }
-      if (key === "StaffResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Staff"] });
-        this.setState({ staffList: [...this.state.staffList, ...categoryAndPrograms[key]] });
-      }
-    });
+    this.setState({ CategoryName: editGoalDetails.user_goal_category_name });
+    this.setState({ ProgramName: editGoalDetails.user_goal_program_name });
+    this.setState({ Location: editGoalDetails.user_goal_program_location });
+    this.setState({ Instructor: editGoalDetails.user_goal_program_instructor });
+    this.setState({ StartDate: editGoalDetails.user_goal_program_startdate.replace(/-/g, "/") });
+    this.setState({ EndDate: editGoalDetails.user_goal_program_enddate.replace(/-/g, "/") });
+    this.setState({ Status: editGoalDetails.user_goal_program_status });
+    this.setState({ ParticipantComments: editGoalDetails.user_goal_program_participantcomments });
+    this.setState({ AdditionalComments: editGoalDetails.user_goal_program_additionalcomments });
+    this.setState({ RatingBefore: editGoalDetails.user_goal_program_RatingBefore });
+    this.setState({ RatingAfter: editGoalDetails.user_goal_program_RatingAfter });
   }
 
   inputChange = input => e => {
     this.setState({
       [input]: e.target.value
-    });
-  };
-
-  inputChangeProgramDefault = e => {
-    this.setState({ CategoryName: e.target.value }, function () {
-      // eslint-disable-next-line default-case
-      switch (this.state.CategoryName) {
-        case "Health":
-          this.setState({
-            ProgramName: this.state.healthList[0]
-          });
-          break;
-        case "Employment":
-          this.setState({
-            ProgramName: this.state.employmentList[0]
-          });
-          break;
-        case "Neighbourhood Net":
-          this.setState({
-            ProgramName: this.state.neighbourhoodList[0]
-          });
-          break;
-        case "Staff":
-          this.setState({
-            ProgramName: this.state.staffList[0]
-          });
-          break;
-        case "After School":
-          this.setState({
-            ProgramName: this.state.afterSchoolList[0]
-          });
-          break;
-      }
     });
   };
 
@@ -118,7 +57,7 @@ class AddGoal extends Component {
     const { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter } = this.state;
 
     try {
-      const response = await Axios.post("/irf_addGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
+      const response = await Axios.post("/irf_updateGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
 
       if (response.data.success === true) {
         this.setState({ loading: false });
@@ -126,6 +65,25 @@ class AddGoal extends Component {
       }
     } catch (e) {
       alert("Error Message. Please update all fields.");
+      console.log(e.response.data);
+      this.setState({ loading: false });
+    }
+  };
+  handleDelete = async e => {
+    e.preventDefault();
+    this.setState({ loading: true });
+
+    const { userId, ProgramName } = this.state;
+
+    try {
+      const response = await Axios.post("/irf_deleteGoal", { userId, ProgramName });
+
+      if (response.data.success === true) {
+        this.setState({ loading: false });
+        this.setState({ response: true });
+      }
+    } catch (e) {
+      alert("Something went wrong.");
       console.log(e.response.data);
       this.setState({ loading: false });
     }
@@ -140,7 +98,7 @@ class AddGoal extends Component {
       <LoadingOverlay active={this.state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
         <section className="forms">
           <div className="container-fluid">
-            <Page title="Add Goal">
+            <Page title="Edit Goal">
               <div className="row">
                 <div className="col-md-4">
                   <FormInput icon="fa fa-id-card-o" type="text" placeholder={values.userId} disabled />
@@ -150,33 +108,28 @@ class AddGoal extends Component {
                     <button className="btn btn-block btn-primary">Cancel</button>
                   </Link>
                 </div>
+                <div className="col-md-2">
+                  <Link to="/search" onClick={this.handleDelete}>
+                    <button className="btn btn-block btn-danger">Delete</button>
+                  </Link>
+                </div>
               </div>
 
               <Container title="Goal Details">
                 <div className="row">
                   <div className="col-md-4">
                     <div className={`form-group row`}>
-                      <label class="col-sm-4 form-control-label">Category Name</label>
-                      <div class="col-sm-8 mb-3">
-                        <select name="account" class="form-control" value={this.state.CategoryName} onChange={e => this.inputChangeProgramDefault(e)}>
-                          {this.state.categoryList.map(category => {
-                            return <option value={category}>{category}</option>;
-                          })}
-                        </select>
+                      <label className="col-sm-4 form-control-label">Category Name</label>
+                      <div className="col-sm-8 mb-3">
+                        <FormInput icon="fa fa-id-card-o" type="text" value={values.CategoryName} disabled />
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4">
                     <div className={`form-group row`}>
-                      <label class="col-sm-4 form-control-label">Programs List</label>
-                      <div class="col-sm-8 mb-3">
-                        <select name="account" class="form-control" value={this.state.ProgramName} onChange={this.inputChange("ProgramName")}>
-                          {this.state.CategoryName === "Health" && this.state.healthList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "Employment" && this.state.employmentList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "Neighbourhood Net" && this.state.neighbourhoodList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "Staff" && this.state.staffList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "After School" && this.state.afterSchoolList.map(value => <option>{value}</option>)}
-                        </select>
+                      <label className="col-sm-4 form-control-label">Programs List</label>
+                      <div className="col-sm-8 mb-3">
+                        <FormInput icon="fa fa-id-card-o" type="text" value={values.ProgramName} disabled />
                       </div>
                     </div>
                   </div>
@@ -305,4 +258,4 @@ class AddGoal extends Component {
   }
 }
 
-export default AddGoal;
+export default EditGoal;

@@ -77,6 +77,24 @@ class EditProgramDetails extends Component {
     Others: ""
   };
 
+  componentDidMount() {
+    let program_details = this.props.programDetails;
+
+    program_details.map(prog => {
+      if (prog === "Zumba") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthZumba: {
+              ...prevState.health.healthZumba,
+              isChecked: true
+            }
+          }
+        }));
+      }
+    });
+  }
+
   inputChange = input => e => {
     this.setState({
       [input]: e.target.value
@@ -91,7 +109,6 @@ class EditProgramDetails extends Component {
   };
 
   // const program_details = this.props.programDetails;
-  // console.log("program_details: ", this.state.program_details);
 
   /* checkedValueHandler = (progId, progLabel) => e => {
 
@@ -136,6 +153,8 @@ class EditProgramDetails extends Component {
 
   render() {
     const values = this.state;
+
+    console.log("program_details: ", this.state.program_details);
 
     /* if (program.programName === "Yoga") {
         this.setState({ health: { healthYoga: { isChecked: true } } });

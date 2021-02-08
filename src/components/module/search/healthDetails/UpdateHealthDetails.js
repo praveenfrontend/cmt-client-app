@@ -10,7 +10,7 @@ import FormInput from "../../../FormFields/FormInput";
 import FormRadio from "../../../FormFields/FormRadio";
 import FormDropDown from "../../../FormFields/FormDropDown";
 
-class AddGoal extends Component {
+class UpdateHealthDetails extends Component {
   state = {
     response: false,
     loading: false,
@@ -140,7 +140,7 @@ class AddGoal extends Component {
       <LoadingOverlay active={this.state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
         <section className="forms">
           <div className="container-fluid">
-            <Page title="Add Goal">
+            <Page title="Update Member Health Details">
               <div className="row">
                 <div className="col-md-4">
                   <FormInput icon="fa fa-id-card-o" type="text" placeholder={values.userId} disabled />
@@ -152,7 +152,7 @@ class AddGoal extends Component {
                 </div>
               </div>
 
-              <Container title="Goal Details">
+              <Container title="Health Details">
                 <div className="row">
                   <div className="col-md-4">
                     <div className={`form-group row`}>
@@ -305,4 +305,4 @@ class AddGoal extends Component {
   }
 }
 
-export default AddGoal;
+export default UpdateHealthDetails;

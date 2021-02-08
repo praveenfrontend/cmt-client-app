@@ -40,6 +40,7 @@ function Search() {
             setSearchData(response.data.data);
             appDispatch({ type: "userDetails", value: response.data.data.User_Details });
             appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
+            appDispatch({ type: "childDetails", value: response.data.data.Child_Details });
             appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
             appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
             setLoading(false);
@@ -71,6 +72,7 @@ function Search() {
         setSearchData(response.data.data);
         appDispatch({ type: "userDetails", value: response.data.data.User_Details });
         appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
+        appDispatch({ type: "childDetails", value: response.data.data.Child_Details });
         appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
         appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
       } else {
@@ -92,49 +94,13 @@ function Search() {
   const { User_Details, Child_Details, GoalDetails, Program_Details, Health_Details } = searchData;
 
   const tableHeader = ["S.No", "Label", "Value"];
-  const childProgramHeader = ["S.No", "Child First Name", "Child Last Name", "Child DoB"];
-  const programDetailsHeader = ["S.No", "Category", "Program Name"];
   const healthDetailsHeader = ["S.No", "Health Question", "Initial Status", "Current Status", "Current Program"];
 
-  let userDetailsRows = "",
-    goalDetailsRows = "",
-    programDetailsRows = "",
-    healthDetailsRows = "",
+  let healthDetailsRows = "",
     regId = "";
 
   if (Object.keys(searchData).length !== 0) {
     regId = User_Details.userId;
-
-    userDetailsRows = {
-      "Reg Id": regId,
-      "First Name": User_Details.firstName,
-      "Last Name": User_Details.lastName,
-      Address: User_Details.streetAddress !== undefined ? User_Details.streetAddress + ", " + User_Details.city + ", " + User_Details.province + ", " + User_Details.zipCode + ", " + User_Details.country : "",
-      Email: User_Details.email,
-      "First Language": User_Details.firstLang,
-      "Contact Number": User_Details.phoneCell,
-      Children: User_Details.ChildValue,
-      "Agent Notes": User_Details.notes
-    };
-
-    goalDetailsRows = {
-      Category: "No Data Available",
-      Program: "No Data Available",
-      Location: "No Data Available",
-      Instructor: "No Data Available",
-      Status: "No Data Available",
-      "Rating: Before": "No Data Available",
-      "Rating: After": "No Data Available",
-      "Start Date": "No Data Available",
-      "End Date": "No Data Available"
-    };
-
-    programDetailsRows = {
-      "After School": "No Data Available",
-      Health: "No Data Available",
-      Employment: "No Data Available",
-      Staff: "No Data Available"
-    };
 
     healthDetailsRows = {
       "Overall Health": "No Data Available",
@@ -180,7 +146,7 @@ function Search() {
                       <h5 className="text-white text-left">User Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
-                      <i className="fa fa-edit"></i>
+                      <i className="fa fa-edit text-white"></i>
                       <Link to="/editUserDetails">
                         <p className="ml-1 text-white text-left">Edit</p>
                       </Link>
@@ -242,7 +208,7 @@ function Search() {
                       <h5 className="text-white text-left">Goal Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
-                      <i className="fa fa-edit"></i>
+                      <i className="fa fa-edit text-white"></i>
                       <Link to="/addGoal">
                         <p className="ml-1 text-white text-left">Add</p>
                       </Link>
@@ -276,7 +242,20 @@ function Search() {
                                     ? GoalDetails.map((goal, val) => {
                                         return (
                                           <tr key={val}>
-                                            <td>{val + 1}</td>
+                                            <td>
+                                              <Link
+                                                to={{
+                                                  pathname: "/editGoal",
+                                                  state: {
+                                                    editGoalDetails: goal
+                                                  }
+                                                }}
+                                                className="d-flex"
+                                              >
+                                                <i class="fa fa-edit"></i>
+                                                <p className="ml-1 text-left">{val + 1}</p>
+                                              </Link>
+                                            </td>
                                             <td>{goal.user_goal_category_name}</td>
                                             <td>{goal.user_goal_program_name}</td>
                                             <td>{goal.user_goal_program_location}</td>
@@ -308,25 +287,54 @@ function Search() {
                       <h5 className="text-white text-left">Child Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
-                      <i className="fa fa-edit"></i>
-                      <Link to="/addGoal">
-                        <p className="ml-1 text-white text-left">Edit</p>
+                      <i className="fa fa-edit text-white"></i>
+                      <Link to="/addChild">
+                        <p className="ml-1 text-white text-left">Add</p>
                       </Link>
                     </Col>
                   </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="2">
                   <div className="card-body">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <div className="card">
-                          <div className="card-body">
-                            <Table tableHeader={childProgramHeader}>
-                              <TableRow rows={null} colSpan="4" />
-                            </Table>
-                          </div>
-                        </div>
-                      </div>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Sl.No:</th>
+                            <th>Child First Name</th>
+                            <th>Child Last Name</th>
+                            <th>Date of Birth</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {console.log(Child_Details)}
+                          {Object.keys(searchData).length !== 0 && searchData.Child_Details.length !== 0
+                            ? Child_Details.map((child, val) => {
+                                return (
+                                  <tr key={val}>
+                                    <td>
+                                      <Link
+                                        to={{
+                                          pathname: "/editChild",
+                                          state: {
+                                            editChildDetails: child
+                                          }
+                                        }}
+                                        className="d-flex"
+                                      >
+                                        <i class="fa fa-edit"></i>
+                                        <p className="ml-1 text-left">{val + 1}</p>
+                                      </Link>
+                                    </td>
+                                    <td>{child.childFirstname}</td>
+                                    <td>{child.childLastname}</td>
+                                    <td>{child.childDob}</td>
+                                  </tr>
+                                );
+                              })
+                            : ""}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </Accordion.Collapse>
@@ -339,7 +347,7 @@ function Search() {
                       <h5 className="text-white text-left">Prog Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
-                      <i className="fa fa-edit"></i>
+                      <i className="fa fa-edit text-white"></i>
                       <Link to="/editProgram">
                         <p className="ml-1 text-white text-left">Edit</p>
                       </Link>
@@ -391,9 +399,9 @@ function Search() {
                       <h5 className="text-white text-left">Health Details - {regId}</h5>
                     </Col>
                     <Col sm={4} className="d-flex">
-                      <i className="fa fa-edit"></i>
-                      <Link to="/addGoal">
-                        <p className="ml-1 text-white text-left">Edit</p>
+                      <i className="fa fa-edit text-white"></i>
+                      <Link to="/updateHealth">
+                        <p className="ml-1 text-white text-left">Update</p>
                       </Link>
                     </Col>
                   </Row>
@@ -404,9 +412,134 @@ function Search() {
                       <div className="col-lg-12">
                         <div className="card">
                           <div className="card-body">
-                            <Table tableHeader={healthDetailsHeader}>
-                              <TableRow rows={healthDetailsRows} />
-                            </Table>
+                            <div class="table-responsive">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>S.No:</th>
+                                    <th>Health Question</th>
+                                    <th>Initial Status</th>
+                                    <th>Current Status</th>
+                                    <th>Current Program</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {Object.keys(searchData).length !== 0 && searchData.Health_Details.length !== 0
+                                    ? Health_Details.map(health => {
+                                        return (
+                                          <React.Fragment>
+                                            <tr>
+                                              <td>1</td>
+                                              <td>Overall Health</td>
+                                              <td>{health.myHealth}</td>
+                                              <td>{health.myhealth_curr_state}</td>
+                                              <td>{health.myhealth_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>2</td>
+                                              <td>Satisfaction with Life</td>
+                                              <td>{health.myLifeSatisfaction}</td>
+                                              <td>{health.mylifesatisfaction_curr_state}</td>
+                                              <td>{health.mylifesatisfaction_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>3</td>
+                                              <td>Social Network of Family and Friends</td>
+                                              <td>{health.mySocialNetwork}</td>
+                                              <td>{health.mysocialnetwork_curr_state}</td>
+                                              <td>{health.mysocialnetwork_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>4</td>
+                                              <td>Connection with community</td>
+                                              <td>{health.myCommunityNetwork}</td>
+                                              <td>{health.mycommunitynetwork_curr_state}</td>
+                                              <td>{health.mycommunitynetwork_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>5</td>
+                                              <td>Level of Stress</td>
+                                              <td>{health.myStressLevel}</td>
+                                              <td>{health.mystresslevel_curr_state}</td>
+                                              <td>{health.mystresslevel_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>6</td>
+                                              <td>Talk to others about personal health issues</td>
+                                              <td>{health.myHealthIssues}</td>
+                                              <td>{health.myhealthissues_curr_state}</td>
+                                              <td>{health.myhealthissues_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>7</td>
+                                              <td>Has a Family Doctor</td>
+                                              <td>{health.myFamilyDoctor}</td>
+                                              <td>{health.myfamilydoctor_curr_state}</td>
+                                              <td>{health.myfamilydoctor_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>8</td>
+                                              <td>Number of visits each year - Family Doctor</td>
+                                              <td>{health.myVisitToFamilyDoctor}</td>
+                                              <td>{health.myvisittofamilydoctor_curr_state}</td>
+                                              <td>{/* health.myhealth_curr_prog */}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>9</td>
+                                              <td>Number of visits each year - Walk In Clinic</td>
+                                              <td>{health.myVisitToClinic}</td>
+                                              <td>{health.myvisittoclinic_curr_state}</td>
+                                              <td>{/* health.myhealth_curr_prog */}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>10</td>
+                                              <td>Number of visits each year - Emergency Room</td>
+                                              <td>{health.myVisitToEmergency}</td>
+                                              <td>{health.myvisittoemergency_curr_state}</td>
+                                              <td>{/* health.myhealth_curr_prog */}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>11</td>
+                                              <td>Number of visits each year - Hospital</td>
+                                              <td>{health.myVisitToHospital}</td>
+                                              <td>{health.myvisittohospital_curr_state}</td>
+                                              <td>{/* health.myhealth_curr_prog */}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>12</td>
+                                              <td>Awareness on risk factors for diabetes, cancer and cardiovascular diseases</td>
+                                              <td>{health.myDiseaseAwareness}</td>
+                                              <td>{health.mydiseaseawareness_curr_state}</td>
+                                              <td>{health.mydiseaseawareness_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>13</td>
+                                              <td>Awareness on facilities, programs, parks, playgrounds within community for healthy living and physical activity</td>
+                                              <td>{health.myHealth}</td>
+                                              <td>{health.myCmtProgramAwareness}</td>
+                                              <td>{health.mycmtprogramawareness_curr_prog}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>14</td>
+                                              <td>Physical activity</td>
+                                              <td>{health.myPhysicalActiveness}</td>
+                                              <td>{health.myphysicalactiveness_curr_state}</td>
+                                              <td>{health.myphysicalactiveness_curr_prog}</td>
+                                            </tr>
+                                          </React.Fragment>
+                                        );
+                                      })
+                                    : ""}
+                                  {/* <tr>
+                                      <td>1</td>
+                                      <td>Overall Health</td>
+                                      <td>{Health_Details[0].myHealth}</td>
+                                      <td>{Health_Details[0].myhealth_curr_state}</td>
+                                      <td>{Health_Details[0].myhealth_curr_prog}</td>
+                                    </tr> */}
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
                       </div>

@@ -18,7 +18,11 @@ import Reports from "./components/module/reports/Reports";
 import Schedule from "./components/module/schedule/Schedule";
 import EditUserDetails from "./components/module/search/userDetails/EditUserDetails";
 import AddGoal from "./components/module/search/goals/AddGoal";
+import EditGoal from "./components/module/search/goals/EditGoal";
+import AddChild from "./components/module/search/childProgram/AddChild";
+import EditChild from "./components/module/search/childProgram/EditChild";
 import EditProgramDetails from "./components/module/search/programDetails/EditProgramDetails";
+import UpdateHealthDetails from "./components/module/search/healthDetails/UpdateHealthDetails";
 import GuardedRoute from "./components/auth/GuardedRoute";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
@@ -44,7 +48,9 @@ function App(props) {
     registrationId: "",
     userDetails: {},
     goalDetails: [],
+    childDetails: [],
     programDetails: [],
+    healthDetails: [],
     loading: false
   };
 
@@ -78,8 +84,14 @@ function App(props) {
       case "goalDetails":
         draft.goalDetails = action.value;
         return;
+      case "childDetails":
+        draft.childDetails = action.value;
+        return;
       case "programDetails":
         draft.programDetails = action.value;
+        return;
+      case "healthDetails":
+        draft.healthDetails = action.value;
         return;
       case "loading":
         draft.loading = action.value;
@@ -132,7 +144,11 @@ function App(props) {
                 <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />
                 <GuardedRoute path="/editUserDetails" component={EditUserDetails} auth={state.loggedIn} userDetails={state.userDetails} />
                 <GuardedRoute path="/addGoal" component={AddGoal} auth={state.loggedIn} goalDetails={state.goalDetails} registrationId={state.registrationId} />
+                <GuardedRoute path="/editGoal" component={EditGoal} auth={state.loggedIn} registrationId={state.registrationId} />
+                <GuardedRoute path="/addChild" component={AddChild} auth={state.loggedIn} childDetails={state.childDetails} registrationId={state.registrationId} />
+                <GuardedRoute path="/editChild" component={EditChild} auth={state.loggedIn} registrationId={state.registrationId} />
                 <GuardedRoute path="/editProgram" component={EditProgramDetails} auth={state.loggedIn} programDetails={state.programDetails} registrationId={state.registrationId} />
+                <GuardedRoute path="/updateHealth" component={UpdateHealthDetails} auth={state.loggedIn} healthDetails={state.healthDetails} registrationId={state.registrationId} />
               </Switch>
             </div>
           </LoadingOverlay>
