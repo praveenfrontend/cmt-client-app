@@ -55,7 +55,7 @@ class EditChild extends Component {
     const child_program = [child_details];
 
     try {
-      const response = await Axios.post("/irf_childAdd", { userId, child_program });
+      const response = await Axios.post("/irf_childUpdate", { userId, child_program });
 
       if (response.data.success === true) {
         this.setState({ loading: false });

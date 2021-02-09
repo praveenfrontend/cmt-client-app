@@ -2,6 +2,30 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/irf_addHealth", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_programUpdate", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/gethealth_programs", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/irf_programUpdate", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/irf_childDelete", {
       target: "https://test4cmt.000webhostapp.com/api",
       changeOrigin: true

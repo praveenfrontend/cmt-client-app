@@ -84,7 +84,7 @@ class IRF extends Component {
       jobClub: { isChecked: false, value: "Job Club" },
       childMinding: { isChecked: false, value: "Child Minding" },
       computerBasic: { isChecked: false, value: "Computer Basic" },
-      citizenshipRefugees: { isChecked: false, value: "" },
+      citizenshipRefugees: { isChecked: false, value: "Citizenship/Refugees" },
       communityAssistant: { isChecked: false, value: "Community Assistant" },
       computerIntermediate: { isChecked: false, value: "Computer Intermediate" },
       interestedInVolunteering: { isChecked: false, value: "Interested in Volunteering" },

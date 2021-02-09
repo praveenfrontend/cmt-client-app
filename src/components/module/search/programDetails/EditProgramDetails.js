@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
@@ -12,7 +12,7 @@ import EditCommunityMattersProgram from "./EditCommunityMattersProgram";
 class EditProgramDetails extends Component {
   state = {
     loading: false,
-    registrationId: this.props.registrationId,
+    userId: this.props.registrationId,
     program_details: this.props.programDetails,
 
     after_school_program: "",
@@ -55,7 +55,7 @@ class EditProgramDetails extends Component {
       jobClub: { isChecked: false, value: "Job Club" },
       childMinding: { isChecked: false, value: "Child Minding" },
       computerBasic: { isChecked: false, value: "Computer Basic" },
-      citizenshipRefugees: { isChecked: false, value: "" },
+      citizenshipRefugees: { isChecked: false, value: "Citizenship/Refugees" },
       communityAssistant: { isChecked: false, value: "Community Assistant" },
       computerIntermediate: { isChecked: false, value: "Computer Intermediate" },
       interestedInVolunteering: { isChecked: false, value: "Interested in Volunteering" },
@@ -80,8 +80,10 @@ class EditProgramDetails extends Component {
   componentDidMount() {
     let program_details = this.props.programDetails;
 
+    // console.log(program_details);
+
     program_details.map(prog => {
-      if (prog === "Zumba") {
+      if (prog.programName === "Zumba") {
         this.setState(prevState => ({
           health: {
             ...prevState.health,
@@ -91,6 +93,509 @@ class EditProgramDetails extends Component {
             }
           }
         }));
+      }
+      if (prog.programName === "Yoga") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthYoga: {
+              ...prevState.health.healthYoga,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Dental") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthDental: {
+              ...prevState.health.healthDental,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Karate") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthKarate: {
+              ...prevState.health.healthKarate,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Meditation") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthMeditation: {
+              ...prevState.health.healthMeditation,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Food Market") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthFoodMarket: {
+              ...prevState.health.healthFoodMarket,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Belly Dancing") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthBellyDancing: {
+              ...prevState.health.healthBellyDancing,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Adult Plus") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthAdultPlus: {
+              ...prevState.health.healthAdultPlus,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "English Cafe") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthEnglishCafe: {
+              ...prevState.health.healthEnglishCafe,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Basic English") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthBasicEnglish: {
+              ...prevState.health.healthBasicEnglish,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Home Vistits") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthHomeVistits: {
+              ...prevState.health.healthHomeVistits,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Social Group") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthSocialGroup: {
+              ...prevState.health.healthSocialGroup,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Healthy Smiles") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthHealthySmiles: {
+              ...prevState.health.healthHealthySmiles,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Volley Ball") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthVolleyBall: {
+              ...prevState.health.healthVolleyBall,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Heart and Stroke") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthHeartAndStroke: {
+              ...prevState.health.healthHeartAndStroke,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Bollywood Dance") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthBollywoodDance: {
+              ...prevState.health.healthBollywoodDance,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Food Share Bus") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthFoodShareBus: {
+              ...prevState.health.healthFoodShareBus,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Dietician Sessions") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthDieticianSessions: {
+              ...prevState.health.healthDieticianSessions,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Food Handling") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthFoodHandling: {
+              ...prevState.health.healthFoodHandling,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Adult Nutrition") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthAdultNutrition: {
+              ...prevState.health.healthAdultNutrition,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Diabetes Sessions") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthDiabetesSessions: {
+              ...prevState.health.healthDiabetesSessions,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Healthy Choices") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthHealthyChoices: {
+              ...prevState.health.healthHealthyChoices,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Home Management") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthHomeManagement: {
+              ...prevState.health.healthHomeManagement,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Stress Management") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthStressManagement: {
+              ...prevState.health.healthStressManagement,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Cancer Screening/Spa") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthCancerScreeningSpa: {
+              ...prevState.health.healthCancerScreeningSpa,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Diabetes Management") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthDiabetesManagement: {
+              ...prevState.health.healthDiabetesManagement,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Swimming Children") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthSwimmingChildren: {
+              ...prevState.health.healthSwimmingChildren,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Swimming Ladies") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthSwimmingLadies: {
+              ...prevState.health.healthSwimmingLadies,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Swimming AquaFit Male") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthSwimmingAquaFitMale: {
+              ...prevState.health.healthSwimmingAquaFitMale,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Swimming AquaFit Female") {
+        this.setState(prevState => ({
+          health: {
+            ...prevState.health,
+            healthSwimmingAquaFitFemale: {
+              ...prevState.health.healthSwimmingAquaFitFemale,
+              isChecked: true
+            }
+          }
+        }));
+      }
+
+      // Employment
+      if (prog.programName === "Tutoring") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            tutoring: {
+              ...prevState.employment.tutoring,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Job Club") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            jobClub: {
+              ...prevState.employment.jobClub,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Child Minding") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            childMinding: {
+              ...prevState.employment.childMinding,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Computer Basic") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            computerBasic: {
+              ...prevState.employment.computerBasic,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Citizenship/Refugees") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            citizenshipRefugees: {
+              ...prevState.employment.citizenshipRefugees,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Community Assistant") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            communityAssistant: {
+              ...prevState.employment.communityAssistant,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Computer Intermediate") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            computerIntermediate: {
+              ...prevState.employment.computerIntermediate,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Interested in Volunteering") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            interestedInVolunteering: {
+              ...prevState.employment.interestedInVolunteering,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Public Speaking Level 1 & 2") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            publicSpeaking: {
+              ...prevState.employment.publicSpeaking,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Foreign Trained Health Professionals") {
+        this.setState(prevState => ({
+          employment: {
+            ...prevState.employment,
+            foreignTrainedHealthProfessionals: {
+              ...prevState.employment.foreignTrainedHealthProfessionals,
+              isChecked: true
+            }
+          }
+        }));
+      }
+
+      // Staff
+      if (prog.programName === "Volunteer") {
+        this.setState(prevState => ({
+          staff: {
+            ...prevState.staff,
+            staffVolunteer: {
+              ...prevState.staff.staffVolunteer,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Community Assistant") {
+        this.setState(prevState => ({
+          staff: {
+            ...prevState.staff,
+            staffCommunityAssistant: {
+              ...prevState.staff.staffCommunityAssistant,
+              isChecked: true
+            }
+          }
+        }));
+      }
+
+      // neightbourhood
+      if (prog.programName === "Citizenship") {
+        this.setState(prevState => ({
+          neighbourhood_net: {
+            ...prevState.neighbourhood_net,
+            neighbourhoodCitizenship: {
+              ...prevState.neighbourhood_net.neighbourhoodCitizenship,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "IncomeTax") {
+        this.setState(prevState => ({
+          neighbourhood_net: {
+            ...prevState.neighbourhood_net,
+            neighbourhoodIncomeTax: {
+              ...prevState.neighbourhood_net.neighbourhoodIncomeTax,
+              isChecked: true
+            }
+          }
+        }));
+      }
+      if (prog.programName === "Other") {
+        this.setState(prevState => ({
+          neighbourhood_net: {
+            ...prevState.neighbourhood_net,
+            neighbourhoodOther: {
+              ...prevState.neighbourhood_net.neighbourhoodOther,
+              isChecked: true
+            }
+          }
+        }));
+      }
+
+      // Others checking with categoryName
+      if (prog.category === "Other") {
+        this.setState({
+          Others: prog.programName
+        });
+      }
+      // After School
+      if (prog.category === "after_school_program") {
+        this.setState({
+          after_school_program: prog.programName
+        });
       }
     });
   }
@@ -108,67 +613,48 @@ class EditProgramDetails extends Component {
     this.setState({ [input]: input });
   };
 
-  // const program_details = this.props.programDetails;
+  handleSubmit = async e => {
+    e.preventDefault();
 
-  /* checkedValueHandler = (progId, progLabel) => e => {
+    const { userId, after_school_program, health, employment, staff, neighbourhood_net, Others } = this.state;
 
-    this.state.program_details.map(program => (
-      if(program.programName === progLabel) {
-        this.setState(prevState => ({
-            health: {
-              ...prevState.health,
-              progId: {
-                ...prevState.health.progId,
-                isChecked: true
-              }
-            }
-          }));
+    const userprograms = {
+      health,
+      employment,
+      neighbourhood_net,
+      staff
+    };
+
+    try {
+      this.setState({ loading: true });
+      const response = await Axios.post("/irf_programUpdate", { userId, after_school_program, userprograms, Others });
+
+      if (response.data.success === true) {
+        this.setState({ loading: false });
+        this.setState({ response: true });
       }
-    )
-  }; */
-
-  /*  this.state.program_details.map(program => {
-      if (program.programName === "Zumba") {
-        this.setState(prevState => ({
-          health: {
-            ...prevState.health,
-            healthZumba: {
-              ...prevState.health.healthZumba,
-              isChecked: true
-            }
-          }
-        }));
-      }
-      if (program.programName === "Yoga") {
-        this.setState(prevState => ({
-          health: {
-            ...prevState.health,
-            healthZumba: {
-              ...prevState.health.healthYoga,
-              isChecked: true
-            }
-          }
-        }));
-      } */
+    } catch (e) {
+      alert("Please check the details or Something went wrong.");
+      console.log(e.response.data);
+      this.setState({ loading: false });
+    }
+  };
 
   render() {
     const values = this.state;
 
     console.log("program_details: ", this.state.program_details);
 
-    /* if (program.programName === "Yoga") {
-        this.setState({ health: { healthYoga: { isChecked: true } } });
-      } */
-    // });
-
-    return (
+    return this.state.response ? (
+      <Redirect to={{ pathname: "/search" }} />
+    ) : (
       <LoadingOverlay active={this.state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
         <section className="forms">
           <div className="container-fluid">
             <Page title="Edit Program Details">
               <div className="row">
                 <div className="col-md-4">
-                  <FormInput icon="fa fa-id-card-o" type="text" placeholder={values.registrationId} disabled />
+                  <FormInput icon="fa fa-id-card-o" type="text" placeholder={values.userId} disabled />
                 </div>
                 <div className="col-md-2">
                   <Link to="/search">
@@ -177,11 +663,11 @@ class EditProgramDetails extends Component {
                 </div>
               </div>
 
-              <EditCommunityMattersProgram inputChange={this.inputChange} inputCheckBoxHandler={this.inputCheckBoxHandler} values={values} /* checkedValueHandler={this.checkedValueHandler}  */ />
+              <EditCommunityMattersProgram inputChange={this.inputChange} inputCheckBoxHandler={this.inputCheckBoxHandler} values={values} />
 
               <div className="row justify-content-center">
                 <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/search" /* onClick={this.handleSubmit} */>
+                  <Link to="/search" onClick={this.handleSubmit}>
                     <button className="btn btn-block btn-success">Submit</button>
                   </Link>
                 </div>

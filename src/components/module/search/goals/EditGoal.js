@@ -15,6 +15,7 @@ class EditGoal extends Component {
     response: false,
     loading: false,
     userId: this.props.registrationId,
+    tb_user_details_goals_update_id: "",
     CategoryName: "",
     ProgramName: "",
     Location: "",
@@ -31,6 +32,7 @@ class EditGoal extends Component {
   componentDidMount() {
     const { editGoalDetails } = this.props.location.state;
 
+    this.setState({ tb_user_details_goals_update_id: editGoalDetails.tb_user_details_goals_update_id });
     this.setState({ CategoryName: editGoalDetails.user_goal_category_name });
     this.setState({ ProgramName: editGoalDetails.user_goal_program_name });
     this.setState({ Location: editGoalDetails.user_goal_program_location });
@@ -54,10 +56,10 @@ class EditGoal extends Component {
     e.preventDefault();
     this.setState({ loading: true });
 
-    const { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter } = this.state;
+    const { tb_user_details_goals_update_id, userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter } = this.state;
 
     try {
-      const response = await Axios.post("/irf_updateGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
+      const response = await Axios.post("/irf_updateGoal", { tb_user_details_goals_update_id, userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
 
       if (response.data.success === true) {
         this.setState({ loading: false });
@@ -73,10 +75,10 @@ class EditGoal extends Component {
     e.preventDefault();
     this.setState({ loading: true });
 
-    const { userId, ProgramName } = this.state;
+    const { userId, ProgramName, tb_user_details_goals_update_id } = this.state;
 
     try {
-      const response = await Axios.post("/irf_deleteGoal", { userId, ProgramName });
+      const response = await Axios.post("/irf_deleteGoal", { userId, ProgramName, tb_user_details_goals_update_id });
 
       if (response.data.success === true) {
         this.setState({ loading: false });

@@ -138,7 +138,7 @@ function Search() {
             </form>
           </Page>
           <Container title="Member Details - CMT">
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="4">
               <div className="card">
                 <Accordion.Toggle as={Card.Header} eventKey="0">
                   <Row className="card-header bg-primary">
@@ -348,7 +348,14 @@ function Search() {
                     </Col>
                     <Col sm={4} className="d-flex">
                       <i className="fa fa-edit text-white"></i>
-                      <Link to="/editProgram">
+                      <Link
+                        to={{
+                          pathname: "/editProgram",
+                          state: {
+                            programDetails: Program_Details
+                          }
+                        }}
+                      >
                         <p className="ml-1 text-white text-left">Edit</p>
                       </Link>
                     </Col>
@@ -530,13 +537,6 @@ function Search() {
                                         );
                                       })
                                     : ""}
-                                  {/* <tr>
-                                      <td>1</td>
-                                      <td>Overall Health</td>
-                                      <td>{Health_Details[0].myHealth}</td>
-                                      <td>{Health_Details[0].myhealth_curr_state}</td>
-                                      <td>{Health_Details[0].myhealth_curr_prog}</td>
-                                    </tr> */}
                                 </tbody>
                               </table>
                             </div>
