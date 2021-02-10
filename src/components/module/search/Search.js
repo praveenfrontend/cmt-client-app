@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 
 import Page from "../../common/Page";
 import Container from "../../common/Container";
@@ -47,7 +48,7 @@ function Search() {
           }
         } catch (e) {
           if (e.response === null) {
-            alert("Something went wrong.");
+            swal("Something went wrong.", e.response, "error");
           }
           setLoading(false);
         }
@@ -76,11 +77,11 @@ function Search() {
         appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
         appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
       } else {
-        alert("Incorrect Registration Id or Email Id.");
+        swal("Invalid Input", "Incorrect Registration Id or Email Id.", "error");
       }
     } catch (e) {
       if (e.response === null) {
-        alert("Something went wrong.");
+        swal("Something went wrong.", e.response, "error");
       }
       setLoading(false);
     }

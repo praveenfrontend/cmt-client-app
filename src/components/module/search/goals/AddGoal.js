@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 
 import Page from "../../../common/Page";
 import Container from "../../../common/Container";
@@ -45,12 +46,12 @@ class AddGoal extends Component {
 
         // setting the default option
         // After School by default returns yes even though no is selected in irf_submit. needs to be fixed.
-        // after that logic needs to be modified with alert.
+        // after that logic needs to be modified with alert/swal.
         this.setState({ CategoryName: "After School" });
         if (categoryAndPrograms[key] === "yes" || "Yes") {
           this.setState({ ProgramName: categoryAndPrograms[key] });
         } else {
-          alert("You should enroll for the program before you add a goal");
+          swal("Goal Details", "You should enroll for the program before you add a goal", "info");
         }
       }
       if (key === "HealthResults") {
@@ -125,8 +126,7 @@ class AddGoal extends Component {
         this.setState({ response: true });
       }
     } catch (e) {
-      alert("Error Message. Please update all fields.");
-      console.log(e.response.data);
+      swal("Please update all fields.", e.response.data, "error");
       this.setState({ loading: false });
     }
   };

@@ -8,11 +8,13 @@ import DispatchContext from "../../DispatchContext";
 import { CSSTransition } from "react-transition-group";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 
 function SignUp() {
   const appDispatch = useContext(DispatchContext);
 
   const [loading, setLoading] = useState(false);
+  const [submitCount, setSubmitCount] = useState(0);
 
   const initialState = {
     email: {
@@ -81,8 +83,7 @@ function SignUp() {
       value: "",
       hasErrors: false,
       message: ""
-    },
-    submitCount: 0
+    }
   };
 
   function ourReducer(draft, action) {
@@ -224,7 +225,7 @@ function SignUp() {
         console.log("inside submitform");
         if (/* !draft.username.hasErrors && draft.username.isUnique && */ /* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
           console.log("inside submitform error count");
-          draft.submitCount++;
+          setSubmitCount(1);
         }
         return;
     }
@@ -266,7 +267,6 @@ function SignUp() {
       async function fetchResults() {
         try {
           console.log("before email response...");
-          // const response = await Axios.post("/doesEmailExist", { email: state.email.value }, { cancelToken: ourRequest.token });
           const response = await Axios.post("/checkemail", { email: state.email.value } /* , { cancelToken: ourRequest.token } */);
           console.log("after email response: " + response.data);
           // dispatch({ type: "emailUniqueResults", value: response.data });
@@ -281,13 +281,11 @@ function SignUp() {
   }, [dispatch, state.email.checkCount, state.email.value]);
 
   useEffect(() => {
-    if (state.submitCount) {
+    if (submitCount) {
       const ourRequest = Axios.CancelToken.source();
       async function fetchResults() {
         setLoading(true);
         try {
-          console.log("role type: " + state.roleType);
-          console.log("role type: " + state.gender);
           const response = await Axios.post(
             "/register",
             {
@@ -308,23 +306,19 @@ function SignUp() {
             { cancelToken: ourRequest.token }
           );
           setLoading(false);
-          alert("User was successfully created");
-          console.log(response.data);
-          appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });
+          swal("User was successfully created", "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email.", "success");
+          // appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });
         } catch (e) {
-          console.log("There was a problem or the request was cancelled.");
-          // console.log(e.response);
-          // console.log(e.response.data);
-          alert(e.response.data);
-          // console.log(e.response.data[1]);
+          setSubmitCount(0);
+          swal("Registration Failed!", e.response.data, "error");
           setLoading(false);
-          dispatch({ type: "emailUniqueResults", value: e.response.data.email });
+          // dispatch({ type: "emailUniqueResults", value: e.response.data.email });
         }
       }
       fetchResults();
       return () => ourRequest.cancel();
     }
-  }, [dispatch, state.email.value, state.password.value, state.submitCount, state.roleType, appDispatch]);
+  }, [dispatch, state.email.value, state.password.value, submitCount, state.roleType, appDispatch]);
 
   function handleSubmit(e) {
     e.preventDefault();

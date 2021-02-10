@@ -11,6 +11,7 @@ import FormStepper from "./FormStepper";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 // import * as ReactBootStrap from "react-bootstrap";
 
 class IRF extends Component {
@@ -144,10 +145,10 @@ class IRF extends Component {
         console.log("regId: ", regId);
         console.log(response.data);
         this.setState({ loading: false });
-        alert("Your Registration ID is: " + regId);
+        swal(`Your Registration ID is: ${regId}`, "IRF Submit Completed", "success");
       }
     } catch (e) {
-      alert("Error Message. Please fill all fields.");
+      swal("Something went wrong", e.response.data, "error");
       console.log(e.response.data);
       this.setState({ loading: false });
     }
@@ -176,7 +177,7 @@ class IRF extends Component {
     child_program.map((item, idx) => (item.isChecked ? (checked = true) : null));
 
     if (!checked) {
-      alert("Atleast 1 Child row has to be selected to remove!");
+      swal("Child Program Registration", "Atleast 1 Child row has to be selected to remove!", "info");
       return;
     }
 
@@ -229,14 +230,25 @@ class IRF extends Component {
     console.log("childprogram.............", input);
     if (e.target.value === "No") {
       // eslint-disable-next-line no-restricted-globals
-      const result = confirm("Are you sure you want to delete all your child information?");
-      if (result === true) {
-        this.setState({
-          [input]: e.target.value,
-          childProgramAddRemove: false,
-          child_program: []
-        });
-      }
+
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to delete all your child information?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(willDelete => {
+        if (willDelete) {
+          this.setState({
+            [input]: e.target.value,
+            childProgramAddRemove: false,
+            child_program: []
+          });
+          swal("Your child details has been deleted!", {
+            icon: "success"
+          });
+        }
+      });
     } else {
       this.setState({
         [input]: e.target.value,

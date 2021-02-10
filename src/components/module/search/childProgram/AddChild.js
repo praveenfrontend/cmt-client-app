@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 
 import Page from "../../../common/Page";
 import Container from "../../../common/Container";
@@ -43,7 +44,7 @@ class AddChild extends Component {
     child_program.map((item, idx) => (item.isChecked ? (checked = true) : null));
 
     if (!checked) {
-      alert("Atleast 1 Child row has to be selected to remove!");
+      swal("Child Program Registration", "Atleast 1 Child row has to be selected to remove!", "info");
       return;
     }
 
@@ -132,8 +133,7 @@ class AddChild extends Component {
         this.setState({ response: true });
       }
     } catch (e) {
-      alert("Error Message. Please update all fields.");
-      console.log(e.response.data);
+      swal("Please update all fields.", e.response.data, "error");
       this.setState({ loading: false });
     }
   };

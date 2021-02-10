@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 
 import Page from "../../../common/Page";
 import Container from "../../../common/Container";
@@ -66,8 +67,7 @@ class EditGoal extends Component {
         this.setState({ response: true });
       }
     } catch (e) {
-      alert("Error Message. Please update all fields.");
-      console.log(e.response.data);
+      swal("Please update all fields.", e.response.data, "error");
       this.setState({ loading: false });
     }
   };
@@ -85,8 +85,7 @@ class EditGoal extends Component {
         this.setState({ response: true });
       }
     } catch (e) {
-      alert("Something went wrong.");
-      console.log(e.response.data);
+      swal("Something went wrong!", e.response.data, "error");
       this.setState({ loading: false });
     }
   };

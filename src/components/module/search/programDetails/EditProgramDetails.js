@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import swal from "sweetalert";
 
 import FormInput from "../../../FormFields/FormInput";
 import Page from "../../../common/Page";
@@ -634,8 +635,7 @@ class EditProgramDetails extends Component {
         this.setState({ response: true });
       }
     } catch (e) {
-      alert("Please check the details or Something went wrong.");
-      console.log(e.response.data);
+      swal("Something went wrong.", e.response.data, "error");
       this.setState({ loading: false });
     }
   };
