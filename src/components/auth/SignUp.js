@@ -9,10 +9,13 @@ import { CSSTransition } from "react-transition-group";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 import swal from "sweetalert";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 
 function SignUp() {
   const appDispatch = useContext(DispatchContext);
 
+  // const [selectedDate, setSelectedDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [submitCount, setSubmitCount] = useState(0);
 
@@ -97,19 +100,22 @@ function SignUp() {
           draft.email.hasErrors = true;
           draft.email.message = "You must provide a valid email address.";
         }
-        if (!draft.email.hasErrors && !action.noRequest) {
-          draft.email.checkCount++;
-        }
+        // if (!draft.email.hasErrors && !action.noRequest) {
+        //   console.log("inside no request...");
+        //   draft.email.checkCount++;
+        // }
         return;
-      case "emailUniqueResults":
-        if (action.value) {
-          draft.email.hasErrors = true;
-          draft.email.isUnique = false;
-          draft.email.message = "That email is already being used.";
-        } else {
-          draft.email.isUnique = true;
-        }
-        return;
+      // case "emailUniqueResults":
+      //   if (action.value) {
+      //     draft.email.hasErrors = false;
+      //     draft.email.isUnique = true;
+      //     draft.email.message = "";
+      //   } else {
+      //     draft.email.hasErrors = true;
+      //     draft.email.isUnique = false;
+      //     draft.email.message = "That email is already being used.";
+      //   }
+      //   return;
       case "passwordImmediately":
         draft.password.hasErrors = false;
         draft.password.value = action.value;
@@ -261,24 +267,25 @@ function SignUp() {
     }
   }, [dispatch, state.birthDate.value]);
 
-  useEffect(() => {
-    if (state.email.checkCount) {
-      const ourRequest = Axios.CancelToken.source();
-      async function fetchResults() {
-        try {
-          console.log("before email response...");
-          const response = await Axios.post("/checkemail", { email: state.email.value } /* , { cancelToken: ourRequest.token } */);
-          console.log("after email response: " + response.data);
-          // dispatch({ type: "emailUniqueResults", value: response.data });
-        } catch (e) {
-          console.log(e.response.data);
-          console.log("There was a problem or the request was cancelled.");
-        }
-      }
-      fetchResults();
-      return () => ourRequest.cancel();
-    }
-  }, [dispatch, state.email.checkCount, state.email.value]);
+  // useEffect(() => {
+  //   if (state.email.checkCount) {
+  //     const ourRequest = Axios.CancelToken.source();
+  //     async function fetchResults() {
+  //       try {
+  //         console.log("before email response...");
+  //         const response = await Axios.post("/checkemail", { email: state.email.value } /* , { cancelToken: ourRequest.token } */);
+  //         const result = response.data[0];
+  //         console.log("after email response before emailUniqueResults: " + result);
+  //         dispatch({ type: "emailUniqueResults", value: result });
+  //       } catch (e) {
+  //         console.log(e.response.data);
+  //         console.log("There was a problem or the request was cancelled.");
+  //       }
+  //     }
+  //     fetchResults();
+  //     return () => ourRequest.cancel();
+  //   }
+  // }, [dispatch, state.email.checkCount, state.email.value]);
 
   useEffect(() => {
     if (submitCount) {
@@ -327,7 +334,7 @@ function SignUp() {
     dispatch({ type: "middleNameImmediately", value: state.middleName.value });
     dispatch({ type: "lastNameImmediately", value: state.lastName.value });
     dispatch({ type: "emailImmediately", value: state.email.value });
-    dispatch({ type: "emailAfterDelay", value: state.email.value, noRequest: true });
+    dispatch({ type: "emailAfterDelay", value: state.email.value /* , noRequest: true */ });
     dispatch({ type: "passwordImmediately", value: state.password.value });
     dispatch({ type: "passwordAfterDelay", value: state.password.value });
     dispatch({ type: "phoneImmediately", value: state.phone.value });
@@ -382,6 +389,20 @@ function SignUp() {
                   </div>
                   <div className="col-md-6">
                     <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
+
+                    {/* <div className="form-group">
+                      <div className="input-group input-group-mb">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text" id="basic-addon1">
+                            <i className="fas fa-calendar"></i>
+                          </span>
+                        </div>                        
+                        <DatePicker className="form-control" selected={selectedDate} onChange={date => setSelectedDate(date), e => dispatch({ type: "birthDateImmediately", value: e.target.value }) } placeholder="MM/DD/YYYY" dateFormat="MM/dd/yyyy" maxDate={new Date()} isClearable showYearDropdown scrollableMonthYearDropdown />
+                      </div>
+                      <CSSTransition in={state.birthDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                        <div className="alert alert-danger small liveValidateMessage">{state.phone.message}</div>
+                      </CSSTransition>
+                    </div> */}
                   </div>
                 </div>
 
