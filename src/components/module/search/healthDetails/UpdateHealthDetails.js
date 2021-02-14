@@ -8,69 +8,166 @@ import swal from "sweetalert";
 import Page from "../../../common/Page";
 import Container from "../../../common/Container";
 import FormInput from "../../../FormFields/FormInput";
-import FormRadio from "../../../FormFields/FormRadio";
-import FormDropDown from "../../../FormFields/FormDropDown";
 
 class UpdateHealthDetails extends Component {
   state = {
     response: false,
     loading: false,
     userId: this.props.registrationId,
-    categoryList: [],
-    afterSchoolList: [],
     healthList: [],
-    employmentList: [],
-    neighbourhoodList: [],
-    staffList: [],
-    CategoryName: "",
-    ProgramName: "",
-    Location: "",
-    Instructor: "",
-    StartDate: "",
-    EndDate: "",
-    Status: "",
-    ParticipantComments: "",
-    AdditionalComments: "",
-    RatingBefore: "",
-    RatingAfter: ""
+    healthNewState: ["Poor", "Fair", "Good", "Very Good", "Excellent"],
+    stressNewState: ["High", "Quiet a lot", "Depends", "Manageable", "Low"],
+    personalHealthNewState: ["Never", "When it is urgent", "If I am upset", "Sometimes", "All the time"],
+    healthDetails: this.props.healthDetails,
+
+    OverallHealth: "",
+    LifeSatisfaction: "",
+    SocialNetwork: "",
+    CommunityConnection: "",
+    StressLevel: "",
+    PersonalHealthIssues: "",
+    FamilyDoctor: "",
+    FamilyDoctorVisit: "",
+    ClinicVisit: "",
+    EmergencyVisit: "",
+    HospitalVisit: "",
+    DiseasesAwareness: "",
+    CommunityAwareness: "",
+    PhysicalActivity: "",
+    OverallHealth_prog: "",
+    LifeSatisfaction_prog: "",
+    SocialNetwork_prog: "",
+    CommunityConnection_prog: "",
+    StressLevel_prog: "",
+    PersonalHealthIssues_prog: "",
+    FamilyDoctor_prog: "",
+    DiseasesAwareness_prog: "",
+    CommunityAwareness_prog: "",
+    PhysicalActivity_prog: "",
+
+    myHealth: "",
+    myhealth_curr_state: "",
+    myhealth_curr_prog: "",
+
+    myLifeSatisfaction: "",
+    mylifesatisfaction_curr_state: "",
+    mylifesatisfaction_curr_prog: "",
+
+    mySocialNetwork: "",
+    mysocialnetwork_curr_state: "",
+    mysocialnetwork_curr_prog: "",
+
+    myCommunityNetwork: "",
+    mycommunitynetwork_curr_state: "",
+    mycommunitynetwork_curr_prog: "",
+
+    myStressLevel: "",
+    mystresslevel_curr_state: "",
+    mystresslevel_curr_prog: "",
+
+    myHealthIssues: "",
+    myhealthissues_curr_state: "",
+    myhealthissues_curr_prog: "",
+
+    myFamilyDoctor: "",
+    myfamilydoctor_curr_state: "",
+    myfamilydoctor_curr_prog: "",
+
+    myCmtProgramAwareness: "",
+    mycmtprogramawareness_curr_state: "",
+    mycmtprogramawareness_curr_prog: "",
+
+    myDiseaseAwareness: "",
+    mydiseaseawareness_curr_state: "",
+    mydiseaseawareness_curr_prog: "",
+
+    myPhysicalActiveness: "",
+    myphysicalactiveness_curr_state: "",
+    myphysicalactiveness_curr_prog: "",
+
+    myVisitToClinic: "",
+    myvisittoclinic_curr_state: "",
+
+    myVisitToEmergency: "",
+    myvisittoemergency_curr_state: "",
+
+    myVisitToFamilyDoctor: "",
+    myvisittofamilydoctor_curr_state: "",
+
+    myVisitToHospital: "",
+    myvisittohospital_curr_state: ""
   };
 
   async componentDidMount() {
-    const response = await Axios.get(`/getprograms/${this.state.userId}`);
-    const categoryAndPrograms = response.data.data;
+    this.setState({ loading: true });
 
-    Object.keys(categoryAndPrograms).map((key, value) => {
-      if (key === "AfterschoolResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "After School"] });
-        this.setState({ afterSchoolList: [...this.state.afterSchoolList, categoryAndPrograms[key]] });
+    this.setState({ myHealth: this.props.healthDetails[0].myHealth });
+    this.setState({ myhealth_curr_prog: this.props.healthDetails[0].myhealth_curr_prog });
+    this.setState({ myhealth_curr_state: this.props.healthDetails[0].myhealth_curr_state });
 
-        // setting the default option
-        // After School by default returns yes even though no is selected in irf_submit. needs to be fixed.
-        // after that logic needs to be modified with alert.
-        this.setState({ CategoryName: "After School" });
-        if (categoryAndPrograms[key] === "yes" || "Yes") {
-          this.setState({ ProgramName: categoryAndPrograms[key] });
-        } else {
-          swal("Health Details", "You should enroll for the program before you add a goal", "info");
-        }
+    this.setState({ myLifeSatisfaction: this.props.healthDetails[0].myLifeSatisfaction });
+    this.setState({ mylifesatisfaction_curr_state: this.props.healthDetails[0].mylifesatisfaction_curr_state });
+    this.setState({ mylifesatisfaction_curr_prog: this.props.healthDetails[0].mylifesatisfaction_curr_prog });
+
+    this.setState({ mySocialNetwork: this.props.healthDetails[0].mySocialNetwork });
+    this.setState({ mysocialnetwork_curr_state: this.props.healthDetails[0].mysocialnetwork_curr_state });
+    this.setState({ mysocialnetwork_curr_prog: this.props.healthDetails[0].mysocialnetwork_curr_prog });
+
+    this.setState({ myCommunityNetwork: this.props.healthDetails[0].myCommunityNetwork });
+    this.setState({ mycommunitynetwork_curr_state: this.props.healthDetails[0].mycommunitynetwork_curr_state });
+    this.setState({ mycommunitynetwork_curr_prog: this.props.healthDetails[0].mycommunitynetwork_curr_prog });
+
+    this.setState({ myStressLevel: this.props.healthDetails[0].myStressLevel });
+    this.setState({ mystresslevel_curr_state: this.props.healthDetails[0].mystresslevel_curr_state });
+    this.setState({ mystresslevel_curr_prog: this.props.healthDetails[0].mystresslevel_curr_prog });
+
+    this.setState({ myHealthIssues: this.props.healthDetails[0].myHealthIssues });
+    this.setState({ myhealthissues_curr_state: this.props.healthDetails[0].myhealthissues_curr_state });
+    this.setState({ myhealthissues_curr_prog: this.props.healthDetails[0].myhealthissues_curr_prog });
+
+    this.setState({ myFamilyDoctor: this.props.healthDetails[0].myFamilyDoctor });
+    this.setState({ myfamilydoctor_curr_state: this.props.healthDetails[0].myfamilydoctor_curr_state });
+    this.setState({ myfamilydoctor_curr_prog: this.props.healthDetails[0].myfamilydoctor_curr_prog });
+
+    this.setState({ myCmtProgramAwareness: this.props.healthDetails[0].myCmtProgramAwareness });
+    this.setState({ mycmtprogramawareness_curr_state: this.props.healthDetails[0].mycmtprogramawareness_curr_state });
+    this.setState({ mycmtprogramawareness_curr_prog: this.props.healthDetails[0].mycmtprogramawareness_curr_prog });
+
+    this.setState({ myDiseaseAwareness: this.props.healthDetails[0].myDiseaseAwareness });
+    this.setState({ mydiseaseawareness_curr_state: this.props.healthDetails[0].mydiseaseawareness_curr_state });
+    this.setState({ mydiseaseawareness_curr_prog: this.props.healthDetails[0].mydiseaseawareness_curr_prog });
+
+    this.setState({ myPhysicalActiveness: this.props.healthDetails[0].myPhysicalActiveness });
+    this.setState({ myphysicalactiveness_curr_state: this.props.healthDetails[0].myphysicalactiveness_curr_state });
+    this.setState({ myphysicalactiveness_curr_prog: this.props.healthDetails[0].myphysicalactiveness_curr_prog });
+
+    this.setState({ myVisitToFamilyDoctor: this.props.healthDetails[0].myVisitToFamilyDoctor });
+    this.setState({ myvisittofamilydoctor_curr_state: this.props.healthDetails[0].myvisittofamilydoctor_curr_state });
+
+    this.setState({ myVisitToClinic: this.props.healthDetails[0].myVisitToClinic });
+    this.setState({ myvisittoclinic_curr_state: this.props.healthDetails[0].myvisittoclinic_curr_state });
+
+    this.setState({ myVisitToEmergency: this.props.healthDetails[0].myVisitToEmergency });
+    this.setState({ myvisittoemergency_curr_state: this.props.healthDetails[0].myvisittoemergency_curr_state });
+
+    this.setState({ myVisitToHospital: this.props.healthDetails[0].myVisitToHospital });
+    this.setState({ myvisittohospital_curr_state: this.props.healthDetails[0].myvisittohospital_curr_state });
+
+    try {
+      const response = await Axios.get(`/gethealth_programs/${this.state.userId}`);
+
+      if (response.data.success === true) {
+        this.setState({ loading: false });
       }
-      if (key === "HealthResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Health"] });
-        this.setState({ healthList: [...this.state.healthList, ...categoryAndPrograms[key]] });
-      }
-      if (key === "EmploymentResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Employment"] });
-        this.setState({ employmentList: [...this.state.employmentList, ...categoryAndPrograms[key]] });
-      }
-      if (key === "NeighbourhoodResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Neighbourhood Net"] });
-        this.setState({ neighbourhoodList: [...this.state.neighbourhoodList, ...categoryAndPrograms[key]] });
-      }
-      if (key === "StaffResults") {
-        this.setState({ categoryList: [...this.state.categoryList, "Staff"] });
-        this.setState({ staffList: [...this.state.staffList, ...categoryAndPrograms[key]] });
-      }
-    });
+
+      const healthPrograms = response.data.data;
+      healthPrograms.map(program => {
+        this.setState({ healthList: [...this.state.healthList, program] });
+      });
+    } catch (e) {
+      swal("Something went wrong", e.response.data, "error");
+      this.setState({ loading: false });
+    }
   }
 
   inputChange = input => e => {
@@ -79,47 +176,14 @@ class UpdateHealthDetails extends Component {
     });
   };
 
-  inputChangeProgramDefault = e => {
-    this.setState({ CategoryName: e.target.value }, function () {
-      // eslint-disable-next-line default-case
-      switch (this.state.CategoryName) {
-        case "Health":
-          this.setState({
-            ProgramName: this.state.healthList[0]
-          });
-          break;
-        case "Employment":
-          this.setState({
-            ProgramName: this.state.employmentList[0]
-          });
-          break;
-        case "Neighbourhood Net":
-          this.setState({
-            ProgramName: this.state.neighbourhoodList[0]
-          });
-          break;
-        case "Staff":
-          this.setState({
-            ProgramName: this.state.staffList[0]
-          });
-          break;
-        case "After School":
-          this.setState({
-            ProgramName: this.state.afterSchoolList[0]
-          });
-          break;
-      }
-    });
-  };
-
   handleSubmit = async e => {
     e.preventDefault();
     this.setState({ loading: true });
 
-    const { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter } = this.state;
+    const { userId, OverallHealth, LifeSatisfaction, SocialNetwork, CommunityConnection, StressLevel, PersonalHealthIssues, FamilyDoctor, FamilyDoctorVisit, ClinicVisit, EmergencyVisit, HospitalVisit, DiseasesAwareness, CommunityAwareness, PhysicalActivity, OverallHealth_prog, LifeSatisfaction_prog, SocialNetwork_prog, CommunityConnection_prog, StressLevel_prog, PersonalHealthIssues_prog, FamilyDoctor_prog, DiseasesAwareness_prog, CommunityAwareness_prog, PhysicalActivity_prog } = this.state;
 
     try {
-      const response = await Axios.post("/irf_addGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
+      const response = await Axios.post("/irf_addHealth", { userId, OverallHealth, LifeSatisfaction, SocialNetwork, CommunityConnection, StressLevel, PersonalHealthIssues, FamilyDoctor, FamilyDoctorVisit, ClinicVisit, EmergencyVisit, HospitalVisit, DiseasesAwareness, CommunityAwareness, PhysicalActivity, OverallHealth_prog, LifeSatisfaction_prog, SocialNetwork_prog, CommunityConnection_prog, StressLevel_prog, PersonalHealthIssues_prog, FamilyDoctor_prog, DiseasesAwareness_prog, CommunityAwareness_prog, PhysicalActivity_prog });
 
       if (response.data.success === true) {
         this.setState({ loading: false });
@@ -152,7 +216,320 @@ class UpdateHealthDetails extends Component {
                 </div>
               </div>
 
-              <Container title="Health Details"></Container>
+              <Container title="Health Details">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div className="card">
+                        <div className="card-body">
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>Health Question</th>
+                                  <th>Initial Status</th>
+                                  <th>Current Status</th>
+                                  <th>Program</th>
+                                  <th>Select Program</th>
+                                  <th>New State</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <React.Fragment>
+                                  <tr>
+                                    <td>Overall Health</td>
+                                    <td>{this.state.myHealth}</td>
+                                    <td>{this.state.myhealth_curr_state === null ? "NA" : this.state.myhealth_curr_state}</td>
+                                    <td>{this.state.myhealth_curr_prog === null ? "NA" : this.state.myhealth_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myhealth_curr_prog} onChange={this.inputChange("OverallHealth_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myhealth_curr_state} onChange={this.inputChange("OverallHealth")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthNewState.map(state => (
+                                          <option>{state}</option>
+                                        ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Satisfaction with Life</td>
+                                    <td>{this.state.myLifeSatisfaction}</td>
+                                    <td>{this.state.mylifesatisfaction_curr_state === null ? "NA" : this.state.mylifesatisfaction_curr_state}</td>
+                                    <td>{this.state.mylifesatisfaction_curr_prog === null ? "NA" : this.state.mylifesatisfaction_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mylifesatisfaction_curr_prog} onChange={this.inputChange("LifeSatisfaction_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mylifesatisfaction_curr_state} onChange={this.inputChange("LifeSatisfaction")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthNewState.map(state => (
+                                          <option>{state}</option>
+                                        ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Social Network of Family and Friends</td>
+                                    <td>{this.state.mySocialNetwork}</td>
+                                    <td>{this.state.mysocialnetwork_curr_state === null ? "NA" : this.state.mysocialnetwork_curr_state}</td>
+                                    <td>{this.state.mysocialnetwork_curr_prog === null ? "NA" : this.state.mysocialnetwork_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mysocialnetwork_curr_prog} onChange={this.inputChange("SocialNetwork_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mysocialnetwork_curr_state} onChange={this.inputChange("SocialNetwork")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthNewState.map(state => (
+                                          <option>{state}</option>
+                                        ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Connection with community</td>
+                                    <td>{this.state.myCommunityNetwork}</td>
+                                    <td>{this.state.mycommunitynetwork_curr_state === null ? "NA" : this.state.mycommunitynetwork_curr_state}</td>
+                                    <td>{this.state.mycommunitynetwork_curr_prog === null ? "NA" : this.state.mycommunitynetwork_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mycommunitynetwork_curr_prog} onChange={this.inputChange("CommunityConnection_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mycommunitynetwork_curr_state} onChange={this.inputChange("CommunityConnection")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthNewState.map(state => (
+                                          <option>{state}</option>
+                                        ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Level of Stress</td>
+                                    <td>{this.state.myStressLevel}</td>
+                                    <td>{this.state.mystresslevel_curr_state === null ? "NA" : this.state.mystresslevel_curr_state}</td>
+                                    <td>{this.state.mystresslevel_curr_prog === null ? "NA" : this.state.mystresslevel_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mystresslevel_curr_prog} onChange={this.inputChange("StressLevel_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mystresslevel_curr_state} onChange={this.inputChange("StressLevel")}>
+                                        <option value="">Select</option>
+                                        {this.state.stressNewState.map(state => (
+                                          <option>{state}</option>
+                                        ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Talk to others about personal health issues</td>
+                                    <td>{this.state.myHealthIssues}</td>
+                                    <td>{this.state.myhealthissues_curr_state === null ? "NA" : this.state.myhealthissues_curr_state}</td>
+                                    <td>{this.state.myhealthissues_curr_prog === null ? "NA" : this.state.myhealthissues_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myhealthissues_curr_prog} onChange={this.inputChange("PersonalHealthIssues_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myhealthissues_curr_state} onChange={this.inputChange("PersonalHealthIssues")}>
+                                        <option value="">Select</option>
+                                        {this.state.personalHealthNewState.map(state => (
+                                          <option>{state}</option>
+                                        ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Has a Family Doctor</td>
+                                    <td>{this.state.myFamilyDoctor}</td>
+                                    <td>{this.state.myfamilydoctor_curr_state === null ? "NA" : this.state.myfamilydoctor_curr_state}</td>
+                                    <td>{this.state.myfamilydoctor_curr_prog === null ? "NA" : this.state.myfamilydoctor_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myfamilydoctor_curr_prog} onChange={this.inputChange("FamilyDoctor_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myfamilydoctor_curr_state} onChange={this.inputChange("FamilyDoctor")}>
+                                        <option value="">Select</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Awareness on risk factors for diabetes, cancer and cardiovascular diseases</td>
+                                    <td>{this.state.myDiseaseAwareness}</td>
+                                    <td>{this.state.mydiseaseawareness_curr_state === null ? "NA" : this.state.mydiseaseawareness_curr_state}</td>
+                                    <td>{this.state.mydiseaseawareness_curr_prog === null ? "NA" : this.state.mydiseaseawareness_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mydiseaseawareness_curr_prog} onChange={this.inputChange("DiseasesAwareness_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mydiseaseawareness_curr_state} onChange={this.inputChange("DiseasesAwareness")}>
+                                        <option value="">Select</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Awareness on facilities, programs, parks, playgrounds within community for healthy living and physical activity</td>
+                                    <td>{this.state.myCmtProgramAwareness}</td>
+                                    <td>{this.state.mycmtprogramawareness_curr_state === null ? "NA" : this.state.mycmtprogramawareness_curr_state}</td>
+                                    <td>{this.state.mycmtprogramawareness_curr_prog === null ? "NA" : this.state.mycmtprogramawareness_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mycmtprogramawareness_curr_prog} onChange={this.inputChange("CommunityAwareness_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.mycmtprogramawareness_curr_state} onChange={this.inputChange("CommunityAwareness")}>
+                                        <option value="">Select</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Physical activity</td>
+                                    <td>{this.state.myPhysicalActiveness}</td>
+                                    <td>{this.state.myphysicalactiveness_curr_state === null ? "NA" : this.state.myphysicalactiveness_curr_state}</td>
+                                    <td>{this.state.myphysicalactiveness_curr_prog === null ? "NA" : this.state.myphysicalactiveness_curr_prog}</td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myphysicalactiveness_curr_prog} onChange={this.inputChange("PhysicalActivity_prog")}>
+                                        <option value="">Select</option>
+                                        {this.state.healthList.map(program => {
+                                          return <option value={program}>{program}</option>;
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <select name="account" class="form-control" value={this.state.myphysicalactiveness_curr_state} onChange={this.inputChange("PhysicalActivity")}>
+                                        <option value="">Select</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                      </select>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Number of visits each year - Family Doctor</td>
+                                    <td>{this.state.myVisitToFamilyDoctor}</td>
+                                    <td>{this.state.myvisittofamilydoctor_curr_state === null ? "NA" : this.state.myvisittofamilydoctor_curr_state}</td>
+                                    <td>{"NA"}</td>
+                                    <td>{"NA"}</td>
+                                    <td>
+                                      <div className="form-group">
+                                        <div className="input-group input-group-mb">
+                                          <input type="text" className="form-control" autoComplete="off" onChange={this.inputChange("FamilyDoctorVisit")} value={this.state.myvisittofamilydoctor_curr_state} />
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Number of visits each year - Walk In Clinic</td>
+                                    <td>{this.state.myVisitToClinic}</td>
+                                    <td>{this.state.myvisittoclinic_curr_state === null ? "NA" : this.state.myvisittoclinic_curr_state}</td>
+                                    <td>{"NA"}</td>
+                                    <td>{"NA"}</td>
+                                    <td>
+                                      <div className="form-group">
+                                        <div className="input-group input-group-mb">
+                                          <input type="text" className="form-control" autoComplete="off" onChange={this.inputChange("ClinicVisit")} value={this.state.myvisittoclinic_curr_state} />
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Number of visits each year - Emergency Room</td>
+                                    <td>{this.state.myVisitToEmergency}</td>
+                                    <td>{this.state.myvisittoemergency_curr_state === null ? "NA" : this.state.myvisittoemergency_curr_state}</td>
+                                    <td>{"NA"}</td>
+                                    <td>{"NA"}</td>
+                                    <td>
+                                      <div className="form-group">
+                                        <div className="input-group input-group-mb">
+                                          <input type="text" className="form-control" autoComplete="off" onChange={this.inputChange("EmergencyVisit")} value={this.state.myvisittoemergency_curr_state} />
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>Number of visits each year - Hospital</td>
+                                    <td>{this.state.myVisitToHospital}</td>
+                                    <td>{this.state.myvisittohospital_curr_state === null ? "NA" : this.state.myvisittohospital_curr_state}</td>
+                                    <td>{"NA"}</td>
+                                    <td>{"NA"}</td>
+                                    <td>
+                                      <div className="form-group">
+                                        <div className="input-group input-group-mb">
+                                          <input type="text" className="form-control" autoComplete="off" onChange={this.inputChange("HospitalVisit")} value={this.state.myvisittohospital_curr_state} />
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </React.Fragment>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Container>
 
               <div className="row justify-content-center">
                 <div className="col col-sm-4 col-md-3 col-lg-2">
@@ -175,136 +552,3 @@ class UpdateHealthDetails extends Component {
 }
 
 export default UpdateHealthDetails;
-
-/* 
-<div className="row">
-                  <div className="col-md-4">
-                    <div className={`form-group row`}>
-                      <label class="col-sm-4 form-control-label">Category Name</label>
-                      <div class="col-sm-8 mb-3">
-                        <select name="account" class="form-control" value={this.state.CategoryName} onChange={e => this.inputChangeProgramDefault(e)}>
-                          {this.state.categoryList.map(category => {
-                            return <option value={category}>{category}</option>;
-                          })}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className={`form-group row`}>
-                      <label class="col-sm-4 form-control-label">Programs List</label>
-                      <div class="col-sm-8 mb-3">
-                        <select name="account" class="form-control" value={this.state.ProgramName} onChange={this.inputChange("ProgramName")}>
-                          {this.state.CategoryName === "Health" && this.state.healthList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "Employment" && this.state.employmentList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "Neighbourhood Net" && this.state.neighbourhoodList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "Staff" && this.state.staffList.map(value => <option>{value}</option>)}
-                          {this.state.CategoryName === "After School" && this.state.afterSchoolList.map(value => <option>{value}</option>)}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-4">
-                    <FormInput icon="fa fa-id-card-o" type="text" placeholder="Location" changeHandler={this.inputChange("Location")} value={values.Location} />
-                  </div>
-                  <div className="col-md-4">
-                    <FormInput icon="fas fa-user" type="text" placeholder="Instructor" changeHandler={this.inputChange("Instructor")} value={values.Instructor} />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-4">
-                    <FormInput icon="fas fa-calendar" type="text" placeholder="Start Date YYYY/MM/DD" changeHandler={this.inputChange("StartDate")} value={values.StartDate} />
-                  </div>
-                  <div className="col-md-4">
-                    <FormInput icon="fas fa-calendar" type="text" placeholder="End Date YYYY/MM/DD" changeHandler={this.inputChange("EndDate")} value={values.EndDate} />
-                  </div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col">
-                    <div className="form-group">
-                      <label htmlFor="agent_notes" className="text-muted">
-                        Participant Comments
-                      </label>
-                      <textarea className="form-control col col-md-10" id="" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={this.inputChange("ParticipantComments")} value={values.ParticipantComments}></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col">
-                    <div className="form-group">
-                      <label htmlFor="agent_notes" className="text-muted">
-                        Additional Comments
-                      </label>
-                      <textarea className="form-control col col-md-10" id="" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={this.inputChange("AdditionalComments")} value={values.AdditionalComments}></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="form-group">
-                    <div className="col">
-                      <label className="text-muted mr-2">Status:</label>
-                    </div>
-                    <div className="col">
-                      <FormRadio classNameValue="col-md-3 col-lg-3 col-xl-3" changeHandler={this.inputChange("Status")} inputId="status_yetToBegin" inputName="Status" inputValue="Yet To Begin" inputLabel="Yet To Begin" checkedValue={values.Status} />
-                      <FormRadio classNameValue="col-md-3 col-lg-3 col-xl-3" changeHandler={this.inputChange("Status")} inputId="status_inProgress" inputName="Status" inputValue="In Progress" inputLabel="In Progress" checkedValue={values.Status} />
-                      <FormRadio classNameValue="col-md-3 col-lg-3 col-xl-3" changeHandler={this.inputChange("Status")} inputId="status_complete" inputName="Status" inputValue="Complete" inputLabel="Complete" checkedValue={values.Status} />
-                      <FormRadio classNameValue="col-md-3 col-lg-3 col-xl-3" changeHandler={this.inputChange("Status")} inputId="status_inComplete" inputName="Status" inputValue="In Complete" inputLabel="In Complete" checkedValue={values.Status} />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <div className="row">
-                    <div className="col">
-                      <label className="text-muted mr-2">Rating Score: "Before" :</label>
-                    </div>
-                  </div>
-                  <div className="row d-flex">
-                    <div className="col">
-                      <span className="col-md-1 col-lg-1 col-xl-1 mr-2">
-                        <label className="text-muted mr-2">Poor</label>
-                      </span>
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_1" inputName="RatingBefore" inputValue="1" inputLabel="1" checkedValue={values.RatingBefore} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_2" inputName="RatingBefore" inputValue="2" inputLabel="2" checkedValue={values.RatingBefore} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_3" inputName="RatingBefore" inputValue="3" inputLabel="3" checkedValue={values.RatingBefore} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_4" inputName="RatingBefore" inputValue="4" inputLabel="4" checkedValue={values.RatingBefore} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_5" inputName="RatingBefore" inputValue="5" inputLabel="5" checkedValue={values.RatingBefore} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_6" inputName="RatingBefore" inputValue="6" inputLabel="6" checkedValue={values.RatingBefore} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingBefore")} inputId="before_7" inputName="RatingBefore" inputValue="7" inputLabel="7" checkedValue={values.RatingBefore} />
-                      <span className="col-md-1 col-lg-1 col-xl-1 text-muted">
-                        <label className="text-muted mr-2">Excellent</label>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <div className="row">
-                    <div className="col">
-                      <label className="text-muted mr-2">Rating Score: "After" :</label>
-                    </div>
-                  </div>
-                  <div className="row d-flex">
-                    <div className="col">
-                      <span className="col-md-1 col-lg-1 col-xl-1 mr-2">
-                        <label className="text-muted mr-2">Poor</label>
-                      </span>
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_1" inputName="RatingAfter" inputValue="1" inputLabel="1" checkedValue={values.RatingAfter} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_2" inputName="RatingAfter" inputValue="2" inputLabel="2" checkedValue={values.RatingAfter} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_3" inputName="RatingAfter" inputValue="3" inputLabel="3" checkedValue={values.RatingAfter} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_4" inputName="RatingAfter" inputValue="4" inputLabel="4" checkedValue={values.RatingAfter} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_5" inputName="RatingAfter" inputValue="5" inputLabel="5" checkedValue={values.RatingAfter} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_6" inputName="RatingAfter" inputValue="6" inputLabel="6" checkedValue={values.RatingAfter} />
-                      <FormRadio classNameValue="col-md-1 col-lg-1 col-xl-1" changeHandler={this.inputChange("RatingAfter")} inputId="after_7" inputName="RatingAfter" inputValue="7" inputLabel="7" checkedValue={values.RatingAfter} />
-                      <span className="col-md-1 col-lg-1 col-xl-1 text-muted">
-                        <label className="text-muted mr-2">Excellent</label>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-*/

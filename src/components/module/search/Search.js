@@ -43,6 +43,7 @@ function Search() {
             appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
             appDispatch({ type: "childDetails", value: response.data.data.Child_Details });
             appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
+            appDispatch({ type: "healthDetails", value: response.data.data.Health_Details });
             appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
             setLoading(false);
           }
@@ -75,6 +76,7 @@ function Search() {
         appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
         appDispatch({ type: "childDetails", value: response.data.data.Child_Details });
         appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
+        appDispatch({ type: "healthDetails", value: response.data.data.Health_Details });
         appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
       } else {
         swal("Invalid Input", "Incorrect Registration Id or Email Id.", "error");
@@ -308,7 +310,6 @@ function Search() {
                           </tr>
                         </thead>
                         <tbody>
-                          {console.log(Child_Details)}
                           {Object.keys(searchData).length !== 0 && searchData.Child_Details.length !== 0
                             ? Child_Details.map((child, val) => {
                                 return (
@@ -432,112 +433,114 @@ function Search() {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {Object.keys(searchData).length !== 0 && searchData.Health_Details.length !== 0
-                                    ? Health_Details.map(health => {
-                                        return (
-                                          <React.Fragment>
-                                            <tr>
-                                              <td>1</td>
-                                              <td>Overall Health</td>
-                                              <td>{health.myHealth}</td>
-                                              <td>{health.myhealth_curr_state}</td>
-                                              <td>{health.myhealth_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>2</td>
-                                              <td>Satisfaction with Life</td>
-                                              <td>{health.myLifeSatisfaction}</td>
-                                              <td>{health.mylifesatisfaction_curr_state}</td>
-                                              <td>{health.mylifesatisfaction_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>3</td>
-                                              <td>Social Network of Family and Friends</td>
-                                              <td>{health.mySocialNetwork}</td>
-                                              <td>{health.mysocialnetwork_curr_state}</td>
-                                              <td>{health.mysocialnetwork_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>4</td>
-                                              <td>Connection with community</td>
-                                              <td>{health.myCommunityNetwork}</td>
-                                              <td>{health.mycommunitynetwork_curr_state}</td>
-                                              <td>{health.mycommunitynetwork_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>5</td>
-                                              <td>Level of Stress</td>
-                                              <td>{health.myStressLevel}</td>
-                                              <td>{health.mystresslevel_curr_state}</td>
-                                              <td>{health.mystresslevel_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>6</td>
-                                              <td>Talk to others about personal health issues</td>
-                                              <td>{health.myHealthIssues}</td>
-                                              <td>{health.myhealthissues_curr_state}</td>
-                                              <td>{health.myhealthissues_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>7</td>
-                                              <td>Has a Family Doctor</td>
-                                              <td>{health.myFamilyDoctor}</td>
-                                              <td>{health.myfamilydoctor_curr_state}</td>
-                                              <td>{health.myfamilydoctor_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>8</td>
-                                              <td>Number of visits each year - Family Doctor</td>
-                                              <td>{health.myVisitToFamilyDoctor}</td>
-                                              <td>{health.myvisittofamilydoctor_curr_state}</td>
-                                              <td>{/* health.myhealth_curr_prog */}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>9</td>
-                                              <td>Number of visits each year - Walk In Clinic</td>
-                                              <td>{health.myVisitToClinic}</td>
-                                              <td>{health.myvisittoclinic_curr_state}</td>
-                                              <td>{/* health.myhealth_curr_prog */}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>10</td>
-                                              <td>Number of visits each year - Emergency Room</td>
-                                              <td>{health.myVisitToEmergency}</td>
-                                              <td>{health.myvisittoemergency_curr_state}</td>
-                                              <td>{/* health.myhealth_curr_prog */}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>11</td>
-                                              <td>Number of visits each year - Hospital</td>
-                                              <td>{health.myVisitToHospital}</td>
-                                              <td>{health.myvisittohospital_curr_state}</td>
-                                              <td>{/* health.myhealth_curr_prog */}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>12</td>
-                                              <td>Awareness on risk factors for diabetes, cancer and cardiovascular diseases</td>
-                                              <td>{health.myDiseaseAwareness}</td>
-                                              <td>{health.mydiseaseawareness_curr_state}</td>
-                                              <td>{health.mydiseaseawareness_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>13</td>
-                                              <td>Awareness on facilities, programs, parks, playgrounds within community for healthy living and physical activity</td>
-                                              <td>{health.myHealth}</td>
-                                              <td>{health.myCmtProgramAwareness}</td>
-                                              <td>{health.mycmtprogramawareness_curr_prog}</td>
-                                            </tr>
-                                            <tr>
-                                              <td>14</td>
-                                              <td>Physical activity</td>
-                                              <td>{health.myPhysicalActiveness}</td>
-                                              <td>{health.myphysicalactiveness_curr_state}</td>
-                                              <td>{health.myphysicalactiveness_curr_prog}</td>
-                                            </tr>
-                                          </React.Fragment>
-                                        );
-                                      })
-                                    : ""}
+                                  {Object.keys(searchData).length !== 0 && searchData.Health_Details.length !== 0 ? (
+                                    Health_Details.map(health => {
+                                      return (
+                                        <React.Fragment>
+                                          <tr>
+                                            <td>1</td>
+                                            <td>Overall Health</td>
+                                            <td>{health.myHealth}</td>
+                                            <td>{health.myhealth_curr_state === null ? "NA" : health.myhealth_curr_state}</td>
+                                            <td>{health.myhealth_curr_prog === null ? "NA" : health.myhealth_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>2</td>
+                                            <td>Satisfaction with Life</td>
+                                            <td>{health.myLifeSatisfaction}</td>
+                                            <td>{health.mylifesatisfaction_curr_state === null ? "NA" : health.mylifesatisfaction_curr_state}</td>
+                                            <td>{health.mylifesatisfaction_curr_prog === null ? "NA" : health.mylifesatisfaction_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>3</td>
+                                            <td>Social Network of Family and Friends</td>
+                                            <td>{health.mySocialNetwork}</td>
+                                            <td>{health.mysocialnetwork_curr_state === null ? "NA" : health.mysocialnetwork_curr_state}</td>
+                                            <td>{health.mysocialnetwork_curr_prog === null ? "NA" : health.mysocialnetwork_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>4</td>
+                                            <td>Connection with community</td>
+                                            <td>{health.myCommunityNetwork}</td>
+                                            <td>{health.mycommunitynetwork_curr_state === null ? "NA" : health.mycommunitynetwork_curr_state}</td>
+                                            <td>{health.mycommunitynetwork_curr_prog === null ? "NA" : health.mycommunitynetwork_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>5</td>
+                                            <td>Level of Stress</td>
+                                            <td>{health.myStressLevel}</td>
+                                            <td>{health.mystresslevel_curr_state === null ? "NA" : health.mystresslevel_curr_state}</td>
+                                            <td>{health.mystresslevel_curr_prog === null ? "NA" : health.mystresslevel_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>6</td>
+                                            <td>Talk to others about personal health issues</td>
+                                            <td>{health.myHealthIssues}</td>
+                                            <td>{health.myhealthissues_curr_state === null ? "NA" : health.myhealthissues_curr_state}</td>
+                                            <td>{health.myhealthissues_curr_prog === null ? "NA" : health.myhealthissues_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>7</td>
+                                            <td>Has a Family Doctor</td>
+                                            <td>{health.myFamilyDoctor}</td>
+                                            <td>{health.myfamilydoctor_curr_state === null ? "NA" : health.myfamilydoctor_curr_state}</td>
+                                            <td>{health.myfamilydoctor_curr_prog === null ? "NA" : health.myfamilydoctor_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>8</td>
+                                            <td>Number of visits each year - Family Doctor</td>
+                                            <td>{health.myVisitToFamilyDoctor}</td>
+                                            <td>{health.myvisittofamilydoctor_curr_state === null ? "NA" : health.myvisittofamilydoctor_curr_state}</td>
+                                            <td>{"NA"}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>9</td>
+                                            <td>Number of visits each year - Walk In Clinic</td>
+                                            <td>{health.myVisitToClinic}</td>
+                                            <td>{health.myvisittoclinic_curr_state === null ? "NA" : health.myvisittoclinic_curr_state}</td>
+                                            <td>{"NA"}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>10</td>
+                                            <td>Number of visits each year - Emergency Room</td>
+                                            <td>{health.myVisitToEmergency}</td>
+                                            <td>{health.myvisittoemergency_curr_state === null ? "NA" : health.myvisittoemergency_curr_state}</td>
+                                            <td>{"NA"}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>11</td>
+                                            <td>Number of visits each year - Hospital</td>
+                                            <td>{health.myVisitToHospital}</td>
+                                            <td>{health.myvisittohospital_curr_state === null ? "NA" : health.myvisittohospital_curr_state}</td>
+                                            <td>{"NA"}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>12</td>
+                                            <td>Awareness on risk factors for diabetes, cancer and cardiovascular diseases</td>
+                                            <td>{health.myDiseaseAwareness}</td>
+                                            <td>{health.mydiseaseawareness_curr_state === null ? "NA" : health.mydiseaseawareness_curr_state}</td>
+                                            <td>{health.mydiseaseawareness_curr_prog === null ? "NA" : health.mydiseaseawareness_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>13</td>
+                                            <td>Awareness on facilities, programs, parks, playgrounds within community for healthy living and physical activity</td>
+                                            <td>{health.myCmtProgramAwareness}</td>
+                                            <td>{health.mycmtprogramawareness_curr_state === null ? "NA" : health.mycmtprogramawareness_curr_state}</td>
+                                            <td>{health.mycmtprogramawareness_curr_prog === null ? "NA" : health.mycmtprogramawareness_curr_prog}</td>
+                                          </tr>
+                                          <tr>
+                                            <td>14</td>
+                                            <td>Physical activity</td>
+                                            <td>{health.myPhysicalActiveness}</td>
+                                            <td>{health.myphysicalactiveness_curr_state === null ? "NA" : health.myphysicalactiveness_curr_state}</td>
+                                            <td>{health.myphysicalactiveness_curr_prog === null ? "NA" : health.myphysicalactiveness_curr_prog}</td>
+                                          </tr>
+                                        </React.Fragment>
+                                      );
+                                    })
+                                  ) : (
+                                    <h1>No Data Available</h1>
+                                  )}
                                 </tbody>
                               </table>
                             </div>
