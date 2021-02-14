@@ -141,7 +141,7 @@ function Search() {
             </form>
           </Page>
           <Container title="Member Details - CMT">
-            <Accordion defaultActiveKey="4">
+            <Accordion defaultActiveKey="0">
               <div className="card">
                 <Accordion.Toggle as={Card.Header} eventKey="0">
                   <Row className="card-header bg-primary">

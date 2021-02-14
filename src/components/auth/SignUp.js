@@ -276,7 +276,12 @@ function SignUp() {
   //         const response = await Axios.post("/checkemail", { email: state.email.value } /* , { cancelToken: ourRequest.token } */);
   //         const result = response.data[0];
   //         console.log("after email response before emailUniqueResults: " + result);
-  //         dispatch({ type: "emailUniqueResults", value: result });
+  //         if (result === "True") {
+  //           dispatch({ type: "emailUniqueResults", value: true });
+  //         }
+  //         if (result === "False") {
+  //           dispatch({ type: "emailUniqueResults", value: false });
+  //         }
   //       } catch (e) {
   //         console.log(e.response.data);
   //         console.log("There was a problem or the request was cancelled.");

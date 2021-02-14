@@ -32,12 +32,12 @@ function SideNavigation({ menuHandleValue }) {
                 <i className="fa fa-user-o"></i>Profile
               </Link>
             </li>
-            <li>
+            <li style={{ background: "#62d92b" }}>
               <Link to="/initial-registration-form">
                 <i className="fa fa-wpforms"></i>IRF
               </Link>
             </li>
-            <li>
+            <li style={{ background: "#62d92b" }}>
               <Link to="/search">
                 <i className="fa fa-search"></i>Search
               </Link>
