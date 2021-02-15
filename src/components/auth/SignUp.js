@@ -73,7 +73,7 @@ function SignUp() {
       message: ""
     },
     country: {
-      value: "",
+      value: "Canada",
       hasErrors: false,
       message: ""
     },
@@ -98,7 +98,7 @@ function SignUp() {
       case "emailAfterDelay":
         if (!/^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([a-zA-Z]+)$/.test(draft.email.value)) {
           draft.email.hasErrors = true;
-          draft.email.message = "You must provide a valid email address.";
+          draft.email.message = "Provide a valid email.";
         }
         // if (!draft.email.hasErrors && !action.noRequest) {
         //   console.log("inside no request...");
@@ -133,104 +133,152 @@ function SignUp() {
       case "firstNameImmediately":
         draft.firstName.hasErrors = false;
         draft.firstName.value = action.value;
+        if (/\d/.test(draft.firstName.value)) {
+          draft.firstName.hasErrors = true;
+          draft.firstName.message = "Enter first name without numbers.";
+          return;
+        }
         if (!/^[a-zA-Z]+$/.test(draft.firstName.value)) {
           draft.firstName.hasErrors = true;
-          draft.firstName.message = "Please enter only alphabets without space.";
+          draft.firstName.message = "First name cannot be empty.";
+          return;
         }
         return;
       case "middleNameImmediately":
         draft.middleName.hasErrors = false;
         draft.middleName.value = action.value;
+        if (/\d/.test(draft.middleName.value)) {
+          draft.middleName.hasErrors = true;
+          draft.middleName.message = "Enter middle name without numbers.";
+          return;
+        }
         if (!/^[a-zA-Z]+$/.test(draft.middleName.value)) {
           draft.middleName.hasErrors = true;
-          draft.middleName.message = "Please enter only alphabets without space.";
+          draft.middleName.message = "Middle name cannot be empty.";
+          return;
         }
         return;
       case "lastNameImmediately":
         draft.lastName.hasErrors = false;
         draft.lastName.value = action.value;
+        if (/\d/.test(draft.lastName.value)) {
+          draft.lastName.hasErrors = true;
+          draft.lastName.message = "Enter last name without numbers.";
+          return;
+        }
         if (!/^[a-zA-Z]+$/.test(draft.lastName.value)) {
           draft.lastName.hasErrors = true;
-          draft.lastName.message = "Please enter only alphabets without space.";
+          draft.lastName.message = "Last name cannot be empty.";
+          return;
         }
         return;
       case "phoneImmediately":
         draft.phone.hasErrors = false;
         draft.phone.value = action.value;
+        if (draft.phone.value.length === 0) {
+          draft.phone.hasErrors = true;
+          draft.phone.message = "Phone number cannot be empty.";
+          return;
+        }
         return;
       case "phoneAfterDelay":
         if (!/^[0-9]{10}$/.test(draft.phone.value)) {
           draft.phone.hasErrors = true;
-          draft.phone.message = "Please enter 10 digits phone number.";
+          draft.phone.message = "Enter 10 digits phone number.";
+          return;
         }
         return;
       case "birthDateImmediately":
         draft.birthDate.hasErrors = false;
         draft.birthDate.value = action.value;
+        if (draft.birthDate.value.length === 0) {
+          draft.birthDate.hasErrors = true;
+          draft.birthDate.message = "DOB cannot be empty.";
+          return;
+        }
         return;
       case "birthDateAfterDelay":
         if (!/^(0[1-9]|[12][0-9]|3[01])[\\/](0[1-9]|1[012])[\\/](19|20)\d\d$/.test(draft.birthDate.value)) {
           draft.birthDate.hasErrors = true;
-          draft.birthDate.message = "Please enter date of birth in DD/MM/YYYY format.";
+          draft.birthDate.message = "Enter date of birth in DD/MM/YYYY format.";
+          return;
         }
         return;
       case "cityImmediately":
         draft.city.hasErrors = false;
         draft.city.value = action.value;
+        if (/\d/.test(draft.city.value)) {
+          draft.city.hasErrors = true;
+          draft.city.message = "City cannot contain number.";
+          return;
+        }
         if (!/^[a-zA-Z]+$/.test(draft.city.value)) {
           draft.city.hasErrors = true;
+          draft.city.message = "City cannot be empty.";
+          return;
         }
         return;
       case "provinceImmediately":
         draft.province.hasErrors = false;
         draft.province.value = action.value;
+        if (/\d/.test(draft.province.value)) {
+          draft.province.hasErrors = true;
+          draft.province.message = "Province cannot contain number.";
+          return;
+        }
         if (!/^[a-zA-Z]+$/.test(draft.province.value)) {
           draft.province.hasErrors = true;
-          draft.province.message = "Please enter only alphabets without space.";
+          draft.province.message = "Province cannot be empty.";
+          return;
         }
         return;
       case "postalImmediately":
         draft.postal.hasErrors = false;
         draft.postal.value = action.value;
+        if (draft.postal.value.length === 0) {
+          draft.postal.hasErrors = true;
+          draft.postal.message = "Postal code cannot be empty.";
+          return;
+        }
         if (!/^[ABCEGHJKLMNPRSTVXYabceghjklmnprstvxy]{1}\d{1}[A-Za-z]{1}\d{1}[A-Za-z]{1}\d{1}$/.test(draft.postal.value)) {
           draft.postal.hasErrors = true;
-          draft.postal.message = "Please enter only 6 characters alpha numeric.";
+          draft.postal.message = "Enter 6 alpha numeric characters postal code without space. Ex: K1A0B1";
+          return;
         }
         return;
       case "countryImmediately":
         draft.country.hasErrors = false;
         draft.country.value = action.value;
+        if (!draft.country.value.toLowerCase() === "canada") {
+          draft.country.hasErrors = true;
+          draft.country.message = "Enter Canada.";
+          return;
+        }
         if (!/^[a-zA-Z]+$/.test(draft.country.value)) {
           draft.country.hasErrors = true;
-          draft.country.message = "Please enter only alphabets without space.";
+          draft.country.message = "Country cannot be empty.";
+          return;
         }
         return;
       case "genderImmediately":
-        console.log("Inside role type");
         draft.gender.hasErrors = false;
         draft.gender.value = action.value;
-        console.log("role type value:" + draft.gender.value);
         if (draft.gender.value === "") {
-          console.log("Gender has errorssssssssssssss............");
           draft.gender.hasErrors = true;
-          draft.gender.message = "Please select the gender";
+          draft.gender.message = "Select Gender.";
         }
         return;
       case "roleTypeImmediately":
-        console.log("Inside role type");
         draft.roleType.hasErrors = false;
         draft.roleType.value = action.value;
-        console.log("role type value:" + draft.roleType.value);
         if (draft.roleType.value === "") {
-          console.log("role type has errorssssssssssssss............");
           draft.roleType.hasErrors = true;
-          draft.roleType.message = "Please select the Role Type";
+          draft.roleType.message = "Select Role Type.";
         }
         return;
       case "submitForm":
         console.log("inside submitform");
-        if (/* !draft.username.hasErrors && draft.username.isUnique && */ /* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
-          console.log("inside submitform error count");
+        if (/* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
           setSubmitCount(1);
         }
         return;
@@ -422,7 +470,7 @@ function SignUp() {
                     <FormInput icon="fas fa-address-card" type="text" placeholder="Postal code" changeHandler={e => dispatch({ type: "postalImmediately", value: e.target.value })} message={state.postal.message} inputField={state.postal.hasErrors} />
                   </div>
                   <div className="col-md-3">
-                    <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={e => dispatch({ type: "countryImmediately", value: e.target.value })} message={state.country.message} inputField={state.country.hasErrors} />
+                    <FormInput icon="fas fa-address-card" type="text" placeholder="Country" changeHandler={e => dispatch({ type: "countryImmediately", value: e.target.value })} message={state.country.message} inputField={state.country.hasErrors} value={state.country.value} disabled />
                   </div>
                 </div>
 
@@ -440,10 +488,10 @@ function SignUp() {
                           <input type="radio" name="gender" id="female" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
                         </label>
                       </div>
-                      <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                        <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
-                      </CSSTransition>
                     </div>
+                    <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
+                    </CSSTransition>
                   </div>
                   <div className="col-md-7">
                     <div className="form-group d-flex align-items-center ">
@@ -461,10 +509,10 @@ function SignUp() {
                           <input type="radio" name="roleType" id="admin" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Admin
                         </label>
                       </div>
-                      <CSSTransition in={state.roleType.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                        <div className="alert alert-danger small liveValidateMessage">{state.roleType.message}</div>
-                      </CSSTransition>
                     </div>
+                    <CSSTransition in={state.roleType.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.roleType.message}</div>
+                    </CSSTransition>
                   </div>
                 </div>
 

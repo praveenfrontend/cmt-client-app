@@ -74,7 +74,6 @@ function SignIn() {
         }
         return;
       case "submitForm":
-        console.log("inside submitform");
         if (/* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors) {
           console.log("inside submitform error count");
           setSubmitCount(1);
@@ -100,7 +99,6 @@ function SignIn() {
   }, [dispatch, state.password.value]);
 
   useEffect(() => {
-    const errorMsg = "";
     if (submitCount) {
       async function fetchResults() {
         appDispatch({ type: "loading", value: true });

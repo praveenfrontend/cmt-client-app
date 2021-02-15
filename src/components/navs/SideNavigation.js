@@ -22,24 +22,24 @@ function SideNavigation({ menuHandleValue }) {
         {/* <!-- Sidebar Navigation Menus--> */}
         <div className="main-menu">
           <ul id="side-main-menu" className="side-menu list-unstyled">
-            <li>
-              <Link to="/feed">
-                <i className="fa fa-feed"></i>Feed
-              </Link>
-            </li>
-            <li>
-              <Link to="/profile">
-                <i className="fa fa-user-o"></i>Profile
-              </Link>
-            </li>
             <li style={{ background: "#62d92b" }}>
               <Link to="/initial-registration-form">
                 <i className="fa fa-wpforms"></i>IRF
               </Link>
             </li>
+            <li>
+              <Link to="/feed">
+                <i className="fa fa-feed"></i>Feed
+              </Link>
+            </li>
             <li style={{ background: "#62d92b" }}>
               <Link to="/search">
                 <i className="fa fa-search"></i>Search
+              </Link>
+            </li>
+            <li>
+              <Link to="/profile">
+                <i className="fa fa-user-o"></i>Profile
               </Link>
             </li>
             <li>

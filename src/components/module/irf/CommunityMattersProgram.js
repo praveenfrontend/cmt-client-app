@@ -1,9 +1,88 @@
-import React from "react";
+/* eslint-disable default-case */
+import React, { useEffect, useState } from "react";
+import { useImmerReducer } from "use-immer";
 import Page from "../../common/Page";
 import FormRadio from "../../FormFields/FormRadio";
 import FormCheckbox from "../../FormFields/FormCheckbox";
+import { CSSTransition } from "react-transition-group";
 
 function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, nextStep, prevStep }) {
+  const [continueCount, setContinueCount] = useState(0);
+
+  const initialState = {
+    after_school_program: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    Others: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    notes: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    }
+  };
+
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "afterSchoolImmediately":
+        draft.after_school_program.hasErrors = false;
+        draft.after_school_program.value = action.value;
+        if (draft.after_school_program.value === values.after_school_program) {
+          draft.after_school_program.hasErrors = true;
+          draft.after_school_program.message = "Select after school program.";
+        }
+        return;
+
+      case "OthersImmediately":
+        draft.Others.hasErrors = false;
+        draft.Others.value = action.value;
+        if (values.Others.length === 0) {
+          draft.Others.hasErrors = true;
+          draft.Others.message = "Others, if any cannot be empty.";
+          return;
+        }
+        return;
+
+      case "notesImmediately":
+        draft.notes.hasErrors = false;
+        draft.notes.value = action.value;
+        if (values.notes.length === 0) {
+          draft.notes.hasErrors = true;
+          draft.notes.message = "Others, if any cannot be empty.";
+          return;
+        }
+        return;
+
+      case "submitForm":
+        if (!draft.after_school_program.hasErrors && !draft.Others.hasErrors && !draft.notes.hasErrors) {
+          setContinueCount(1);
+        }
+        return;
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+
+  useEffect(() => {
+    if (continueCount) {
+      nextStep();
+    }
+  }, [continueCount, nextStep]);
+
+  function nextHandler(e) {
+    e.preventDefault();
+
+    dispatch({ type: "afterSchoolImmediately", value: state.after_school_program.value });
+    dispatch({ type: "OthersImmediately", value: state.Others.value });
+    dispatch({ type: "notesImmediately", value: state.notes.value });
+    dispatch({ type: "submitForm" });
+  }
+
   return (
     <Page title="Community Matters Program">
       <div className="row">
@@ -17,9 +96,12 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
           <label className="text-muted mr-2">After School Program (3:30 - 6):</label>
         </div>
         <div className="col-md-3 col-lg-6">
-          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_yes" inputName="after_school_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.after_school_program} />
-          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_no" inputName="after_school_program" inputValue="No" inputLabel="No" checkedValue={values.after_school_program} />
+          <FormRadio changeHandler={inputChange("after_school_program")} inputHandler={e => dispatch({ type: "afterSchoolImmediately", value: e.target.id })} inputId="after_school_program_yes" inputName="after_school_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.after_school_program} />
+          <FormRadio changeHandler={inputChange("after_school_program")} inputHandler={e => dispatch({ type: "afterSchoolImmediately", value: e.target.id })} inputId="after_school_program_no" inputName="after_school_program" inputValue="No" inputLabel="No" checkedValue={values.after_school_program} />
         </div>
+        <CSSTransition in={state.after_school_program.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+          <div className="alert alert-danger small liveValidateMessage">{state.after_school_program.message}</div>
+        </CSSTransition>
       </div>
 
       <div className="row">
@@ -109,13 +191,19 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         <label htmlFor="othersTextArea" className="text-muted">
           Others, if any
         </label>
-        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} value={values.Others}></textarea>
+        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} onInput={e => dispatch({ type: "OthersImmediately", value: e.target.value })} message={state.Others.message} inputField={state.Others.hasErrors} value={values.Others}></textarea>
+        <CSSTransition in={state.Others.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+          <div className="alert alert-danger small liveValidateMessage">{state.Others.message}</div>
+        </CSSTransition>
       </div>
       <div className="form-group">
         <label htmlFor="notes" className="text-muted">
           Agent Notes
         </label>
-        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")} value={values.notes}></textarea>
+        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")} onInput={e => dispatch({ type: "notesImmediately", value: e.target.value })} message={state.notes.message} inputField={state.notes.hasErrors} value={values.notes}></textarea>
+        <CSSTransition in={state.notes.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+          <div className="alert alert-danger small liveValidateMessage">{state.notes.message}</div>
+        </CSSTransition>
       </div>
 
       <br />
@@ -126,7 +214,7 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
           </button>
         </div>
         <div className="col col-sm-4 col-md-3 col-lg-2">
-          <button className="btn btn-block btn-primary" onClick={nextStep}>
+          <button className="btn btn-block btn-primary" onClick={nextHandler}>
             Continue
           </button>
         </div>

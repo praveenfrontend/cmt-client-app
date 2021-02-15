@@ -30,7 +30,7 @@ class IRF extends Component {
     city: "",
     province: "",
     zipCode: "",
-    country: "",
+    country: "Canada",
 
     // Contact Details
     phoneCell: "",
@@ -227,7 +227,6 @@ class IRF extends Component {
   };
 
   inputChangeChildProgram = input => e => {
-    console.log("childprogram.............", input);
     if (e.target.value === "No") {
       // eslint-disable-next-line no-restricted-globals
 
@@ -271,7 +270,7 @@ class IRF extends Component {
   };
 
   nextStep = e => {
-    e.preventDefault();
+    // e.preventDefault();
     const { step } = this.state;
     this.setState({ step: step + 1 });
   };
