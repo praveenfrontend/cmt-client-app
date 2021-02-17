@@ -2,6 +2,42 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/returnzipcode", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/returncategory", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/reportprograms", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/notesreport", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/goalreport", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/programreport", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/irf_addHealth", {
       target: "https://test4cmt.000webhostapp.com/api",
       changeOrigin: true

@@ -22,9 +22,29 @@ function SideNavigation({ menuHandleValue }) {
         {/* <!-- Sidebar Navigation Menus--> */}
         <div className="main-menu">
           <ul id="side-main-menu" className="side-menu list-unstyled">
-            <li style={{ background: "#62d92b" }}>
+            <li>
               <Link to="/initial-registration-form">
-                <i className="fa fa-wpforms"></i>IRF
+                <i className="fa fa-wpforms text-success"></i>IRF
+              </Link>
+            </li>
+            <li>
+              <Link to="/search">
+                <i className="fa fa-search text-success"></i>Search
+              </Link>
+            </li>
+            <li>
+              <Link to="/programReport">
+                <i className="fa fa-file-text-o text-success"></i>Reports - Program
+              </Link>
+            </li>
+            <li>
+              <Link to="/goalsReport">
+                <i className="fa fa-file-text-o text-success"></i>Reports - Goals
+              </Link>
+            </li>
+            <li>
+              <Link to="/notesReport">
+                <i className="fa fa-file-text-o text-success"></i>Reports - Notes
               </Link>
             </li>
             <li>
@@ -32,19 +52,9 @@ function SideNavigation({ menuHandleValue }) {
                 <i className="fa fa-feed"></i>Feed
               </Link>
             </li>
-            <li style={{ background: "#62d92b" }}>
-              <Link to="/search">
-                <i className="fa fa-search"></i>Search
-              </Link>
-            </li>
             <li>
               <Link to="/profile">
                 <i className="fa fa-user-o"></i>Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/reports">
-                <i className="fa fa-file-text-o"></i>Reports
               </Link>
             </li>
             <li>

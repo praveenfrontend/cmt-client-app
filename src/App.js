@@ -23,6 +23,11 @@ import AddChild from "./components/module/search/childProgram/AddChild";
 import EditChild from "./components/module/search/childProgram/EditChild";
 import EditProgramDetails from "./components/module/search/programDetails/EditProgramDetails";
 import UpdateHealthDetails from "./components/module/search/healthDetails/UpdateHealthDetails";
+
+import ProgramReport from "./components/module/reports/ProgramReport";
+import GoalsReport from "./components/module/reports/GoalsReport";
+import NotesReport from "./components/module/reports/NotesReport";
+
 import GuardedRoute from "./components/auth/GuardedRoute";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
@@ -133,7 +138,8 @@ function App(props) {
               {state.loggedIn ? <Header menuHandle={menuToggle} /> : null}
               <Switch>
                 <Route exact path="/">
-                  {!state.loggedIn ? state.signIn ? <SignIn /> : <SignUp /> : <Redirect to="/initial-registration-form" />}
+                  {/* !state.loggedIn ? state.signIn ? <SignIn /> : <SignUp /> : <Redirect to="/initial-registration-form" /> */}
+                  {!state.loggedIn ? state.signIn ? <SignIn /> : <SignUp /> : <Redirect to="/programReport" />}
                 </Route>
 
                 <GuardedRoute path="/initial-registration-form" component={IRF} auth={state.loggedIn} />
@@ -149,6 +155,10 @@ function App(props) {
                 <GuardedRoute path="/editChild" component={EditChild} auth={state.loggedIn} registrationId={state.registrationId} />
                 <GuardedRoute path="/editProgram" component={EditProgramDetails} auth={state.loggedIn} programDetails={state.programDetails} registrationId={state.registrationId} />
                 <GuardedRoute path="/updateHealth" component={UpdateHealthDetails} auth={state.loggedIn} healthDetails={state.healthDetails} registrationId={state.registrationId} />
+
+                <GuardedRoute path="/programReport" component={ProgramReport} auth={state.loggedIn} />
+                <GuardedRoute path="/goalsReport" component={GoalsReport} auth={state.loggedIn} />
+                <GuardedRoute path="/notesReport" component={NotesReport} auth={state.loggedIn} />
               </Switch>
             </div>
           </LoadingOverlay>
