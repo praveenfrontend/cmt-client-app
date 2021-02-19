@@ -198,9 +198,9 @@ function SignUp() {
         }
         return;
       case "birthDateAfterDelay":
-        if (!/^(0[1-9]|[12][0-9]|3[01])[\\/](0[1-9]|1[012])[\\/](19|20)\d\d$/.test(draft.birthDate.value)) {
+        if (!/^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/](19|20)\d\d$/.test(draft.birthDate.value)) {
           draft.birthDate.hasErrors = true;
-          draft.birthDate.message = "Enter date of birth in DD/MM/YYYY format.";
+          draft.birthDate.message = "Enter date of birth in MM/DD/YYYY format.";
           return;
         }
         return;
@@ -366,6 +366,7 @@ function SignUp() {
             { cancelToken: ourRequest.token }
           );
           setLoading(false);
+          setSubmitCount(0);
           swal("User was successfully created", "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email.", "success");
           // appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });
         } catch (e) {
@@ -441,7 +442,7 @@ function SignUp() {
                     <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
                   </div>
                   <div className="col-md-6">
-                    <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
+                    <FormInput icon="fas fa-calendar" type="text" placeholder="MM/DD/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
 
                     {/* <div className="form-group">
                       <div className="input-group input-group-mb">

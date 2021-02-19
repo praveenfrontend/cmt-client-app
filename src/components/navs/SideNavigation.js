@@ -33,20 +33,29 @@ function SideNavigation({ menuHandleValue }) {
               </Link>
             </li>
             <li>
-              <Link to="/programReport">
-                <i className="fa fa-file-text-o text-success"></i>Reports - Program
-              </Link>
+              <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse">
+                {" "}
+                <i class="fa fa-file-text-o text-success"></i>Reports{" "}
+              </a>
+              <ul id="exampledropdownDropdown" class="collapse list-unstyled">
+                <li>
+                  <Link to="/programReport">
+                    <i className="fa fa-file-text-o text-success"></i>Program Reports
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/goalsReport">
+                    <i className="fa fa-file-text-o text-success"></i>Goals Reports
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/notesReport">
+                    <i className="fa fa-file-text-o text-success"></i>Notes Reports
+                  </Link>
+                </li>
+              </ul>
             </li>
-            <li>
-              <Link to="/goalsReport">
-                <i className="fa fa-file-text-o text-success"></i>Reports - Goals
-              </Link>
-            </li>
-            <li>
-              <Link to="/notesReport">
-                <i className="fa fa-file-text-o text-success"></i>Reports - Notes
-              </Link>
-            </li>
+
             <li>
               <Link to="/feed">
                 <i className="fa fa-feed"></i>Feed

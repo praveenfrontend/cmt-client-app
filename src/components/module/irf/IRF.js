@@ -1,6 +1,6 @@
 /* eslint-disable default-case */
 import React, { Component } from "react";
-
+import { Redirect } from "react-router-dom";
 import BasicDetails from "./BasicDetails";
 import ContactDetails from "./ContactDetails";
 import CommunityMattersProgram from "./CommunityMattersProgram";
@@ -19,6 +19,7 @@ class IRF extends Component {
     // Stepper
     step: 0,
     loading: false,
+    response: false,
 
     // Basic Details
     firstName: "",
@@ -142,14 +143,14 @@ class IRF extends Component {
 
       if (response.data.success === true) {
         const regId = response.data.id;
-        console.log("regId: ", regId);
-        console.log(response.data);
         this.setState({ loading: false });
-        swal(`Your Registration ID is: ${regId}`, "IRF Submit Completed", "success");
+        swal(`Please note your Registration ID: ${regId}`, "IRF Submit Completed", "success").then(res => {
+          this.setState({ response: true });
+          window.location.reload();
+        });
       }
     } catch (e) {
       swal("Something went wrong", e.response.data, "error");
-      console.log(e.response.data);
       this.setState({ loading: false });
     }
   };
@@ -306,7 +307,9 @@ class IRF extends Component {
     const values = this.state;
     const steps = this.getSteps();
 
-    return (
+    return this.state.response ? (
+      <Redirect to={{ pathname: "/initial-registration-form" }} />
+    ) : (
       <LoadingOverlay active={this.state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
         <section className="forms">
           <div className="container-fluid">
