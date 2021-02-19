@@ -140,7 +140,7 @@ function SignUp() {
         }
         if (!/^[a-zA-Z]+$/.test(draft.firstName.value)) {
           draft.firstName.hasErrors = true;
-          draft.firstName.message = "First name cannot be empty.";
+          draft.firstName.message = "First name cannot be empty or contains space.";
           return;
         }
         return;
@@ -154,7 +154,7 @@ function SignUp() {
         }
         if (!/^[a-zA-Z]+$/.test(draft.middleName.value)) {
           draft.middleName.hasErrors = true;
-          draft.middleName.message = "Middle name cannot be empty.";
+          draft.middleName.message = "Middle name cannot be empty or contains space.";
           return;
         }
         return;
@@ -168,7 +168,7 @@ function SignUp() {
         }
         if (!/^[a-zA-Z]+$/.test(draft.lastName.value)) {
           draft.lastName.hasErrors = true;
-          draft.lastName.message = "Last name cannot be empty.";
+          draft.lastName.message = "Last name cannot be empty or contains space.";
           return;
         }
         return;
