@@ -4,18 +4,20 @@ import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import FormInput from "../FormFields/FormInput";
 import FormButton from "../FormFields/FormButton";
+import FormRadio from "../FormFields/FormRadio";
 import DispatchContext from "../../DispatchContext";
 import { CSSTransition } from "react-transition-group";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 import swal from "sweetalert";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function SignUp() {
   const appDispatch = useContext(DispatchContext);
 
-  // const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState("");
+  const [inputDate, setInputDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitCount, setSubmitCount] = useState(0);
 
@@ -197,13 +199,13 @@ function SignUp() {
           return;
         }
         return;
-      case "birthDateAfterDelay":
-        if (!/^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/](19|20)\d\d$/.test(draft.birthDate.value)) {
-          draft.birthDate.hasErrors = true;
-          draft.birthDate.message = "Enter date of birth in MM/DD/YYYY format.";
-          return;
-        }
-        return;
+      // case "birthDateAfterDelay":
+      //   if (!/^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/](19|20)\d\d$/.test(draft.birthDate.value)) {
+      //     draft.birthDate.hasErrors = true;
+      //     draft.birthDate.message = "Enter date of birth in MM/DD/YYYY format.";
+      //     return;
+      //   }
+      //   return;
       case "cityImmediately":
         draft.city.hasErrors = false;
         draft.city.value = action.value;
@@ -289,28 +291,28 @@ function SignUp() {
 
   useEffect(() => {
     if (state.email.value) {
-      const delay = setTimeout(() => dispatch({ type: "emailAfterDelay" }), 800);
+      const delay = setTimeout(() => dispatch({ type: "emailAfterDelay" }), 1000);
       return () => clearTimeout(delay);
     }
   }, [dispatch, state.email.value]);
 
   useEffect(() => {
     if (state.password.value) {
-      const delay = setTimeout(() => dispatch({ type: "passwordAfterDelay" }), 800);
+      const delay = setTimeout(() => dispatch({ type: "passwordAfterDelay" }), 1000);
       return () => clearTimeout(delay);
     }
   }, [dispatch, state.password.value]);
 
   useEffect(() => {
     if (state.phone.value) {
-      const delay = setTimeout(() => dispatch({ type: "phoneAfterDelay" }), 800);
+      const delay = setTimeout(() => dispatch({ type: "phoneAfterDelay" }), 1000);
       return () => clearTimeout(delay);
     }
   }, [dispatch, state.phone.value]);
 
   useEffect(() => {
     if (state.birthDate.value) {
-      const delay = setTimeout(() => dispatch({ type: "birthDateAfterDelay" }), 800);
+      const delay = setTimeout(() => dispatch({ type: "birthDateAfterDelay" }), 1000);
       return () => clearTimeout(delay);
     }
   }, [dispatch, state.birthDate.value]);
@@ -392,7 +394,7 @@ function SignUp() {
     dispatch({ type: "passwordImmediately", value: state.password.value });
     dispatch({ type: "passwordAfterDelay", value: state.password.value });
     dispatch({ type: "phoneImmediately", value: state.phone.value });
-    dispatch({ type: "birthDateImmediately", value: state.birthDate.value });
+    dispatch({ type: "birthDateImmediately", value: inputDate });
     dispatch({ type: "cityImmediately", value: state.city.value });
     dispatch({ type: "provinceImmediately", value: state.province.value });
     dispatch({ type: "postalImmediately", value: state.postal.value });
@@ -401,6 +403,24 @@ function SignUp() {
     dispatch({ type: "roleTypeImmediately", value: state.roleType.value });
     dispatch({ type: "submitForm" });
   }
+
+  const onChangeDateHandler = input => {
+    const year = new Date(input).getFullYear();
+    let month = (new Date(input).getMonth() + 1).toString().padStart(2, "0");
+    let day = new Date(input).getDate().toString().padStart(2, "0");
+
+    let date = month + "/" + day + "/" + year;
+
+    setSelectedDate(input);
+    setInputDate(date);
+
+    if (date === "01/01/1970") {
+      date = "";
+      setInputDate("");
+    }
+
+    dispatch({ type: "birthDateImmediately", value: date });
+  };
 
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
@@ -442,21 +462,23 @@ function SignUp() {
                     <FormInput icon="fas fa-phone" type="text" placeholder="Phone Number" changeHandler={e => dispatch({ type: "phoneImmediately", value: e.target.value })} message={state.phone.message} inputField={state.phone.hasErrors} />
                   </div>
                   <div className="col-md-6">
-                    <FormInput icon="fas fa-calendar" type="text" placeholder="MM/DD/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} />
+                    {/* <FormInput icon="fas fa-calendar" type="text" placeholder="MM/DD/YYYY" changeHandler={e => dispatch({ type: "birthDateImmediately", value: e.target.value })} message={state.birthDate.message} inputField={state.birthDate.hasErrors} /> */}
 
-                    {/* <div className="form-group">
-                      <div className="input-group input-group-mb">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text" id="basic-addon1">
-                            <i className="fas fa-calendar"></i>
-                          </span>
-                        </div>                        
-                        <DatePicker className="form-control" selected={selectedDate} onChange={date => setSelectedDate(date), e => dispatch({ type: "birthDateImmediately", value: e.target.value }) } placeholder="MM/DD/YYYY" dateFormat="MM/dd/yyyy" maxDate={new Date()} isClearable showYearDropdown scrollableMonthYearDropdown />
+                    {
+                      <div className="form-group">
+                        <div className="input-group input-group-mb">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">
+                              <i className="fas fa-calendar"></i>
+                            </span>
+                          </div>
+                          <DatePicker className="form-control" selected={selectedDate} onChange={date => onChangeDateHandler(date)} placeholderText="Birth Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                        </div>
+                        <CSSTransition in={state.birthDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                          <div className="alert alert-danger small liveValidateMessage">{state.birthDate.message}</div>
+                        </CSSTransition>
                       </div>
-                      <CSSTransition in={state.birthDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                        <div className="alert alert-danger small liveValidateMessage">{state.phone.message}</div>
-                      </CSSTransition>
-                    </div> */}
+                    }
                   </div>
                 </div>
 
@@ -516,6 +538,39 @@ function SignUp() {
                     </CSSTransition>
                   </div>
                 </div>
+
+                {/* <div className="row">
+                  <div className="col-sm-12 col-md-12 col-lg-4">
+                    <div className="form-group d-flex">
+                      <div>
+                        <label className="text-muted mr-2">Gender</label>
+                      </div>
+                      <div>
+                        <FormRadio changeHandler={inputChange("gender")} inputHandler={e => dispatch({ type: "genderImmediately", value: e.target.id })} inputId="male" inputName="gender" inputValue="Male" inputLabel="Male" checkedValue={values.gender} />
+                        <FormRadio changeHandler={inputChange("gender")} inputHandler={e => dispatch({ type: "genderImmediately", value: e.target.id })} inputId="female" inputName="gender" inputValue="Female" inputLabel="Female" checkedValue={values.gender} />
+                      </div>
+                    </div>
+                    <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
+                    </CSSTransition>
+                  </div>
+
+                  <div className="col-sm-12 col-md-12 col-lg-6 ">
+                    <div className="form-group d-flex">
+                      <div>
+                        <label className="text-muted mr-2">Age</label>
+                      </div>
+                      <div>
+                        <FormRadio changeHandler={inputChange("age")} inputHandler={e => dispatch({ type: "ageImmediately", value: e.target.id })} inputId="upto12" inputName="age" inputValue="Child upto 12" inputLabel="Child upto 12" checkedValue={values.age} />
+                        <FormRadio changeHandler={inputChange("age")} inputHandler={e => dispatch({ type: "ageImmediately", value: e.target.id })} inputId="13to25" inputName="age" inputValue="Youth 13-25" inputLabel="Youth 13-25" checkedValue={values.age} />
+                        <FormRadio changeHandler={inputChange("age")} inputHandler={e => dispatch({ type: "ageImmediately", value: e.target.id })} inputId="above25" inputName="age" inputValue="Adult Over 25" inputLabel="Adult Over 25" checkedValue={values.age} />
+                      </div>
+                    </div>
+                    <CSSTransition in={state.age.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                      <div className="alert alert-danger small liveValidateMessage">{state.age.message}</div>
+                    </CSSTransition>
+                  </div>
+                </div> */}
 
                 <input type="submit" value="Register" className="btn btn-primary btn-block col-md-4 col-sm-4 mx-auto" />
               </form>
