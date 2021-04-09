@@ -57,6 +57,11 @@ function SideNavigation({ menuHandleValue }) {
             </li>
 
             <li>
+              <Link to="/schedule">
+                <i className="fa fa-calendar text-success"></i>Schedule
+              </Link>
+            </li>
+            <li>
               <Link to="/feed">
                 <i className="fa fa-feed"></i>Feed
               </Link>
@@ -64,11 +69,6 @@ function SideNavigation({ menuHandleValue }) {
             <li>
               <Link to="/profile">
                 <i className="fa fa-user-o"></i>Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/schedule">
-                <i className="fa fa-clock-o"></i>Schedule
               </Link>
             </li>
           </ul>

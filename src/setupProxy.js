@@ -2,6 +2,30 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/schedules", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/delete_schedule", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/update_schedule", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/add_schedule", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/returnzipcode", {
       target: "https://test4cmt.000webhostapp.com/api",
       changeOrigin: true

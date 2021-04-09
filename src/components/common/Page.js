@@ -8,7 +8,11 @@ function Page(props) {
     window.scrollTo(0, 0);
   }, [props.title]);
 
-  return <Container title={props.title}>{props.children}</Container>;
+  return (
+    <Container title={props.title} schedule={props.schedule} clickHandler={props.clickHandler}>
+      {props.children}
+    </Container>
+  );
 }
 
 export default Page;
