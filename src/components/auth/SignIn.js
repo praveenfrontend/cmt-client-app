@@ -109,8 +109,7 @@ function SignIn() {
           });
 
           if (response.data.success === true) {
-            console.log(email, password);
-            appDispatch({ type: "login", data: response.data });
+            appDispatch({ type: "login", data: response.data.data });
             // appDispatch({ type: "flashMessage", value: "You have successfully logged in." });
             appDispatch({ type: "loading", value: false });
           } else {

@@ -2,6 +2,12 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/profile", {
+      target: "https://test4cmt.000webhostapp.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/schedules", {
       target: "https://test4cmt.000webhostapp.com/api",
       changeOrigin: true

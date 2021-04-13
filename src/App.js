@@ -109,7 +109,7 @@ function App(props) {
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem("communityMattersToken", state.user.token);
-      localStorage.setItem("communityMattersUsername", state.user.username);
+      // localStorage.setItem("communityMattersUsername", state.user.username);
     } else {
       localStorage.clear();
     }

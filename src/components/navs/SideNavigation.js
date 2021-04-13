@@ -55,20 +55,24 @@ function SideNavigation({ menuHandleValue }) {
                 </li>
               </ul>
             </li>
-
             <li>
               <Link to="/schedule">
                 <i className="fa fa-calendar text-success"></i>Schedule
               </Link>
             </li>
             <li>
-              <Link to="/feed">
-                <i className="fa fa-feed"></i>Feed
+              <Link to="/profile">
+                <i className="fa fa-user text-success"></i>Profile
               </Link>
             </li>
             <li>
-              <Link to="/profile">
-                <i className="fa fa-user-o"></i>Profile
+              <Link to="/programs">
+                <i className="fa fa-user-o"></i>Programs
+              </Link>
+            </li>
+            <li>
+              <Link to="/feed">
+                <i className="fa fa-feed"></i>Feed
               </Link>
             </li>
           </ul>
