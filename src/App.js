@@ -11,7 +11,11 @@ import StateContext from "./StateContext";
 import DispatchContext from "./DispatchContext";
 import SideNavigation from "./components/navs/SideNavigation";
 import Header from "./components/navs/Header";
-import Feed from "./components/module/feed/Feed";
+import AdminAddProgram from "./components/module/admin/AdminAddProgram";
+import AdminDeleteUsers from "./components/module/admin/AdminDeleteUsers";
+import ProgramDetails from "./components/module/program/ProgramDetails";
+import Document from "./components/module/program/Document";
+import Grade from "./components/module/program/Grade";
 import Profile from "./components/module/profile/Profile";
 import Search from "./components/module/search/Search";
 import Reports from "./components/module/reports/Reports";
@@ -38,7 +42,7 @@ import Loader from "react-loader-spinner";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://test4cmt.000webhostapp.com/api";
+Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://cmt2019.000webhostapp.com/api";
 
 function App(props) {
   const initialState = {
@@ -143,7 +147,11 @@ function App(props) {
 
                 <GuardedRoute path="/initial-registration-form" component={IRF} auth={state.loggedIn} />
                 <GuardedRoute path="/search" component={Search} auth={state.loggedIn} />
-                <GuardedRoute path="/feed" component={Feed} auth={state.loggedIn} />
+                <GuardedRoute path="/adminAddProgram" component={AdminAddProgram} auth={state.loggedIn} />
+                <GuardedRoute path="/adminDeleteUsers" component={AdminDeleteUsers} auth={state.loggedIn} />
+                <GuardedRoute path="/programDetails" component={ProgramDetails} auth={state.loggedIn} />
+                <GuardedRoute path="/document" component={Document} auth={state.loggedIn} />
+                <GuardedRoute path="/grade" component={Grade} auth={state.loggedIn} />
                 <GuardedRoute path="/profile" component={Profile} auth={state.loggedIn} />
                 <GuardedRoute path="/reports" component={Reports} auth={state.loggedIn} />
                 <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />

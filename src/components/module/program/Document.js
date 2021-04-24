@@ -1,0 +1,164 @@
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+import swal from "sweetalert";
+import LoadingOverlay from "react-loading-overlay";
+import Loader from "react-loader-spinner";
+
+import Page from "../../common/Page";
+import Container from "../../common/Container";
+import FormInput from "../../FormFields/FormInput";
+
+function Document() {
+  const [loading, setLoading] = useState(false);
+  const [categoryAndProgramList, setCategoryAndProgramList] = useState({});
+  const [categoryList, setCategoryList] = useState([]);
+  const [programList, setProgramList] = useState([]);
+
+  // const [categoryValue, setCategoryValue] = useState("");
+  const [programValue, setProgramValue] = useState("");
+  const [fileValue, setFileValue] = useState("");
+  const [gradeValue, setGradeValue] = useState("");
+  const [commentValue, setCommentValue] = useState("");
+
+  const [fileList, setFileList] = useState([]);
+  const [fileNameList, setFileNameList] = useState([]);
+  const [userType, setUserType] = useState("");
+
+  // const userType = "Admin";
+
+  useEffect(() => {
+    const categoryDropDown = async () => {
+      setLoading(true);
+      await Axios.get("/showprograms")
+        .then(response => {
+          setCategoryAndProgramList(response.data.data);
+          const category = Object.keys(response.data.data);
+          setCategoryList([...categoryList, ...category]);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.log(error.response);
+          setLoading(false);
+        });
+    };
+    categoryDropDown();
+  }, []);
+
+  const fileHandleChange = value => {
+    setFileValue(value);
+  };
+
+  const categoryHandleChange = value => {
+    // setCategoryValue(value);
+    setProgramList(categoryAndProgramList[value]);
+  };
+
+  const programHandleChange = value => {
+    setProgramValue(value);
+  };
+
+  // const uploadFile = async e => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&UserType=${userType}`);
+  //     setLoading(false);
+
+  //     console.log(response.data.data);
+
+  //     if (response.data.success === true) {
+  //       // setFileList(response.data.data);
+  //       let fileName = [];
+  //       response.data.data.map(file => fileName.push(file.FileName));
+  //       setFileNameList([...fileNameList, ...fileName]);
+  //     } else {
+  //       swal("Something went wrong", e.response, "error");
+  //     }
+  //   } catch (e) {
+  //     // if (e.response === null) {
+  //     swal("Something went wrong.", e.response, "error");
+  //     // }
+  //     setLoading(false);
+  //   }
+  // };
+
+  const uploadFile = async e => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await Axios.post("/addgrade", { FileName: fileValue, usergrade: gradeValue, agentcomments: commentValue });
+      setLoading(false);
+
+      if (response.data.success === true) {
+        swal("Updated", "Program Grade and Agent Comments Updated", "success");
+      } else {
+        swal("Something went wrong", e.response, "error");
+      }
+    } catch (e) {
+      // if (e.response === null) {
+      swal("Something went wrong.", e.response, "error");
+      // }
+      setLoading(false);
+    }
+  };
+
+  return (
+    <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
+      <section className="forms">
+        <div className="container-fluid">
+          <Page title="Document">
+            <form onSubmit={e => uploadFile(e)}>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className={`form-group row`}>
+                    <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)}>
+                      <option>Select Category Name</option>;
+                      {categoryList.map(category => {
+                        return <option value={category}>{category}</option>;
+                      })}
+                    </select>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <select name="account" className="form-control" onChange={e => programHandleChange(e.target.value)}>
+                    <option>Select Program Name</option>;
+                    {programList.map(program => {
+                      return <option value={program}>{program}</option>;
+                    })}
+                  </select>
+                </div>
+                <div className="col-md-4">
+                  <FormInput icon="fa fa-list-alt" type="text" placeholder="User ID" changeHandler={e => setCommentValue(e.target.value)} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4">
+                  <FormInput icon="fa fa-list-alt" type="text" placeholder="File Name" changeHandler={e => setCommentValue(e.target.value)} />
+                </div>
+                <div className="col-md-4">
+                  <select name="account" className="form-control" onChange={e => setUserType(e.target.value)}>
+                    <option>Select User Type</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Agent">Agent</option>
+                    <option value="Participant">Participant</option>
+                  </select>
+                </div>
+                <div className="col-md-4">
+                  <input type="file" />
+                </div>
+              </div>
+
+              <div className="col-md-3">
+                <button className="btn btn-block btn-primary">Submit</button>
+              </div>
+            </form>
+          </Page>
+        </div>
+      </section>
+    </LoadingOverlay>
+  );
+}
+
+export default Document;
