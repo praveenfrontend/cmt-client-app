@@ -42,7 +42,7 @@ import Loader from "react-loader-spinner";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
+Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
 
 function App(props) {
   const initialState = {
