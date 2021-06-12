@@ -76,7 +76,7 @@ function AdminDeleteUsers() {
               <div className="row">
                 <div className="col-md-5">
                   <div className={`form-group row`}>
-                    <label className="col-sm-5 form-control-label">User Name</label>
+                    <label className="col-sm-5 form-control-label">First Name</label>
                     <div className="col-sm-7 mb-3">
                       <select name="account" className="form-control" onChange={e => userHandleChange(e.target.value)}>
                         <option>Select User</option>;
@@ -90,7 +90,7 @@ function AdminDeleteUsers() {
 
                 <div className="col-md-5">
                   <div className={`form-group row`}>
-                    <label className="col-sm-5 form-control-label">User Email</label>
+                    <label className="col-sm-5 form-control-label">Email</label>
                     <div className="col-sm-7 mb-3">
                       <select name="account" className="form-control" onChange={e => emailHandleChange(e.target.value)}>
                         <option>Select Email</option>;

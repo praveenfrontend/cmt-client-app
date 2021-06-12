@@ -65,19 +65,23 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
         </Modal.Header>
         <Modal.Body>
           <form>
-            <div class="form-group">
+            {/* <div class="form-group">
               <label for="inputUserID">User ID</label>
               <input type="text" class="form-control" id="inputUserID" name="UserID" onChange={e => setUserId(e.target.value)} value={UserID} />
-            </div>
+            </div> */}
             <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputUserID">User ID</label>
+                <input type="text" class="form-control" id="inputUserID" name="UserID" onChange={e => setUserId(e.target.value)} value={UserID} />
+              </div>
               <div class="form-group col-md-6">
                 <label for="inputTitle">Program Name</label>
                 <input type="text" class="form-control" id="inputTitle" name="Title" onChange={e => setTitle(e.target.value)} value={Title} />
               </div>
-              <div class="form-group col-md-6">
+              {/* <div class="form-group col-md-6">
                 <label for="inputProgramID">Program ID</label>
                 <input type="text" class="form-control" id="inputProgramID" name="ProgramID" onChange={e => setProgramId(e.target.value)} value={ProgramID} />
-              </div>
+              </div> */}
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
