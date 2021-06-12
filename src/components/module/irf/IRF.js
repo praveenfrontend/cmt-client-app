@@ -143,8 +143,9 @@ class IRF extends Component {
 
       if (response.data.success === true) {
         const regId = response.data.id;
+        const message = response.data.Message;
         this.setState({ loading: false });
-        swal(`Please note your Registration ID: ${regId}`, "IRF Submit Completed", "success").then(res => {
+        swal(`Please note your Registration ID: ${regId}`, `${message}`, "success").then(res => {
           this.setState({ response: true });
           window.location.reload();
         });

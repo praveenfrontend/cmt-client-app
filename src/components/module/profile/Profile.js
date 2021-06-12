@@ -44,6 +44,7 @@ function Profile() {
 
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
+      {/* <Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true}> */}
       <div className="mt-5">
         <div class="container">
           <div class="main-body">
@@ -114,6 +115,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      {/* </Loader> */}
     </LoadingOverlay>
   );
 }

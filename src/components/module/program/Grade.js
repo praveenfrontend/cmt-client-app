@@ -60,8 +60,10 @@ function Grade() {
     e.preventDefault();
     setLoading(true);
 
+    const irfUserID = localStorage.getItem("irfUserID");
+
     try {
-      const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&UserType=${userType}`);
+      const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&userID=${irfUserID}`);
       setLoading(false);
 
       console.log(response.data.data);

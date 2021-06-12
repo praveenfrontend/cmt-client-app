@@ -42,7 +42,7 @@ import Loader from "react-loader-spinner";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
-Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://cmt2019.000webhostapp.com/api";
+// Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
 
 function App(props) {
   const initialState = {
@@ -114,6 +114,24 @@ function App(props) {
     if (state.loggedIn) {
       localStorage.setItem("communityMattersToken", state.user.token);
       // localStorage.setItem("communityMattersUsername", state.user.username);
+
+      async function getProfile() {
+        // setLoading(true);
+        // const token = localStorage.getItem("communityMattersToken");
+        try {
+          // const response = await Axios.post("/profile", { token: token });
+          const response = await Axios.post("/profile", { token: state.user.token });
+          // setLoading(false);
+          if (response.data.user !== null) {
+            // setUser(response.data.user);
+            localStorage.setItem("irfUserID", response.data.user.IRFuserId);
+          }
+        } catch (e) {
+          // swal("Something went wrong!", e.response, "error");
+          // setLoading(false);
+        }
+      }
+      getProfile();
     } else {
       localStorage.clear();
     }

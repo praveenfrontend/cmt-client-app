@@ -14,12 +14,15 @@ function ProgramDetails() {
   const [categoryList, setCategoryList] = useState([]);
   const [programList, setProgramList] = useState([]);
 
-  // const [categoryValue, setCategoryValue] = useState("");
+  const [categoryValue, setCategoryValue] = useState("");
   const [programValue, setProgramValue] = useState("");
 
   const [fileList, setFileList] = useState([]);
 
-  const userType = "Admin";
+  const [subscribe, setSubscribe] = useState(false);
+  const [unsubscribe, setUnSubscribe] = useState(false);
+
+  // const userType = "Admin";
 
   useEffect(() => {
     const categoryDropDown = async () => {
@@ -40,7 +43,7 @@ function ProgramDetails() {
   }, []);
 
   const categoryHandleChange = value => {
-    // setCategoryValue(value);
+    setCategoryValue(value);
     setProgramList(categoryAndProgramList[value]);
   };
 
@@ -52,16 +55,34 @@ function ProgramDetails() {
     e.preventDefault();
     setLoading(true);
 
+    const irfUserID = localStorage.getItem("irfUserID");
+
+    // console.log("irfUserID:: ", irfUserID);
+
     try {
-      const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&UserType=${userType}`);
+      const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&userID=${irfUserID}`);
       setLoading(false);
 
       console.log(response.data.data);
 
       if (response.data.success === true) {
-        setFileList(response.data.data);
+        setFileList(response.data.data.FileDetails);
+        if (response.data.data.UserProgramStatus === "Subscribed") {
+          setSubscribe(false);
+          setUnSubscribe(true);
+        }
       } else {
-        swal("Something went wrong", e.response, "error");
+        if (response.data.success === false && response.data.data.UserProgramStatus === "Subscribed") {
+          setFileList([]);
+          setSubscribe(false);
+          setUnSubscribe(true);
+        }
+        if (response.data.success === false && response.data.data.UserProgramStatus === "UnSubscribed") {
+          setFileList([]);
+          setSubscribe(true);
+          setUnSubscribe(false);
+        }
+        swal(response.data.data.UserProgramStatus, response.data.message, "warning");
       }
     } catch (e) {
       // if (e.response === null) {
@@ -71,12 +92,74 @@ function ProgramDetails() {
     }
   };
 
+  const subscribeProgram = async e => {
+    e.preventDefault();
+    setLoading(true);
+
+    const irfUserID = localStorage.getItem("irfUserID");
+
+    try {
+      const response = await Axios.post("/subcribeprogram", { Program_Name: programValue, userID: irfUserID, category: categoryValue });
+      setLoading(false);
+
+      console.log(response.data);
+
+      if (response.data.success === true) {
+        swal(response.data.message, "", "success");
+        setSubscribe(false);
+        setUnSubscribe(true);
+      } else {
+        swal(response.data.message, "", "warning");
+        setSubscribe(false);
+        setUnSubscribe(true);
+      }
+    } catch (e) {
+      // if (e.response === null) {
+      swal("Something went wrong.", e.response, "error");
+      // }
+      setLoading(false);
+    }
+  };
+
+  const unSubscribeProgram = async e => {
+    e.preventDefault();
+    setLoading(true);
+
+    const irfUserID = localStorage.getItem("irfUserID");
+
+    try {
+      const response = await Axios.post("/unsubscribeprogram", { Program_Name: programValue, userID: irfUserID, category: categoryValue });
+      setLoading(false);
+
+      console.log(response.data);
+
+      if (response.data.success === true) {
+        swal(response.data.message, "", "success");
+        setSubscribe(true);
+        setUnSubscribe(false);
+      } else {
+        swal(response.data.message, "", "warning");
+        setSubscribe(true);
+        setUnSubscribe(false);
+      }
+    } catch (e) {
+      // if (e.response === null) {
+      swal("Something went wrong.", e.response, "error");
+      // }
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log("FILE LIST: ", fileList);
+  }, [fileList]);
+
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <section className="forms">
         <div className="container-fluid">
           <Page title="Program">
-            <form onSubmit={e => showFiles(e)}>
+            <form /* onSubmit={} */>
               <div className="row">
                 <div className="col-md-5">
                   <div className={`form-group row`}>
@@ -107,8 +190,26 @@ function ProgramDetails() {
                 </div>
               </div>
 
-              <div className="col-md-3">
-                <button className="btn btn-block btn-primary">Show Files</button>
+              <div className="row">
+                <div className="col-md-3">
+                  <button className="btn btn-block btn-primary" onClick={e => showFiles(e)}>
+                    Show Files
+                  </button>
+                </div>
+                {subscribe && (
+                  <div className="col-md-3">
+                    <button className="btn btn-block btn-primary" onClick={e => subscribeProgram(e)}>
+                      Subscribe Program
+                    </button>
+                  </div>
+                )}
+                {unsubscribe && (
+                  <div className="col-md-3">
+                    <button className="btn btn-block btn-primary" onClick={e => unSubscribeProgram(e)}>
+                      UnSubscribe Program
+                    </button>
+                  </div>
+                )}
               </div>
             </form>
           </Page>
