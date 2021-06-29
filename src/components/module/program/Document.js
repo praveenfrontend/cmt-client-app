@@ -107,15 +107,25 @@ function Document() {
     formData.append("document", selectedFile);
 
     try {
-      fetch("/upload", {
-        method: "post",
-        body: formData
-      }).then(res => {
-        if (res.ok) {
-          console.log(res.data);
-          swal("File uploaded", "", "success");
-        }
-      });
+      //   fetch("/upload", {
+      //     method: "post",
+      //     body: formData
+      //   }).then(res => {
+      //     if (res.ok) {
+      //       console.log(res.data);
+      //       swal("File uploaded", "", "success");
+      //     }
+      //   });
+
+      const response = await Axios.post("/upload", formData);
+
+      if (response.data.success === true) {
+        swal("File uploaded", "", "success");
+      } else if (response.data.success === false) {
+        swal("Something went wrong", response.data.message, "warning");
+      } else {
+        swal("Something went wrong", e.response, "error");
+      }
 
       // const response = await Axios.post("/upload");
       // setLoading(false);
