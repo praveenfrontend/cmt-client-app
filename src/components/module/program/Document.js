@@ -7,6 +7,7 @@ import Loader from "react-loader-spinner";
 import Page from "../../common/Page";
 import Container from "../../common/Container";
 import FormInput from "../../FormFields/FormInput";
+import { post } from "jquery";
 
 function Document() {
   const [loading, setLoading] = useState(false);
@@ -17,12 +18,14 @@ function Document() {
   // const [categoryValue, setCategoryValue] = useState("");
   const [programValue, setProgramValue] = useState("");
   const [fileValue, setFileValue] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
   const [gradeValue, setGradeValue] = useState("");
   const [commentValue, setCommentValue] = useState("");
 
   const [fileList, setFileList] = useState([]);
   const [fileNameList, setFileNameList] = useState([]);
   const [userType, setUserType] = useState("");
+  const [selectedFileName, setSelectedFileName] = useState("");
 
   // const userType = "Admin";
 
@@ -57,6 +60,14 @@ function Document() {
     setProgramValue(value);
   };
 
+  const fileHandler = e => {
+    setSelectedFile(e.target.files[0]);
+    console.warn("fileeee ", e.target.files[0]);
+    const fileName = e.target.files[0].name;
+    setSelectedFileName(fileName);
+    document.getElementsByClassName("custom-file-label").innerHTML = fileName;
+  };
+
   // const uploadFile = async e => {
   //   e.preventDefault();
   //   setLoading(true);
@@ -85,22 +96,40 @@ function Document() {
 
   const uploadFile = async e => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
+
+    const irfUserID = localStorage.getItem("irfUserID");
+
+    const formData = new FormData();
+    formData.append("FileName", fileValue);
+    formData.append("Program_Name", programValue);
+    formData.append("userID", irfUserID);
+    formData.append("document", selectedFile);
 
     try {
-      const response = await Axios.post("/addgrade", { FileName: fileValue, usergrade: gradeValue, agentcomments: commentValue });
-      setLoading(false);
+      fetch("/upload", {
+        method: "post",
+        body: formData
+      }).then(res => {
+        if (res.ok) {
+          console.log(res.data);
+          swal("File uploaded", "", "success");
+        }
+      });
 
-      if (response.data.success === true) {
-        swal("Updated", "Program Grade and Agent Comments Updated", "success");
-      } else {
-        swal("Something went wrong", e.response, "error");
-      }
+      // const response = await Axios.post("/upload");
+      // setLoading(false);
+
+      // if (response.data.success === true) {
+      //   swal("Updated", "Program Grade and Agent Comments Updated", "success");
+      // } else {
+      //   swal("Something went wrong", e.response, "error");
+      // }
     } catch (e) {
       // if (e.response === null) {
       swal("Something went wrong.", e.response, "error");
       // }
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -112,14 +141,14 @@ function Document() {
             <form onSubmit={e => uploadFile(e)}>
               <div className="row">
                 <div className="col-md-4">
-                  <div className={`form-group row`}>
-                    <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)}>
-                      <option>Select Category Name</option>;
-                      {categoryList.map(category => {
-                        return <option value={category}>{category}</option>;
-                      })}
-                    </select>
-                  </div>
+                  {/* <div className={`form-group row`}> */}
+                  <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)}>
+                    <option>Select Category Name</option>;
+                    {categoryList.map(category => {
+                      return <option value={category}>{category}</option>;
+                    })}
+                  </select>
+                  {/* </div> */}
                 </div>
                 <div className="col-md-4">
                   <select name="account" className="form-control" onChange={e => programHandleChange(e.target.value)}>
@@ -130,23 +159,21 @@ function Document() {
                   </select>
                 </div>
                 <div className="col-md-4">
-                  <FormInput icon="fa fa-list-alt" type="text" placeholder="User ID" changeHandler={e => setCommentValue(e.target.value)} />
+                  <FormInput icon="fa fa-list-alt" type="text" placeholder="File Name" changeHandler={e => fileHandleChange(e.target.value)} />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-md-4">
-                  <FormInput icon="fa fa-list-alt" type="text" placeholder="File Name" changeHandler={e => setCommentValue(e.target.value)} />
+
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="inputGroupFileAddon01">
+                    Upload
+                  </span>
                 </div>
-                <div className="col-md-4">
-                  <select name="account" className="form-control" onChange={e => setUserType(e.target.value)}>
-                    <option>Select User Type</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Agent">Agent</option>
-                    <option value="Participant">Participant</option>
-                  </select>
-                </div>
-                <div className="col-md-4">
-                  <input type="file" />
+                <div className="custom-file">
+                  <input type="file" name="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" onChange={e => fileHandler(e)} />
+                  <label className="custom-file-label" for="inputGroupFile01">
+                    {selectedFileName ? selectedFileName : "Choose file"}
+                  </label>
                 </div>
               </div>
 

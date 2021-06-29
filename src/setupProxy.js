@@ -26,7 +26,7 @@ module.exports = function (app) {
     })
   );
   app.use(
-    createProxyMiddleware("/documents", {
+    createProxyMiddleware("/upload", {
       target: "http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true
     })

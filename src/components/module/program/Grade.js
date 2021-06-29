@@ -66,13 +66,14 @@ function Grade() {
       const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&userID=${irfUserID}`);
       setLoading(false);
 
-      console.log(response.data.data);
-
-      if (response.data.success === true) {
+      if (response.data.success === true && Array.isArray(response.data.data.FileDetails)) {
         // setFileList(response.data.data);
         let fileName = [];
-        response.data.data.map(file => fileName.push(file.FileName));
+        response.data.data.FileDetails.map(file => fileName.push(file.FileName));
         setFileNameList([...fileNameList, ...fileName]);
+      } else if (response.data.success === false && !Array.isArray(response.data.data.FileDetails) && response.data.data.UserProgramStatus === "UnSubscribed") {
+        setFileNameList([]);
+        swal("UnSubscribed", response.data.message, "warning");
       } else {
         swal("Something went wrong", e.response, "error");
       }
@@ -86,22 +87,28 @@ function Grade() {
 
   const addGrade = async e => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
+
+    const irfUserID = localStorage.getItem("irfUserID");
 
     try {
-      const response = await Axios.post("/addgrade", { FileName: fileValue, usergrade: gradeValue, agentcomments: commentValue });
-      setLoading(false);
+      const response = await Axios.post("/addgrade", { userID: irfUserID, Program_Name: programValue, FileName: fileValue, usergrade: gradeValue, agentcomments: commentValue });
+      // setLoading(false);
+
+      console.log("response.data.success ", response.data.success);
 
       if (response.data.success === true) {
         swal("Updated", "Program Grade and Agent Comments Updated", "success");
+      } else if (response.data.success === false) {
+        swal("Couldn't Update", response.data.message, "warning");
       } else {
-        swal("Something went wrong", e.response, "error");
+        swal("Couldn't add or update Grade", response.data.message, "warning");
       }
     } catch (e) {
       // if (e.response === null) {
       swal("Something went wrong.", e.response, "error");
       // }
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -142,7 +149,7 @@ function Grade() {
               </div>
 
               <div className="col-md-3">
-                <button className="btn btn-block btn-primary">Show Grade</button>
+                <button className="btn btn-block btn-primary">Show Files</button>
               </div>
             </form>
           </Page>
