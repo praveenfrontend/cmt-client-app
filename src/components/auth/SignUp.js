@@ -4,7 +4,6 @@ import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import FormInput from "../FormFields/FormInput";
 import FormButton from "../FormFields/FormButton";
-import FormRadio from "../FormFields/FormRadio";
 import DispatchContext from "../../DispatchContext";
 import { CSSTransition } from "react-transition-group";
 import LoadingOverlay from "react-loading-overlay";
@@ -280,7 +279,8 @@ function SignUp() {
         return;
       case "submitForm":
         console.log("inside submitform");
-        if (/* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
+        // setSubmitCount(1);
+        if (!draft.email.hasErrors /* && draft.email.isUnique */ && !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
           setSubmitCount(1);
         }
         return;
@@ -505,10 +505,10 @@ function SignUp() {
                       </label>
                       <div className="btn-group btn-group-dispose" data-toggle="buttons">
                         <label className="btn btn-outline-primary btn-sm">
-                          <input type="radio" name="gender" id="male" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Male
+                          <input type="radio" name="gender" id="male" onClick={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Male
                         </label>
                         <label className="btn btn-outline-primary btn-sm">
-                          <input type="radio" name="gender" id="female" onChange={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
+                          <input type="radio" name="gender" id="female" onClick={e => dispatch({ type: "genderImmediately", value: e.target.id })} /> Female
                         </label>
                       </div>
                     </div>
@@ -523,13 +523,13 @@ function SignUp() {
                       </label>
                       <div className="btn-group btn-group-dispose" data-toggle="buttons">
                         <label className="btn btn-outline-primary btn-sm">
-                          <input type="radio" name="roleType" id="user" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
+                          <input type="radio" name="roleType" id="user" onClick={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
                         </label>
                         <label className="btn btn-outline-primary btn-sm">
-                          <input type="radio" name="roleType" id="agent" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Agent
+                          <input type="radio" name="roleType" id="agent" onClick={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Agent
                         </label>
                         <label className="btn btn-outline-primary btn-sm">
-                          <input type="radio" name="roleType" id="admin" onChange={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Admin
+                          <input type="radio" name="roleType" id="admin" onClick={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Admin
                         </label>
                       </div>
                     </div>
@@ -538,39 +538,6 @@ function SignUp() {
                     </CSSTransition>
                   </div>
                 </div>
-
-                {/* <div className="row">
-                  <div className="col-sm-12 col-md-12 col-lg-4">
-                    <div className="form-group d-flex">
-                      <div>
-                        <label className="text-muted mr-2">Gender</label>
-                      </div>
-                      <div>
-                        <FormRadio changeHandler={inputChange("gender")} inputHandler={e => dispatch({ type: "genderImmediately", value: e.target.id })} inputId="male" inputName="gender" inputValue="Male" inputLabel="Male" checkedValue={values.gender} />
-                        <FormRadio changeHandler={inputChange("gender")} inputHandler={e => dispatch({ type: "genderImmediately", value: e.target.id })} inputId="female" inputName="gender" inputValue="Female" inputLabel="Female" checkedValue={values.gender} />
-                      </div>
-                    </div>
-                    <CSSTransition in={state.gender.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                      <div className="alert alert-danger small liveValidateMessage">{state.gender.message}</div>
-                    </CSSTransition>
-                  </div>
-
-                  <div className="col-sm-12 col-md-12 col-lg-6 ">
-                    <div className="form-group d-flex">
-                      <div>
-                        <label className="text-muted mr-2">Age</label>
-                      </div>
-                      <div>
-                        <FormRadio changeHandler={inputChange("age")} inputHandler={e => dispatch({ type: "ageImmediately", value: e.target.id })} inputId="upto12" inputName="age" inputValue="Child upto 12" inputLabel="Child upto 12" checkedValue={values.age} />
-                        <FormRadio changeHandler={inputChange("age")} inputHandler={e => dispatch({ type: "ageImmediately", value: e.target.id })} inputId="13to25" inputName="age" inputValue="Youth 13-25" inputLabel="Youth 13-25" checkedValue={values.age} />
-                        <FormRadio changeHandler={inputChange("age")} inputHandler={e => dispatch({ type: "ageImmediately", value: e.target.id })} inputId="above25" inputName="age" inputValue="Adult Over 25" inputLabel="Adult Over 25" checkedValue={values.age} />
-                      </div>
-                    </div>
-                    <CSSTransition in={state.age.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                      <div className="alert alert-danger small liveValidateMessage">{state.age.message}</div>
-                    </CSSTransition>
-                  </div>
-                </div> */}
 
                 <input type="submit" value="Register" className="btn btn-primary btn-block col-md-4 col-sm-4 mx-auto" />
               </form>
