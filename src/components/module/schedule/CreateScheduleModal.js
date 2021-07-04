@@ -10,7 +10,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
   const [loading, setLoading] = useState(false);
   const [UserID, setUserId] = useState("");
   const [Title, setTitle] = useState("");
-  const [ProgramID, setProgramId] = useState("");
+  const [ProgramName, setProgramName] = useState("");
   const [StartDate, setStartDate] = useState("");
   const [EndDate, setEndDate] = useState("");
   const [StartTime, setStartTime] = useState("");
@@ -20,9 +20,10 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
 
   useEffect(() => {
     if (scheduleModal === true) {
-      setUserId("");
+      const irfUserID = localStorage.getItem("irfUserID");
+      setUserId(irfUserID);
       setTitle("");
-      setProgramId("");
+      setProgramName("");
       setStartDate("");
       setEndDate("");
       setStartTime("");
@@ -38,17 +39,17 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
 
   const createSchedule = async e => {
     e.preventDefault();
-
+    
     try {
       setLoading(true);
-      const response = await Axios.post("/add_schedule", { UserID, Title, ProgramID, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
+      const response = await Axios.post("/add_schedule", { UserID, Title, ProgramName, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
 
       if (response.data.id !== "" || response.data.id !== null) {
         setLoading(false);
         closeModalForm();
         swal(`Schedule Created.`, "Program will be added to the calendar.", "success").then(res => {
-          // setLoading(true);
-          // window.location.reload();
+          setLoading(true);
+          window.location.reload();
         });
       }
     } catch (e) {
@@ -71,17 +72,13 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
             </div> */}
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputUserID">User ID</label>
-                <input type="text" class="form-control" id="inputUserID" name="UserID" onChange={e => setUserId(e.target.value)} value={UserID} />
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputTitle">Program Name</label>
+                <label for="inputTitle">Title</label>
                 <input type="text" class="form-control" id="inputTitle" name="Title" onChange={e => setTitle(e.target.value)} value={Title} />
               </div>
-              {/* <div class="form-group col-md-6">
-                <label for="inputProgramID">Program ID</label>
-                <input type="text" class="form-control" id="inputProgramID" name="ProgramID" onChange={e => setProgramId(e.target.value)} value={ProgramID} />
-              </div> */}
+              <div class="form-group col-md-6">
+                <label for="inputProgramName">Program Name</label>
+                <input type="text" class="form-control" id="inputProgramName" name="ProgramName" onChange={e => setProgramName(e.target.value)} value={ProgramName} />
+              </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">

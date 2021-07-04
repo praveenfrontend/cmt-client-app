@@ -47,7 +47,6 @@ function Schedule() {
               id: program.id,
               userId: program.UserID,
               title: program.Title,
-              programID: program.ProgramID,
               start: program.StartDate,
               end: program.EndDate,
               startTime: program.StartTime,

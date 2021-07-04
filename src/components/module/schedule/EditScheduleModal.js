@@ -10,7 +10,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
   const [loading, setLoading] = useState(false);
   const [UserID, setUserId] = useState("");
   const [Title, setTitle] = useState("");
-  const [ProgramID, setProgramId] = useState("");
+  const [ProgramName, setProgramName] = useState("");
   const [StartDate, setStartDate] = useState("");
   const [EndDate, setEndDate] = useState("");
   const [StartTime, setStartTime] = useState("");
@@ -23,7 +23,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
   //   if (editModal === true) {
   //     setUserId("");
   //     setTitle("");
-  //     setProgramId("");
+  //     setProgramName("");
   //     setStartDate("");
   //     setEndDate("");
   //     setStartTime("");
@@ -38,7 +38,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     // if (eventObj !== "" && eventObj !== null) {
     setUserId(eventObj.userId);
     setTitle(eventObj.title);
-    setProgramId(eventObj.programID);
+    setProgramName(eventObj.programName);
     setStartDate(eventObj.start);
     setEndDate(eventObj.end);
     setStartTime(eventObj.startTime);
@@ -59,14 +59,14 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
 
     try {
       setLoading(true);
-      const response = await Axios.post(`/update_schedule/${id}`, { UserID, Title, ProgramID, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
+      const response = await Axios.put(`/update_schedule/${id}`, { UserID, Title, ProgramName, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
 
       if (response.data.id !== "" || response.data.id !== null) {
         setLoading(false);
         closeModalForm();
         swal(`Schedule Updated.`, "Program will be updated to the calendar.", "success").then(res => {
-          // setLoading(true);
-          // window.location.reload();
+          setLoading(true);
+          window.location.reload();
         });
       }
     } catch (e) {
@@ -80,14 +80,14 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
 
     try {
       setLoading(true);
-      const response = await Axios.post(`/delete_schedule/${id}`);
+      const response = await Axios.delete(`/delete_schedule/${id}`);
 
       if (response.data.success === true || response.data.message === "Event Deleted") {
         setLoading(false);
         closeModalForm();
         swal(`Schedule Deleted.`, "Program will be removed from the calendar.", "success").then(res => {
-          // setLoading(true);
-          // window.location.reload();
+          setLoading(true);
+          window.location.reload();
         });
       }
     } catch (e) {
@@ -114,8 +114,8 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
                 <input type="text" class="form-control" id="inputTitle" name="Title" onChange={e => setTitle(e.target.value)} value={Title} />
               </div>
               <div class="form-group col-md-6">
-                <label for="inputProgramID">Program ID</label>
-                <input type="text" class="form-control" id="inputProgramID" name="ProgramID" onChange={e => setProgramId(e.target.value)} value={ProgramID} />
+                <label for="inputProgramName">Program ID</label>
+                <input type="text" class="form-control" id="inputProgramName" name="ProgramName" onChange={e => setProgramName(e.target.value)} value={ProgramName} />
               </div>
             </div>
             <div class="form-row">
