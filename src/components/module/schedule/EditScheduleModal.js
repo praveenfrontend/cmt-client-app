@@ -104,17 +104,13 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
         </Modal.Header>
         <Modal.Body>
           <form>
-            <div class="form-group">
-              <label for="inputUserID">User ID</label>
-              <input type="text" class="form-control" id="inputUserID" name="UserID" onChange={e => setUserId(e.target.value)} value={UserID} />
-            </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputTitle">Program Name</label>
+                <label for="inputTitle">Title</label>
                 <input type="text" class="form-control" id="inputTitle" name="Title" onChange={e => setTitle(e.target.value)} value={Title} />
               </div>
               <div class="form-group col-md-6">
-                <label for="inputProgramName">Program ID</label>
+                <label for="inputProgramName">Program Name</label>
                 <input type="text" class="form-control" id="inputProgramName" name="ProgramName" onChange={e => setProgramName(e.target.value)} value={ProgramName} />
               </div>
             </div>
