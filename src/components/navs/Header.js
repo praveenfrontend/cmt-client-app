@@ -22,7 +22,7 @@ function Header({ menuHandle }) {
                 <i className="fa fa-bars"></i>
               </button>
 
-              <Link to="/initial-registration-form" className="navbar-brand">
+              <Link to="/profile" className="navbar-brand">
                 <div className="brand-text d-none d-md-inline-block">
                   <strong className="text-primary">Community Matters</strong>
                 </div>

@@ -125,6 +125,8 @@ function App(props) {
           if (response.data.user !== null) {
             // setUser(response.data.user);
             localStorage.setItem("irfUserID", response.data.user.IRFuserId);
+            localStorage.setItem("roleType", response.data.user.roleType);
+            setRoleType(response.data.user.roleType);
           }
         } catch (e) {
           // swal("Something went wrong!", e.response, "error");
@@ -139,6 +141,7 @@ function App(props) {
 
   const [menuHandleValue, setMenuHandleValue] = useState("");
   const [pageValue, setPageValue] = useState("");
+  const [roleType, setRoleType] = useState("");
 
   const menuToggle = () => {
     if (window.outerWidth > 991) {
@@ -155,7 +158,7 @@ function App(props) {
       <DispatchContext.Provider value={dispatch}>
         <HashRouter>
           <LoadingOverlay active={state.loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
-            {state.loggedIn ? <SideNavigation menuHandleValue={menuHandleValue} /> : null}
+            {state.loggedIn ? <SideNavigation menuHandleValue={menuHandleValue} roleType={roleType}/> : null}
             <div className={`${state.loggedIn ? `${"page " + pageValue}` : ""}`}>
               {state.loggedIn ? <Header menuHandle={menuToggle} /> : null}
               <Switch>

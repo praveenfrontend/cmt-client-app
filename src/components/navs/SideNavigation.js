@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function SideNavigation({ menuHandleValue }) {
+function SideNavigation({ menuHandleValue, roleType }) {
+
   return (
     <nav className={`side-navbar ${menuHandleValue}`}>
       <div className="side-navbar-wrapper">
@@ -14,7 +15,7 @@ function SideNavigation({ menuHandleValue }) {
           </div>
           {/* <!-- Small Brand information, appears on minimized sidebar--> */}
           <div className="sidenav-header-logo">
-            <Link to="/initial-registration-form" className="brand-small text-center">
+            <Link to="/profile" className="brand-small text-center">
               <strong className="text-primary">CMT</strong>
             </Link>
           </div>
@@ -22,7 +23,10 @@ function SideNavigation({ menuHandleValue }) {
         {/* <!-- Sidebar Navigation Menus--> */}
         <div className="main-menu">
           <ul id="side-main-menu" className="side-menu list-unstyled">
-            <li>
+           {(roleType === "admin" || roleType === "agent") &&
+            (
+              <>
+              <li>
               <Link to="/initial-registration-form">
                 <i className="fa fa-wpforms text-success"></i>IRF
               </Link>
@@ -55,16 +59,19 @@ function SideNavigation({ menuHandleValue }) {
                 </li>
               </ul>
             </li>
+            </>
+             )}
+             <li>
+              <Link to="/profile">
+                <i className="fa fa-user text-success"></i>Profile
+              </Link>
+            </li>
             <li>
               <Link to="/schedule">
                 <i className="fa fa-calendar text-success"></i>Schedule
               </Link>
             </li>
-            <li>
-              <Link to="/profile">
-                <i className="fa fa-user text-success"></i>Profile
-              </Link>
-            </li>
+            
             <li>
               <a href="#exampledropdownDropdownProgram" aria-expanded="false" data-toggle="collapse">
                 {" "}
@@ -76,11 +83,14 @@ function SideNavigation({ menuHandleValue }) {
                     <i className="fa fa-list-alt text-success"></i>Program Details
                   </Link>
                 </li>
+                {
+                  (roleType === "admin" || roleType === "agent") &&
                 <li>
                   <Link to="/grade">
                     <i className="fa fa-list-alt text-success"></i>Grade
                   </Link>
                 </li>
+                }
                 <li>
                   <Link to="/document">
                     <i className="fa fa-list-alt text-success"></i>Document
@@ -88,6 +98,8 @@ function SideNavigation({ menuHandleValue }) {
                 </li>
               </ul>
             </li>
+            {
+              (roleType === "admin") &&             
             <li>
               <a href="#exampledropdownDropdownAdmin" aria-expanded="false" data-toggle="collapse">
                 {" "}
@@ -106,6 +118,7 @@ function SideNavigation({ menuHandleValue }) {
                 </li>
               </ul>
             </li>
+            }
           </ul>
         </div>
       </div>
