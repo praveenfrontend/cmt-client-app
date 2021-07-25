@@ -1,9 +1,11 @@
+/* eslint-disable default-case */
 import React, { useContext, useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 import swal from "sweetalert";
+import { useImmerReducer } from "use-immer";
 
 import Page from "../../common/Page";
 import Container from "../../common/Container";
@@ -15,18 +17,104 @@ import DispatchContext from "../../../DispatchContext";
 
 function Search() {
   const [loading, setLoading] = useState(false);
-  const [registrationId, setRegistrationId] = useState();
-  const [emailId, setEmailId] = useState();
   const [searchData, setSearchData] = useState({});
-
+  const [submitCount, setSubmitCount] = useState(0);
+  const [hasRegInput, setHasRegInput] = useState(false);
+  const [hasEmailInput, setHasEmailInput] = useState(false);
+  const [disableStatus, setDisableStatus] = useState(false);
   const appDispatch = useContext(DispatchContext);
 
-  const registrationChange = e => {
-    setRegistrationId(e.target.value);
-  };
-  const emailChange = e => {
-    setEmailId(e.target.value);
-  };
+  const initialState = {
+    registrationId: {
+      value: "",
+      hasErrors: false,
+      message: "",
+    },
+    email: {
+      value: "",
+      hasErrors: false,
+      message: "",
+    },
+  }
+
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "emailImmediately":
+        draft.email.hasErrors =  false;
+        draft.email.value = action.value;
+        if(draft.email.value.length >0){
+          setHasEmailInput(true);
+        }
+        if(hasEmailInput) {
+          draft.registrationId.hasErrors = false;
+          draft.registrationId.message = "";
+        }
+        return;
+      case "emailAfterDelay":
+        if (!/^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([a-zA-Z]+)$/.test(draft.email.value)) {
+          draft.email.hasErrors = true;
+          draft.email.message = "You must provide a valid email address.";
+          setHasEmailInput(false);
+        }
+        if(hasRegInput || draft.email.value.length === 0) {
+          draft.email.hasErrors = false;
+          draft.email.message = "";
+        }
+        return;
+      case "registrationIdImmediately":
+        draft.registrationId.hasErrors = false;
+        draft.registrationId.value = action.value;
+        if(draft.registrationId.value.length >0){
+          setHasRegInput(true);
+        }
+        if(hasRegInput) {
+          draft.email.hasErrors = false;
+          draft.email.message = "";
+        }
+        return;
+      case "registrationIdAfterDelay" :
+        if (draft.registrationId.value.length !== 8) {
+          draft.registrationId.hasErrors = true;
+          draft.registrationId.message = "Registration Id must be 8 digits.";
+          setHasRegInput(false);
+        } 
+        if(hasEmailInput || draft.registrationId.value.length === 0) {
+          draft.registrationId.hasErrors = false;
+          draft.registrationId.message = "";
+        }
+        return;
+      case "submitForm":
+        if ( !draft.email.hasErrors && !draft.registrationId.hasErrors) {
+          console.log("inside submitform");
+          setSubmitCount(1);
+        }
+        return;
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+
+  useEffect(() => {
+    if(state.email.hasErrors || state.registrationId.hasErrors || (state.email.value === "" && state.registrationId.value === "") ){
+      setDisableStatus(true);
+    } else {
+      setDisableStatus(false);
+    }
+  }, [state.email.hasErrors, state.registrationId.hasErrors, state.email.value, state.registrationId.value])
+
+  useEffect(() => {
+    if (state.email.value) {
+      const delay = setTimeout(() => dispatch({ type: "emailAfterDelay" }), 800);
+      return () => clearTimeout(delay);
+    }
+  }, [dispatch, state.email.value]);
+
+  useEffect(() => {
+    if (state.registrationId.value) {
+      const delay = setTimeout(() => dispatch({ type: "registrationIdAfterDelay" }), 800);
+      return () => clearTimeout(delay);
+    }
+  }, [dispatch, state.registrationId.value]);
 
   useEffect(() => {
     let regIdAfterUpdate = "";
@@ -59,34 +147,57 @@ function Search() {
     irfSearch();
   }, [appDispatch]);
 
+  useEffect(() => {
+    console.log('inside use effect 1')
+    if(submitCount){
+      async function fetchResults() {
+        setLoading(true);
+        try {
+          const searchInput = state.registrationId.value || state.email.value;
+          const response = await Axios.get(`/irf_search/${searchInput}`);
+          if (response.data.success === true) {
+            localStorage.setItem("regIdAfterUpdate", JSON.stringify(state.registrationId.value));
+            setSearchData(response.data.data);
+            appDispatch({ type: "userDetails", value: response.data.data.User_Details });
+            appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
+            appDispatch({ type: "childDetails", value: response.data.data.Child_Details });
+            appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
+            appDispatch({ type: "healthDetails", value: response.data.data.Health_Details });
+            appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
+            setLoading(false);
+          } else {
+            swal("Invalid Input", "Incorrect Registration Id or Email Id.", "error");
+            setLoading(false);
+          }
+        } catch (e) {
+          if (e.response === null) {
+            swal("Something went wrong.", e.response, "error");
+          }
+          setLoading(false);
+        }
+      }
+      fetchResults();
+      document.getElementById("registrationId").value = "";
+      document.getElementById("emailId").value = "";
+      setSubmitCount(0);
+      setHasRegInput(false);
+      setHasEmailInput(false);
+      dispatch({ type: "emailImmediately", value: "" });
+      dispatch({ type: "emailAfterDelay", value: ""});
+      dispatch({ type: "registrationIdImmediately", value: ""});
+      dispatch({ type: "registrationIdAfterDelay", value: ""});
+
+    }
+  }, [submitCount])
+
   const handleSearch = async e => {
     e.preventDefault();
     localStorage.removeItem("regIdAfterUpdate");
-    setLoading(true);
-
-    try {
-      const searchInput = registrationId || emailId;
-      const response = await Axios.get(`/irf_search/${searchInput}`);
-      setLoading(false);
-
-      if (response.data.success === true) {
-        localStorage.setItem("regIdAfterUpdate", JSON.stringify(registrationId));
-        setSearchData(response.data.data);
-        appDispatch({ type: "userDetails", value: response.data.data.User_Details });
-        appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
-        appDispatch({ type: "childDetails", value: response.data.data.Child_Details });
-        appDispatch({ type: "programDetails", value: response.data.data.Program_Details });
-        appDispatch({ type: "healthDetails", value: response.data.data.Health_Details });
-        appDispatch({ type: "registrationId", value: response.data.data.User_Details.userId });
-      } else {
-        swal("Invalid Input", "Incorrect Registration Id or Email Id.", "error");
-      }
-    } catch (e) {
-      if (e.response === null) {
-        swal("Something went wrong.", e.response, "error");
-      }
-      setLoading(false);
-    }
+    dispatch({ type: "emailImmediately", value: state.email.value });
+    dispatch({ type: "emailAfterDelay", value: state.email.value/* , noRequest: true */ });
+    dispatch({ type: "registrationIdImmediately", value: state.registrationId.value });
+    dispatch({ type: "registrationIdAfterDelay", value: state.registrationId.value });
+    dispatch({ type: "submitForm" });
   };
 
   // const clearData = () => {
@@ -121,16 +232,26 @@ function Search() {
             <form onSubmit={e => handleSearch(e)}>
               <div className="row">
                 <div className="col-md-3">
-                  <FormInput icon="fa fa-id-card-o" type="text" placeholder="Search by Registration ID" changeHandler={e => registrationChange(e)} />
+                  <FormInput icon="fa fa-id-card-o" type="number" placeholder="Search by Registration ID" 
+                    changeHandler={e => dispatch({ type: "registrationIdImmediately", value: e.target.value })} 
+                    message={state.registrationId.message} 
+                    inputField={state.registrationId.hasErrors}    
+                    id="registrationId"               
+                  />
                 </div>
                 <div className="col-md-1">
                   <p className="display-6 text-muted mt-2">[OR]</p>
                 </div>
                 <div className="col-md-4">
-                  <FormInput icon="fas fa-envelope" type="text" placeholder="Search by Email ID" changeHandler={e => emailChange(e)} />
+                  <FormInput icon="fas fa-envelope" type="text" placeholder="Search by Email ID" 
+                    changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} 
+                    message={state.email.message} 
+                    inputField={state.email.hasErrors}
+                    id="emailId"               
+                  />
                 </div>
                 <div className="col-md-2">
-                  <button className="btn btn-block btn-primary">Search</button>
+                  <button className="btn btn-block btn-primary" disabled={disableStatus} >Search</button>
                 </div>
                 {/* <div className="col-md-2">
                   <button className="btn btn-block btn-danger" onClick={() => clearData()}>
@@ -575,5 +696,3 @@ function Search() {
 }
 
 export default Search;
-
-// Search ID: 20201046 || 20160007
