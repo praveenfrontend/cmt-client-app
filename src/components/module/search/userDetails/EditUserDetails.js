@@ -49,7 +49,7 @@ class EditUserDetails extends Component {
     const { userId, firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, notes } = this.state;
 
     try {
-      const response = await Axios.post("/irf_userUpdate", { userId, firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, notes });
+      const response = await Axios.put("/irf_userUpdate", { userId, firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, notes });
 
       if (response.data.success === true) {
         this.setState({ loading: false });
