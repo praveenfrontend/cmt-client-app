@@ -8,7 +8,7 @@ import swal from "sweetalert";
 import Page from "../../../common/Page";
 import FormInput from "../../../FormFields/FormInput";
 
-import GoalDetails from "./GoalDetails";
+import AddGoalDetails from "./AddGoalDetails";
 
 class AddGoal extends Component {
   state = {
@@ -72,6 +72,14 @@ class AddGoal extends Component {
     });
   }
 
+  loadingHandler = (input) => {
+    return this.setState({ loading: input });
+  }
+
+  responseHandler = (input) => {
+    return this.setState({ response: input });
+  }
+
   inputChange = input => e => {
     this.setState({
       [input]: e.target.value
@@ -117,25 +125,6 @@ class AddGoal extends Component {
     });
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
-    this.setState({ loading: true });
-
-    const { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter } = this.state;
-
-    try {
-      const response = await Axios.post("/irf_addGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
-
-      if (response.data.success === true) {
-        this.setState({ loading: false });
-        this.setState({ response: true });
-      }
-    } catch (e) {
-      swal("Please update all fields.", e.response.data, "error");
-      this.setState({ loading: false });
-    }
-  };
-
   render() {
     const values = this.state;
 
@@ -157,20 +146,9 @@ class AddGoal extends Component {
                 </div>
               </div>
 
-              <GoalDetails values={values} inputChange={this.inputChange} inputChangeProgramDefault={this.inputChangeProgramDefault} inputChangeDate={this.inputChangeDate}/>
+              <AddGoalDetails values={values} inputChange={this.inputChange} inputChangeProgramDefault={this.inputChangeProgramDefault} 
+              inputChangeDate={this.inputChangeDate} loadingHandler={this.loadingHandler} responseHandler={this.responseHandler}/>
 
-              <div className="row justify-content-center">
-                <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/" onClick={this.handleSubmit}>
-                    <button className="btn btn-block btn-success">Submit</button>
-                  </Link>
-                </div>
-                <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/search">
-                    <button className="btn btn-block btn-danger">Back</button>
-                  </Link>
-                </div>
-              </div>
             </Page>
           </div>
         </section>

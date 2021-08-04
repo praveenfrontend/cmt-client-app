@@ -11,6 +11,8 @@ import FormInput from "../../../FormFields/FormInput";
 import FormRadio from "../../../FormFields/FormRadio";
 import FormDropDown from "../../../FormFields/FormDropDown";
 
+import EditGoalDetails from "./EditGoalDetails";
+
 class EditGoal extends Component {
   state = {
     response: false,
@@ -47,13 +49,27 @@ class EditGoal extends Component {
     this.setState({ RatingAfter: editGoalDetails.user_goal_program_RatingAfter });
   }
 
+  loadingHandler = (input) => {
+    return this.setState({ loading: input });
+  }
+
+  responseHandler = (input) => {
+    return this.setState({ response: input });
+  }
+
   inputChange = input => e => {
     this.setState({
       [input]: e.target.value
     });
   };
 
-  handleSubmit = async e => {
+  inputChangeDate = (input, value) => {
+    return this.setState({
+      [input]: value
+    })
+  }
+
+  /* handleSubmit = async e => {
     e.preventDefault();
     this.setState({ loading: true });
 
@@ -70,7 +86,7 @@ class EditGoal extends Component {
       swal("Please update all fields.", e.response.data, "error");
       this.setState({ loading: false });
     }
-  };
+  }; */
   handleDelete = async e => {
     e.preventDefault();
     this.setState({ loading: true });
@@ -116,7 +132,10 @@ class EditGoal extends Component {
                 </div>
               </div>
 
-              <Container title="Goal Details">
+              <EditGoalDetails value={true} values={values} inputChange={this.inputChange} 
+              inputChangeDate={this.inputChangeDate} loadingHandler={this.loadingHandler} responseHandler={this.responseHandler}/>
+
+              {/* <Container title="Goal Details">
                 <div className="row">
                   <div className="col-md-4">
                     <div className={`form-group row`}>
@@ -237,9 +256,9 @@ class EditGoal extends Component {
                     </div>
                   </div>
                 </div>
-              </Container>
+              </Container> */}
 
-              <div className="row justify-content-center">
+              {/* <div className="row justify-content-center">
                 <div className="col col-sm-4 col-md-3 col-lg-2">
                   <Link to="/" onClick={this.handleSubmit}>
                     <button className="btn btn-block btn-success">Submit</button>
@@ -250,7 +269,7 @@ class EditGoal extends Component {
                     <button className="btn btn-block btn-danger">Back</button>
                   </Link>
                 </div>
-              </div>
+              </div> */}
             </Page>
           </div>
         </section>
