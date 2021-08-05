@@ -72,7 +72,7 @@ function SideNavigation({ menuHandleValue, roleType }) {
               </Link>
             </li>
             
-            <li>
+            {/* <li>
               <a href="#exampledropdownDropdownProgram" aria-expanded="false" data-toggle="collapse">
                 {" "}
                 <i class="fa fa-list-alt text-success"></i>Programs{" "}
@@ -97,7 +97,7 @@ function SideNavigation({ menuHandleValue, roleType }) {
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             {
               (roleType === "admin") &&             
             <li>
