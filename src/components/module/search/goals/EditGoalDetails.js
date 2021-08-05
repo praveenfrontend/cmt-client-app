@@ -147,10 +147,10 @@ function EditGoalDetails({ value, values, inputChange, inputChangeDate, loadingH
           // setLoading(true);
           loadingHandler(true)
           try {
-            // const response = await Axios.post("/irf_addGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
             const response = await Axios.post(
-              "/irf_addGoal",
+              "/irf_updateGoal",
               {
+                tb_user_details_goals_update_id: values.tb_user_details_goals_update_id,
                 userId: values.userId,
                 CategoryName: values.CategoryName,
                 ProgramName: values.ProgramName,
@@ -178,7 +178,7 @@ function EditGoalDetails({ value, values, inputChange, inputChangeDate, loadingH
         fetchResults();
         setSubmitCount(0);
       }
-    }, [dispatch, loadingHandler, responseHandler, submitCount, values.AdditionalComments, values.CategoryName, values.EndDate, values.Instructor, values.Location, values.ParticipantComments, values.ProgramName, values.RatingAfter, values.RatingBefore, values.StartDate, values.Status, values.password, values.userId]);
+    }, [dispatch, loadingHandler, responseHandler, submitCount, values.tb_user_details_goals_update_id, values.AdditionalComments, values.CategoryName, values.EndDate, values.Instructor, values.Location, values.ParticipantComments, values.ProgramName, values.RatingAfter, values.RatingBefore, values.StartDate, values.Status, values.password, values.userId]);
 
     async function handleSubmit(e) {
       e.preventDefault();
