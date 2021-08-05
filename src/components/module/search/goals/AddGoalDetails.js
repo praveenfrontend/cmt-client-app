@@ -136,10 +136,8 @@ function AddGoalDetails({ values, inputChange, inputChangeProgramDefault, inputC
     useEffect(() => {
       if (submitCount) {
         async function fetchResults() {
-          // setLoading(true);
           loadingHandler(true)
           try {
-            // const response = await Axios.post("/irf_addGoal", { userId, CategoryName, ProgramName, Location, Instructor, StartDate, EndDate, Status, ParticipantComments, AdditionalComments, RatingBefore, RatingAfter });
             const response = await Axios.post(
               "/irf_addGoal",
               {

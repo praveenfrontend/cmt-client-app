@@ -614,6 +614,14 @@ class EditProgramDetails extends Component {
     this.setState({ [input]: input });
   };
 
+  loadingHandler = (input) => {
+    return this.setState({ loading: input });
+  }
+
+  responseHandler = (input) => {
+    return this.setState({ response: input });
+  }
+
   handleSubmit = async e => {
     e.preventDefault();
 
@@ -663,9 +671,9 @@ class EditProgramDetails extends Component {
                 </div>
               </div>
 
-              <EditCommunityMattersProgram inputChange={this.inputChange} inputCheckBoxHandler={this.inputCheckBoxHandler} values={values} />
+              <EditCommunityMattersProgram inputChange={this.inputChange} inputCheckBoxHandler={this.inputCheckBoxHandler} values={values} loadingHandler={this.loadingHandler} responseHandler={this.responseHandler}/>
 
-              <div className="row justify-content-center">
+              {/* <div className="row justify-content-center">
                 <div className="col col-sm-4 col-md-3 col-lg-2">
                   <Link to="/search" onClick={this.handleSubmit}>
                     <button className="btn btn-block btn-success">Submit</button>
@@ -676,7 +684,7 @@ class EditProgramDetails extends Component {
                     <button className="btn btn-block btn-danger">Back</button>
                   </Link>
                 </div>
-              </div>
+              </div> */}
             </Page>
           </div>
         </section>

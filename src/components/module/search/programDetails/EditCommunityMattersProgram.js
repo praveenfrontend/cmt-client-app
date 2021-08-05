@@ -1,11 +1,121 @@
-import React from "react";
+/* eslint-disable default-case */
+import React, { useEffect, useState } from "react";
+import { useImmerReducer } from "use-immer";
+import { Link } from "react-router-dom";
+import Axios from "axios";
 import Page from "../../../common/Page";
 import FormRadio from "../../../FormFields/FormRadio";
 import FormCheckbox from "../../../FormFields/FormCheckbox";
+import swal from "sweetalert";
 
-function EditCommunityMattersProgram({ values, inputChange, inputCheckBoxHandler /* , checkedValueHandler */ }) {
-  console.log("values: ", values);
+import { CSSTransition } from "react-transition-group";
+
+function EditCommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, loadingHandler, responseHandler /* , checkedValueHandler */ }) {
+
+  const [submitCount, setSubmitCount] = useState(0);
+
+  const initialState = {
+    after_school_program: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    Others: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    }
+  };
+
+
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "afterSchoolImmediately":
+        draft.after_school_program.hasErrors = false;
+        draft.after_school_program.value = action.value;
+        if (draft.after_school_program.value === values.after_school_program) {
+          draft.after_school_program.hasErrors = true;
+          draft.after_school_program.message = "Select after school program.";
+        }
+        return;
+
+      case "OthersImmediately":
+        draft.Others.hasErrors = false;
+        draft.Others.value = action.value;
+        if (values.Others.length === 0) {
+          draft.Others.hasErrors = true;
+          draft.Others.message = "Others, if any cannot be empty.";
+          return;
+        }
+        return;
+
+
+      case "submitForm":
+        if (!draft.after_school_program.hasErrors && !draft.Others.hasErrors ) {
+          setSubmitCount(1);
+        }
+        return;
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+
+
+  useEffect(() => {
+    if (submitCount) {
+      async function fetchResults() {
+        loadingHandler(true)
+        try {
+
+          const userprograms = {
+            health : values.health,
+            employment: values.employment,
+            neighbourhood_net: values.neighbourhood_net,
+            staff: values.staff
+          };
+
+
+          const response = await Axios.post(
+            "/irf_programUpdate",
+            {
+              userId: values.userId,
+              after_school_program: values.after_school_program,
+              userprograms: userprograms,
+              Others: values.Others
+            }
+          );
+
+          if (response.data.success === true) {
+            loadingHandler(false)
+            responseHandler(true)
+          }
+        } catch (e) {
+          swal("Something went wrong.", e.response.data, "error");
+          loadingHandler(false)
+        }
+      }
+      fetchResults();
+      setSubmitCount(0);
+    }
+  }, [dispatch, loadingHandler, responseHandler, submitCount, values.userId, values.after_school_program, values.health, values.employment, values.neighbourhood_net, values.staff, values.Others]);
+
+
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    dispatch({ type: "afterSchoolImmediately", value: state.after_school_program.value });
+    dispatch({ type: "OthersImmediately", value: state.Others.value });
+    dispatch({ type: "submitForm" });
+  }
+
+
+
+
+
+
   return (
+    <>
     <Page title="Community Matters Program">
       <div className="row">
         <div className="col">
@@ -18,9 +128,14 @@ function EditCommunityMattersProgram({ values, inputChange, inputCheckBoxHandler
           <label className="text-muted mr-2">After School Program (3:30 - 6):</label>
         </div>
         <div className="col-md-3 col-lg-6">
-          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_yes" inputName="after_school_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.after_school_program} />
-          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_no" inputName="after_school_program" inputValue="No" inputLabel="No" checkedValue={values.after_school_program} />
+          {/* <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_yes" inputName="after_school_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.after_school_program} />
+          <FormRadio changeHandler={inputChange("after_school_program")} inputId="after_school_program_no" inputName="after_school_program" inputValue="No" inputLabel="No" checkedValue={values.after_school_program} /> */}
+          <FormRadio changeHandler={inputChange("after_school_program")} inputHandler={e => dispatch({ type: "afterSchoolImmediately", value: e.target.id })} inputId="after_school_program_yes" inputName="after_school_program" inputValue="Yes" inputLabel="Yes" checkedValue={values.after_school_program} />
+          <FormRadio changeHandler={inputChange("after_school_program")} inputHandler={e => dispatch({ type: "afterSchoolImmediately", value: e.target.id })} inputId="after_school_program_no" inputName="after_school_program" inputValue="No" inputLabel="No" checkedValue={values.after_school_program} />
         </div>
+        <CSSTransition in={state.after_school_program.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+          <div className="alert alert-danger small liveValidateMessage">{state.after_school_program.message}</div>
+        </CSSTransition>
       </div>
 
       <div className="row">
@@ -110,9 +225,28 @@ function EditCommunityMattersProgram({ values, inputChange, inputCheckBoxHandler
         <label htmlFor="othersTextArea" className="text-muted">
           Others, if any
         </label>
-        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} value={values.Others}></textarea>
+        {/* <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} value={values.Others}></textarea> */}
+        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} onInput={e => dispatch({ type: "OthersImmediately", value: e.target.value })} message={state.Others.message} inputField={state.Others.hasErrors} value={values.Others}></textarea>
+        <CSSTransition in={state.Others.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+          <div className="alert alert-danger small liveValidateMessage">{state.Others.message}</div>
+        </CSSTransition>
       </div>
     </Page>
+
+    <div className="row justify-content-center">
+      <div className="col col-sm-4 col-md-3 col-lg-2">
+        <Link to="/" onClick={handleSubmit}>
+          <button className="btn btn-block btn-success">Submit</button>
+        </Link>
+      </div>
+      <div className="col col-sm-4 col-md-3 col-lg-2">
+        <Link to="/search">
+          <button className="btn btn-block btn-danger">Back</button>
+        </Link>
+      </div>
+    </div>
+
+    </>
   );
 }
 

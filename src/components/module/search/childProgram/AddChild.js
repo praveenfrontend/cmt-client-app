@@ -10,6 +10,7 @@ import Container from "../../../common/Container";
 import FormInput from "../../../FormFields/FormInput";
 import FormRadio from "../../../FormFields/FormRadio";
 import FormCheckbox from "../../../FormFields/FormCheckbox";
+import AddChildDetails from "./AddChildDetails";
 
 class AddChild extends Component {
   state = {
@@ -119,6 +120,21 @@ class AddChild extends Component {
     });
   };
 
+  inputChangeDate = (input, value) => {
+    return this.setState({
+      [input]: value
+    })
+  }
+
+  loadingHandler = (input) => {
+    return this.setState({ loading: input });
+  }
+
+  responseHandler = (input) => {
+    return this.setState({ response: input });
+  }
+
+
   handleSubmit = async e => {
     e.preventDefault();
     this.setState({ loading: true });
@@ -159,78 +175,89 @@ class AddChild extends Component {
                 </div>
               </div>
 
+              {/* 
+              <AddChildDetails  values={values} inputChange={this.inputChange} addChild={this.addChild} removeChild={this.removeChild} 
+              handleChangeChildProgram={this.handleChangeChildProgram} inputChangeChildProgram={this.inputChangeChildProgram} 
+              inputChangeDate={this.inputChangeDate} loadingHandler={this.loadingHandler} responseHandler={this.responseHandler} />
+               */}
+            
+            
+            
+            
+            
+            
               <Container title="Child Details">
-                <div className="row form-group">
-                  <div className="col-md-7 col-lg-6">
-                    <label className="text-muted mr-2">Information if Registration for a Child's program</label>
-                  </div>
-                  <div className="col-md-3 col-lg-6">
-                    <FormRadio classNameValue="" changeHandler={this.inputChangeChildProgram("ChildValue")} inputId="childYes" inputName="ChildValue" inputValue="Yes" inputLabel="Yes" checkedValue={values.ChildValue} />
-                    <FormRadio classNameValue="" changeHandler={this.inputChangeChildProgram("ChildValue")} inputId="childNo" inputName="ChildValue" inputValue="No" inputLabel="No" checkedValue={values.ChildValue} />
-                  </div>
+              <div className="row form-group">
+                <div className="col-md-7 col-lg-6">
+                  <label className="text-muted mr-2">Information if Registration for a Child's program</label>
                 </div>
-
-                {values.childProgramAddRemove ? (
-                  <div className="row form-group">
-                    <div className="col col-sm-4 col-md-3 col-lg-2">
-                      <button className="btn  btn-outline-success" onClick={this.addChild}>
-                        Add Child
-                      </button>
-                    </div>
-                    <div className="col col-sm-4 col-md-3 col-lg-2">
-                      <button className="btn  btn-outline-danger" onClick={this.removeChild}>
-                        Remove Child
-                      </button>
-                    </div>
-                  </div>
-                ) : null}
-
-                {values.childProgramAddRemove && values.child_program.length ? (
-                  <div className="card">
-                    <div className="card-body">
-                      <table className="table">
-                        <thead className="thead-light">
-                          <tr>
-                            <th scope="col">Select</th>
-                            <th scope="col">Child First Name</th>
-                            <th scope="col">Child Last Name</th>
-                            <th scope="col">Date of Birth</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {values.child_program.map((item, idx) => (
-                            <tr id="addr0" key={idx}>
-                              <td>{<FormCheckbox classNameValue="col col-sm-4 col-md-3 col-lg-2" changeHandler={this.handleChangeChildProgram(idx)} inputId={idx} inputValue={"child_program" + idx} checkedValue={values.child_program[idx].isChecked} />}</td>
-                              <td>
-                                <FormInput icon="fas fa-child" type="text" placeholder="Child First Name" changeHandler={this.handleChangeChildProgram(idx)} value={values.child_program[idx].childFirstName} name="childFirstName" />
-                              </td>
-                              <td>
-                                <FormInput icon="fas fa-child" type="text" placeholder="Child Last Name" changeHandler={this.handleChangeChildProgram(idx)} value={values.child_program[idx].childLastName} name="childLastName" />
-                              </td>
-                              <td>
-                                <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={this.handleChangeChildProgram(idx)} value={values.child_program[idx].childBirthDate} name="childBirthDate" />
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                ) : null}
-              </Container>
-
-              <div className="row justify-content-center">
-                <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/" onClick={this.handleSubmit}>
-                    <button className="btn btn-block btn-success">Submit</button>
-                  </Link>
-                </div>
-                <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/search">
-                    <button className="btn btn-block btn-danger">Back</button>
-                  </Link>
+                <div className="col-md-3 col-lg-6">
+                  <FormRadio classNameValue="" changeHandler={this.inputChangeChildProgram("ChildValue")} inputId="childYes" inputName="ChildValue" inputValue="Yes" inputLabel="Yes" checkedValue={values.ChildValue} />
+                  <FormRadio classNameValue="" changeHandler={this.inputChangeChildProgram("ChildValue")} inputId="childNo" inputName="ChildValue" inputValue="No" inputLabel="No" checkedValue={values.ChildValue} />
                 </div>
               </div>
+
+              {values.childProgramAddRemove ? (
+                <div className="row form-group">
+                  <div className="col col-sm-4 col-md-3 col-lg-2">
+                    <button className="btn  btn-outline-success" onClick={this.addChild}>
+                      Add Child
+                    </button>
+                  </div>
+                  <div className="col col-sm-4 col-md-3 col-lg-2">
+                    <button className="btn  btn-outline-danger" onClick={this.removeChild}>
+                      Remove Child
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+
+              {values.childProgramAddRemove && values.child_program.length ? (
+                <div className="card">
+                  <div className="card-body">
+                    <table className="table">
+                      <thead className="thead-light">
+                        <tr>
+                          <th scope="col">Select</th>
+                          <th scope="col">Child First Name</th>
+                          <th scope="col">Child Last Name</th>
+                          <th scope="col">Date of Birth</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {values.child_program.map((item, idx) => (
+                          <tr id="addr0" key={idx}>
+                            <td>{<FormCheckbox classNameValue="col col-sm-4 col-md-3 col-lg-2" changeHandler={this.handleChangeChildProgram(idx)} inputId={idx} inputValue={"child_program" + idx} checkedValue={values.child_program[idx].isChecked} />}</td>
+                            <td>
+                              <FormInput icon="fas fa-child" type="text" placeholder="Child First Name" changeHandler={this.handleChangeChildProgram(idx)} value={values.child_program[idx].childFirstName} name="childFirstName" />
+                            </td>
+                            <td>
+                              <FormInput icon="fas fa-child" type="text" placeholder="Child Last Name" changeHandler={this.handleChangeChildProgram(idx)} value={values.child_program[idx].childLastName} name="childLastName" />
+                            </td>
+                            <td>
+                              <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={this.handleChangeChildProgram(idx)} value={values.child_program[idx].childBirthDate} name="childBirthDate" />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : null}
+            </Container>
+
+            <div className="row justify-content-center">
+              <div className="col col-sm-4 col-md-3 col-lg-2">
+                <Link to="/" onClick={this.handleSubmit}>
+                  <button className="btn btn-block btn-success">Submit</button>
+                </Link>
+              </div>
+              <div className="col col-sm-4 col-md-3 col-lg-2">
+                <Link to="/search">
+                  <button className="btn btn-block btn-danger">Back</button>
+                </Link>
+              </div>
+            </div>
             </Page>
           </div>
         </section>
