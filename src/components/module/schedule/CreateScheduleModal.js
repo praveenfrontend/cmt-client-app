@@ -304,10 +304,10 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
                 <label for="inputEndDate">End Date</label>
                 {/* <input type="text" class="form-control" id="inputEndDate" name="EndDate" placeholder="MM/DD/YYYY" onChange={e => setEndDate(e.target.value)} value={EndDate} /> */}
                 <DatePicker className="form-control" selected={selectedEndDate} onChange={date => onChangeEndDateHandler(date)}  placeholderText="End Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                </div>
                 <CSSTransition in={state.endDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                     <div className="alert alert-danger small liveValidateMessage">{state.endDate.message}</div>
                 </CSSTransition> 
-              </div>
             </div>
 
             
