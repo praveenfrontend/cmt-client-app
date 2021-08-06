@@ -523,7 +523,7 @@ function SignUp() {
                       </label>
                       <div className="btn-group btn-group-dispose" data-toggle="buttons">
                         <label className="btn btn-outline-primary btn-sm">
-                          <input type="radio" name="roleType" id="user" onClick={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
+                          <input type="radio" name="roleType" id="Participant" onClick={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> User
                         </label>
                         <label className="btn btn-outline-primary btn-sm">
                           <input type="radio" name="roleType" id="agent" onClick={e => dispatch({ type: "roleTypeImmediately", value: e.target.id })} /> Agent
