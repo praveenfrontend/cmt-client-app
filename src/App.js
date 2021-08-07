@@ -14,6 +14,7 @@ import Header from "./components/navs/Header";
 import AdminAddProgram from "./components/module/admin/AdminAddProgram";
 import AdminDeleteUsers from "./components/module/admin/AdminDeleteUsers";
 import ProgramDetails from "./components/module/program/ProgramDetails";
+import ProgramDetailsNew from "./components/module/program/ProgramDetailsNew";
 import Document from "./components/module/program/Document";
 import Grade from "./components/module/program/Grade";
 import Profile from "./components/module/profile/Profile";
@@ -127,6 +128,7 @@ function App(props) {
             // setUser(response.data.user);
             localStorage.setItem("irfUserID", response.data.user.IRFuserId);
             localStorage.setItem("roleType", response.data.user.roleType);
+            localStorage.setItem("email", response.data.user.email);
             setRoleType(response.data.user.roleType);
           }
         } catch (e) {
@@ -171,6 +173,7 @@ function App(props) {
                 <GuardedRoute path="/search" component={Search} auth={state.loggedIn} />
                 <GuardedRoute path="/adminAddProgram" component={AdminAddProgram} auth={state.loggedIn} />
                 <GuardedRoute path="/adminDeleteUsers" component={AdminDeleteUsers} auth={state.loggedIn} />
+                <GuardedRoute path="/programDetailsNew" component={ProgramDetailsNew} auth={state.loggedIn} />
                 <GuardedRoute path="/programDetails" component={ProgramDetails} auth={state.loggedIn} />
                 <GuardedRoute path="/document" component={Document} auth={state.loggedIn} />
                 <GuardedRoute path="/grade" component={Grade} auth={state.loggedIn} />

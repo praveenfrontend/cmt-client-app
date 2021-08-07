@@ -98,6 +98,11 @@ function SideNavigation({ menuHandleValue, roleType }) {
                 </li>
               </ul>
             </li> */}
+            <li>
+              <Link to="/programDetailsNew">
+                <i className="fa fa-list-alt text-success"></i>Programs
+              </Link>
+            </li>
             {
               (roleType === "admin") &&             
             <li>

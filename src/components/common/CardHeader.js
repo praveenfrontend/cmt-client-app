@@ -1,7 +1,7 @@
 import React from "react";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
-function CardHeader({ cardHeaderValue, download, filename, schedule, clickHandler }) {
+function CardHeader({ cardHeaderValue, grade, upload, download, filename, schedule, clickHandler }) {
   return (
     <div className="card-header bg-primary d-flex justify-content-between">
       <h1 className="text-white">{cardHeaderValue}</h1>
@@ -13,6 +13,8 @@ function CardHeader({ cardHeaderValue, download, filename, schedule, clickHandle
         ""
       )}
       {schedule && <input type="submit" value="Create Schedule" className={"btn btn-success"} onClick={() => clickHandler()} />}
+      {upload && <input type="submit" value="Upload New" className={"btn btn-success"} onClick={() => clickHandler()} />}
+      {grade && <input type="submit" value="Set Grade" className={"btn btn-success"} onClick={() => clickHandler()} />}
     </div>
   );
 }
