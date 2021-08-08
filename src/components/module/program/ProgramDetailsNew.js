@@ -3,10 +3,10 @@ import Axios from "axios";
 import swal from "sweetalert";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 import Page from "../../common/Page";
 import Container from "../../common/Container";
-import FormInput from "../../FormFields/FormInput";
 import UploadModal from "./UploadModal";
 import GradeModal from "./GradeModal";
 
@@ -15,6 +15,7 @@ function ProgramDetailsNew() {
   const [uploadModal, setUploadModal] = useState(false);
   const [gradeModal, setGradeModal] = useState(false);
   const [role, SetRole] = useState("");
+  const [gradeSuccess, setGradeSuccess] = useState(false);
   
   const [categoryAndProgramList, setCategoryAndProgramList] = useState({});
   const [categoryList, setCategoryList] = useState([]);
@@ -27,16 +28,15 @@ function ProgramDetailsNew() {
   const [filesList, setFilesList] = useState([]);
   const [participantList, setParticipantList] = useState([]);
 
+  const [ participantObj, setParticipantObj] = useState({});
+
   const [subscribe, setSubscribe] = useState(false);
   const [unsubscribe, setUnSubscribe] = useState(false);
-
-  // const userType = "Admin";
 
   useEffect(() => {
 
     const roleType = localStorage.getItem("roleType");
     SetRole(roleType);
-
 
     const categoryDropDown = async () => {
       setLoading(true);
@@ -48,7 +48,6 @@ function ProgramDetailsNew() {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };
@@ -64,25 +63,19 @@ function ProgramDetailsNew() {
     setProgramValue(value);
   };
 
-  const showAssignments = async e => {
-    e.preventDefault();
+  async function displayAssignments() {
     setLoading(true);
 
-    const irfUserID = localStorage.getItem("irfUserID");
     const email = localStorage.getItem("email");
 
     try {
       const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&email=${email}`);
       setLoading(false);
 
-      console.log(response.data.data);
-
       if (response.data.success === true) {
         setAssignmentsList(response.data.data.Assignments);
         // eslint-disable-next-line no-unused-expressions
         response.data.data.MyFiles !== undefined ? setFilesList(response.data.data.MyFiles) : "";
-        // console.log('MyFiles ', response.data.data.MyFiles);
-        // console.log('PF ', response.data.data.ParticipantFiles);
         // eslint-disable-next-line no-unused-expressions
         response.data.data.ParticipantFiles !== undefined ? setParticipantList(response.data.data.ParticipantFiles) : "";
 
@@ -108,12 +101,26 @@ function ProgramDetailsNew() {
         swal(response.data.data.UserProgramStatus, response.data.message, "warning");
       }
     } catch (e) {
-        // if (e.response === null) {
         swal("Something went wrong.", e.response, "error");
-        // }
       setLoading(false);
     }
+
+  } 
+
+  const showAssignments = e => {
+    e.preventDefault();
+    displayAssignments();
   };
+
+  useEffect(() => {
+
+    function loadAssignments() {
+      displayAssignments();
+      setGradeSuccess(false);
+    };
+    loadAssignments();
+
+  }, [gradeSuccess]);
 
   const subscribeProgram = async e => {
     e.preventDefault();
@@ -124,8 +131,6 @@ function ProgramDetailsNew() {
     try {
       const response = await Axios.post("/subcribeprogram", { Program_Name: programValue, userID: irfUserID, category: categoryValue });
       setLoading(false);
-
-      console.log(response.data);
 
       if (response.data.success === true) {
         swal(response.data.message, "", "success");
@@ -154,8 +159,6 @@ function ProgramDetailsNew() {
       const response = await Axios.post("/unsubscribeprogram", { Program_Name: programValue, userID: irfUserID, category: categoryValue });
       setLoading(false);
 
-      console.log(response.data);
-
       if (response.data.success === true) {
         swal(response.data.message, "", "success");
         setSubscribe(true);
@@ -173,16 +176,13 @@ function ProgramDetailsNew() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("ASSIGNMENT LIST: ", assignmentsList);
-  // }, [assignmentsList]);
-
   const uploadModalForm = () => {
     setUploadModal(true);
   }
 
-  const gradeModalForm = () => {
-    setGradeModal(true);
+  const gradeModalForm = (participant, value) => {
+    setParticipantObj(participant);
+    setGradeModal(value);
   }
 
   return (
@@ -190,7 +190,7 @@ function ProgramDetailsNew() {
       <section className="forms">
         <div className="container-fluid">
           <Page title="Program">
-            <form /* onSubmit={} */>
+            <form>
               <div className="row">
                 <div className="col-md-5">
                   <div className={`form-group row`}>
@@ -295,7 +295,7 @@ function ProgramDetailsNew() {
               </div>
             </div>
           </Container>
-          <Container title={role === "Participant" ? 'My Files' : 'Participant Files' } grade={role === "Participant" ? false : true} upload={role === "Participant" ? true : false} clickHandler={role === "Participant" ? uploadModalForm : gradeModalForm}>
+          <Container title={role === "Participant" ? 'My Files' : 'Participant Files' } upload={role === "Participant" ? true : false} clickHandler={role === "Participant" ? uploadModalForm : ""}>
             <div className="card">
               <div className="card-body">
                 <div className="row">
@@ -338,6 +338,7 @@ function ProgramDetailsNew() {
                                     }) : ""
                                 }
                                 {
+                                  
                                   ( participantList !== undefined && participantList.length !== 0 )
                                   ? participantList.map((participant, val) => {
                                       return (
@@ -345,7 +346,10 @@ function ProgramDetailsNew() {
                                           <td>{participant.Program_Name}</td>
                                           <td>{participant.Sentfrom}</td>
                                           <td>{participant.AssignmentName}</td>
-                                          <td>{participant.usergrade}</td>
+                                          <td>
+                                            {participant.usergrade} &nbsp;
+                                            <Link onClick={e => gradeModalForm(participant, true)} ><i className="fa fa-edit"></i></Link>
+                                          </td>
                                           <td>{participant.agentcomments}</td>
                                           <td>
                                             <a target="_blank" rel="noreferrer" href={participant.File_Loc}>
@@ -369,7 +373,7 @@ function ProgramDetailsNew() {
             </div>
           </Container>
           <UploadModal uploadModal={uploadModal} setUploadModal={setUploadModal}/>
-          <GradeModal gradeModal={gradeModal} setGradeModal={setGradeModal}/>
+          <GradeModal gradeModal={gradeModal} gradeModalForm={gradeModalForm} participantObj={participantObj} setGradeSuccess={setGradeSuccess}/>
         </div>
       </section>
     </LoadingOverlay>

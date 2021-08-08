@@ -72,32 +72,6 @@ function SideNavigation({ menuHandleValue, roleType }) {
               </Link>
             </li>
             
-            {/* <li>
-              <a href="#exampledropdownDropdownProgram" aria-expanded="false" data-toggle="collapse">
-                {" "}
-                <i class="fa fa-list-alt text-success"></i>Programs{" "}
-              </a>
-              <ul id="exampledropdownDropdownProgram" class="collapse list-unstyled">
-                <li>
-                  <Link to="/programDetails">
-                    <i className="fa fa-list-alt text-success"></i>Program Details
-                  </Link>
-                </li>
-                {
-                  (roleType === "admin" || roleType === "agent") &&
-                <li>
-                  <Link to="/grade">
-                    <i className="fa fa-list-alt text-success"></i>Grade
-                  </Link>
-                </li>
-                }
-                <li>
-                  <Link to="/document">
-                    <i className="fa fa-list-alt text-success"></i>Document
-                  </Link>
-                </li>
-              </ul>
-            </li> */}
             <li>
               <Link to="/programDetailsNew">
                 <i className="fa fa-list-alt text-success"></i>Programs

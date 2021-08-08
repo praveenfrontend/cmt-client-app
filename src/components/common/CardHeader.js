@@ -14,7 +14,6 @@ function CardHeader({ cardHeaderValue, grade, upload, download, filename, schedu
       )}
       {schedule && <input type="submit" value="Create Schedule" className={"btn btn-success"} onClick={() => clickHandler()} />}
       {upload && <input type="submit" value="Upload New" className={"btn btn-success"} onClick={() => clickHandler()} />}
-      {grade && <input type="submit" value="Set Grade" className={"btn btn-success"} onClick={() => clickHandler()} />}
     </div>
   );
 }

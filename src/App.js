@@ -13,10 +13,7 @@ import SideNavigation from "./components/navs/SideNavigation";
 import Header from "./components/navs/Header";
 import AdminAddProgram from "./components/module/admin/AdminAddProgram";
 import AdminDeleteUsers from "./components/module/admin/AdminDeleteUsers";
-import ProgramDetails from "./components/module/program/ProgramDetails";
 import ProgramDetailsNew from "./components/module/program/ProgramDetailsNew";
-import Document from "./components/module/program/Document";
-import Grade from "./components/module/program/Grade";
 import Profile from "./components/module/profile/Profile";
 import Search from "./components/module/search/Search";
 import Reports from "./components/module/reports/Reports";
@@ -174,9 +171,6 @@ function App(props) {
                 <GuardedRoute path="/adminAddProgram" component={AdminAddProgram} auth={state.loggedIn} />
                 <GuardedRoute path="/adminDeleteUsers" component={AdminDeleteUsers} auth={state.loggedIn} />
                 <GuardedRoute path="/programDetailsNew" component={ProgramDetailsNew} auth={state.loggedIn} />
-                <GuardedRoute path="/programDetails" component={ProgramDetails} auth={state.loggedIn} />
-                <GuardedRoute path="/document" component={Document} auth={state.loggedIn} />
-                <GuardedRoute path="/grade" component={Grade} auth={state.loggedIn} />
                 <GuardedRoute path="/profile" component={Profile} auth={state.loggedIn} />
                 <GuardedRoute path="/reports" component={Reports} auth={state.loggedIn} />
                 <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />
