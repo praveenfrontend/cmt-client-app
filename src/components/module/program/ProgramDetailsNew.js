@@ -245,130 +245,122 @@ function ProgramDetailsNew() {
             </form>
           </Page>
           <Container title="Assignments" upload={role === "Participant" ? false: true}  clickHandler={uploadModalForm}>
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-lg-12">
-                    {loading ? (
-                      <Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} style={{ top: "50%", left: "50%", position: "absolute" }} />
-                    ) : (
-                      <div className="card">
-                        <div className="card-body">
-                          <div class="table-responsive">
-                            <table class="table" id="table-to-xls">
-                              <thead>
-                                <tr>
-                                  <th>Program Name</th>
-                                  <th>Agent Name</th>
-                                  <th>Assignment Name</th>
-                                  <th>File</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {assignmentsList.length !== 0
-                                  ? assignmentsList.map((assignments, val) => {
-                                      return (
-                                        <tr key={val}>
-                                          <td>{assignments.Program_Name}</td>
-                                          <td>{assignments.Sentfrom}</td>
-                                          <td>{assignments.AssignmentName}</td>
-                                          <td>
-                                            <a target="_blank" rel="noreferrer" href={assignments.File_Loc}>
-                                              Download
-                                            </a>
-                                          </td>
-                                          <td>{assignments.usergrade}</td>
-                                          <td>{assignments.agentcomments}</td>
-                                        </tr>
-                                      );
-                                    })
-                                  : ""}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                        {assignmentsList.length === 0 && <h1 className="m-auto text-muted">No Data Available</h1>}
+            <div className="row">
+              <div className="col-lg-12">
+                {loading ? (
+                  <Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} style={{ top: "50%", left: "50%", position: "absolute" }} />
+                ) : (
+                  <div className="card">
+                    <div className="card-body">
+                      <div class="table-responsive">
+                        <table class="table" id="table-to-xls">
+                          <thead>
+                            <tr>
+                              <th>Program Name</th>
+                              <th>Agent Name</th>
+                              <th>Assignment Name</th>
+                              <th>File</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {assignmentsList.length !== 0
+                              ? assignmentsList.map((assignments, val) => {
+                                  return (
+                                    <tr key={val}>
+                                      <td>{assignments.Program_Name}</td>
+                                      <td>{assignments.Sentfrom}</td>
+                                      <td>{assignments.AssignmentName}</td>
+                                      <td>
+                                        <a target="_blank" rel="noreferrer" href={assignments.File_Loc}>
+                                          Download
+                                        </a>
+                                      </td>
+                                      <td>{assignments.usergrade}</td>
+                                      <td>{assignments.agentcomments}</td>
+                                    </tr>
+                                  );
+                                })
+                              : ""}
+                          </tbody>
+                        </table>
                       </div>
-                    )}
+                    </div>
+                    {assignmentsList.length === 0 && <h1 className="m-auto text-muted">No Data Available</h1>}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </Container>
           <Container title={role === "Participant" ? 'My Files' : 'Participant Files' } upload={role === "Participant" ? true : false} clickHandler={role === "Participant" ? uploadModalForm : ""}>
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-lg-12">
-                    {loading ? (
-                      <Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} style={{ top: "50%", left: "50%", position: "absolute" }} />
-                    ) : (
-                      <div className="card">
-                        <div className="card-body">
-                          <div class="table-responsive">
-                            <table class="table" id="table-to-xls">
-                              <thead>
-                                <tr>
-                                  <th>Program Name</th>
-                                  <th>{role === "Participant" ? 'Agent Name' : 'Participant Name'}</th>
-                                  <th>Assignment Name</th>
-                                  <th>Grade</th>
-                                  <th>Agent Comments</th>
-                                  <th>File</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {
-                                  ( filesList !== undefined && filesList.length !== 0 )
-                                  ? filesList.map((file, val) => {
-                                      return (
-                                        <tr key={val}>
-                                          <td>{file.Program_Name}</td>
-                                          <td>{file.UpdatedAgent}</td>
-                                          <td>{file.AssignmentName}</td>
-                                          <td>{file.usergrade}</td>
-                                          <td>{file.agentcomments}</td>
-                                          <td>
-                                            <a target="_blank" rel="noreferrer" href={file.File_Loc}>
-                                              Download
-                                            </a>
-                                          </td>                                          
-                                        </tr>
-                                      );
-                                    }) : ""
-                                }
-                                {
-                                  
-                                  ( participantList !== undefined && participantList.length !== 0 )
-                                  ? participantList.map((participant, val) => {
-                                      return (
-                                        <tr key={val}>
-                                          <td>{participant.Program_Name}</td>
-                                          <td>{participant.Sentfrom}</td>
-                                          <td>{participant.AssignmentName}</td>
-                                          <td>
-                                            {participant.usergrade} &nbsp;
-                                            <Link onClick={e => gradeModalForm(participant, true)} ><i className="fa fa-edit"></i></Link>
-                                          </td>
-                                          <td>{participant.agentcomments}</td>
-                                          <td>
-                                            <a target="_blank" rel="noreferrer" href={participant.File_Loc}>
-                                              Download
-                                            </a>
-                                          </td>                                          
-                                        </tr>
-                                      );
-                                    }) : ""
-                                }
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                        {role === "Participant" ?  filesList.length === 0 && <h1 className="m-auto text-muted">No Data Available</h1> : participantList.length === 0 && <h1 className="m-auto text-muted">No Data Available</h1>}
+            <div className="row">
+              <div className="col-lg-12">
+                {loading ? (
+                  <Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} style={{ top: "50%", left: "50%", position: "absolute" }} />
+                ) : (
+                  <div className="card">
+                    <div className="card-body">
+                      <div class="table-responsive">
+                        <table class="table" id="table-to-xls">
+                          <thead>
+                            <tr>
+                              <th>Program Name</th>
+                              <th>{role === "Participant" ? 'Agent Name' : 'Participant Name'}</th>
+                              <th>Assignment Name</th>
+                              <th>Grade</th>
+                              <th>Agent Comments</th>
+                              <th>File</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              ( filesList !== undefined && filesList.length !== 0 )
+                              ? filesList.map((file, val) => {
+                                  return (
+                                    <tr key={val}>
+                                      <td>{file.Program_Name}</td>
+                                      <td>{file.UpdatedAgent}</td>
+                                      <td>{file.AssignmentName}</td>
+                                      <td>{file.usergrade}</td>
+                                      <td>{file.agentcomments}</td>
+                                      <td>
+                                        <a target="_blank" rel="noreferrer" href={file.File_Loc}>
+                                          Download
+                                        </a>
+                                      </td>                                          
+                                    </tr>
+                                  );
+                                }) : ""
+                            }
+                            {
+                              
+                              ( participantList !== undefined && participantList.length !== 0 )
+                              ? participantList.map((participant, val) => {
+                                  return (
+                                    <tr key={val}>
+                                      <td>{participant.Program_Name}</td>
+                                      <td>{participant.Sentfrom}</td>
+                                      <td>{participant.AssignmentName}</td>
+                                      <td>
+                                        {participant.usergrade} &nbsp;
+                                        <Link onClick={e => gradeModalForm(participant, true)} ><i className="fa fa-edit"></i></Link>
+                                      </td>
+                                      <td>{participant.agentcomments}</td>
+                                      <td>
+                                        <a target="_blank" rel="noreferrer" href={participant.File_Loc}>
+                                          Download
+                                        </a>
+                                      </td>                                          
+                                    </tr>
+                                  );
+                                }) : ""
+                            }
+                          </tbody>
+                        </table>
                       </div>
-                    )}
+                    </div>
+                    {role === "Participant" ?  filesList.length === 0 && <h1 className="m-auto text-muted">No Data Available</h1> : participantList.length === 0 && <h1 className="m-auto text-muted">No Data Available</h1>}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </Container>
