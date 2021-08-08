@@ -67,6 +67,7 @@ function ProgramDetailsNew() {
     setLoading(true);
 
     const email = localStorage.getItem("email");
+    const irfUserID = localStorage.getItem("irfUserID");
 
     try {
       const response = await Axios.get(`/displayfiles?Program_Name=${programValue}&email=${email}`);
@@ -95,10 +96,17 @@ function ProgramDetailsNew() {
           setAssignmentsList([]);
           setFilesList([]);
           setParticipantList([]);
-          setSubscribe(true);
+          irfUserID !== "null" && setSubscribe(true);
           setUnSubscribe(false);
         }
-        swal(response.data.data.UserProgramStatus, response.data.message, "warning");
+
+        if(irfUserID === "null"){
+          swal("Please inform Agent to complete IRF registration.", "", "warning");
+        } else {
+          swal(response.data.data.UserProgramStatus, response.data.message, "warning");
+        }
+
+
       }
     } catch (e) {
         swal("Something went wrong.", e.response, "error");
