@@ -163,7 +163,7 @@ function App(props) {
               {state.loggedIn ? <Header menuHandle={menuToggle} /> : null}
               <Switch>
                 <Route exact path="/">
-                  {!state.loggedIn ? state.signIn ? <SignIn /> : <SignUp /> : <Redirect to="/initial-registration-form" />}
+                  {!state.loggedIn ? (state.signIn ? <SignIn /> : <SignUp />) : (roleType === 'Participant' ? <Redirect to="/profile" /> : <Redirect to="/initial-registration-form" />)}
                 </Route>
 
                 <GuardedRoute path="/initial-registration-form" component={IRF} auth={state.loggedIn} />
