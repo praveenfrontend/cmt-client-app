@@ -43,7 +43,7 @@ class IRF extends Component {
     firstLang: "",
     aboutUs: "",
     ChildValue: "",
-    childProgramAddRemove: true,
+    childProgramAddRemove: false,
     child_program: [],
 
     // Community Matters Program
