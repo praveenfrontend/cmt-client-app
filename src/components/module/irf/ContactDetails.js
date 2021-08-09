@@ -6,9 +6,12 @@ import Page from "../../common/Page";
 import FormRadio from "../../FormFields/FormRadio";
 import FormCheckbox from "../../FormFields/FormCheckbox";
 import { CSSTransition } from "react-transition-group";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, removeChild, inputChangeChildProgram, handleChangeChildProgram, page }) {
+function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, removeChild, inputChangeChildProgram, handleChangeChildProgram, page, handleChangeChildProgramDate }) {
   const [continueCount, setContinueCount] = useState(0);
+  const [selectedDate, setSelectedDate] = useState("");
 
   const initialState = {
     phoneCell: {
@@ -225,6 +228,18 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
     dispatch({ type: "submitForm" });
   }
 
+  const onChangeDateHandler = (input, idx) => {
+    const year = new Date(input).getFullYear();
+    let month = (new Date(input).getMonth() + 1).toString().padStart(2, "0");
+    let day = new Date(input).getDate().toString().padStart(2, "0");
+    let date = month + "/" + day + "/" + year;
+
+    setSelectedDate(input);
+    handleChangeChildProgramDate(idx, "childBirthDate", date);
+    
+    // dispatch({ type: "birthDateImmediately", value: date });
+  };
+
   return (
     <Page title="Contact Details">
       <div className="row">
@@ -320,14 +335,23 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
                 {values.child_program.map((item, idx) => (
                   <tr id="addr0" key={idx}>
                     <td>{<FormCheckbox classNameValue="col col-sm-4 col-md-3 col-lg-2" changeHandler={handleChangeChildProgram(idx)} inputId={idx} inputValue={"child_program" + idx} checkedValue={values.child_program[idx].isChecked} />}</td>
-                    <td>
+                    <td className="col-md-3">
                       <FormInput icon="fas fa-child" type="text" placeholder="Child First Name" changeHandler={handleChangeChildProgram(idx)} /* inputHandler={e => dispatch({ type: "childFirstNameImmediately", value: e.target.value })} message={state.childFirstName.message} inputField={state.childFirstName.hasErrors} */ value={values.child_program[idx].childFirstName} name="childFirstName" />
                     </td>
-                    <td>
+                    <td className="col-md-3">
                       <FormInput icon="fas fa-child" type="text" placeholder="Child Last Name" changeHandler={handleChangeChildProgram(idx)} value={values.child_program[idx].childLastName} name="childLastName" />
                     </td>
-                    <td>
-                      <FormInput icon="fas fa-calendar" type="text" placeholder="DD/MM/YYYY" changeHandler={handleChangeChildProgram(idx)} value={values.child_program[idx].childBirthDate} name="childBirthDate" />
+                    <td className="col-md-5">
+                      <div className="form-group">
+                        <div className="input-group input-group-mb ">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1">
+                                <i className="fas fa-calendar"></i>
+                                </span>
+                            </div>
+                            <DatePicker className="form-control" selected={selectedDate} onChange={date => onChangeDateHandler(date, idx)} value={values.child_program[idx].childBirthDate} name="childBirthDate"  placeholderText="MM/DD/YYYY" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 ))}

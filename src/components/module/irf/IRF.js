@@ -190,8 +190,8 @@ class IRF extends Component {
     });
   };
 
-  handleChangeChildProgram = idx => e => {
-    const { name, value } = e.target;
+  handleChangeChildProgramData = (idx, name, value) => {
+
     const child_program = [...this.state.child_program];
 
     let isChecked = child_program[idx].isChecked;
@@ -226,6 +226,15 @@ class IRF extends Component {
     this.setState({
       child_program: child_program
     });
+  }
+
+  handleChangeChildProgramDate = (idx, name, date) => {
+    this.handleChangeChildProgramData(idx, name, date)
+  }
+
+  handleChangeChildProgram = idx => e => {
+    const { name, value } = e.target;
+    this.handleChangeChildProgramData(idx, name, value)
   };
 
   inputChangeChildProgram = input => e => {
@@ -293,7 +302,7 @@ class IRF extends Component {
       case 0:
         return <BasicDetails nextStep={this.nextStep} inputChange={this.inputChange} inputClick={this.inputClick} values={values} page="IRF" />;
       case 1:
-        return <ContactDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputChangeChildProgram={this.inputChangeChildProgram} handleChangeChildProgram={this.handleChangeChildProgram} addChild={this.addChild} removeChild={this.removeChild} page="IRF" />;
+        return <ContactDetails prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputChangeChildProgram={this.inputChangeChildProgram} handleChangeChildProgramDate={this.handleChangeChildProgramDate} handleChangeChildProgram={this.handleChangeChildProgram} addChild={this.addChild} removeChild={this.removeChild} page="IRF" />;
       case 2:
         return <CommunityMattersProgram prevStep={this.prevStep} nextStep={this.nextStep} inputChange={this.inputChange} values={values} inputCheckBoxHandler={this.inputCheckBoxHandler} />;
       case 3:
