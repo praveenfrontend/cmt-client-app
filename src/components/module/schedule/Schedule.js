@@ -37,15 +37,14 @@ function Schedule() {
           response.data.map(program => {
             const event = {
               id: program.id,
+              categoryName: program.Category,
               programName: program.ProgramName,
               userId: program.UserID,
-              title: program.Title,
-              start: program.StartDate,
-              end: program.EndDate,
+              title: program.Description,
+              start: program.FromDate,
+              end: program.ToDate/* ,
               startTime: program.StartTime,
-              endTime: program.EndTime,
-              instructor: program.Instructor,
-              location: program.Location
+              endTime: program.EndTime, */
             };
             eventArray.push(event);
           });

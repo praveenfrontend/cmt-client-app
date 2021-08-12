@@ -302,7 +302,8 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
           <Modal.Title>Edit schedule</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+        <h1>Update/Edit Work is in Progress</h1>
+          {/* <form>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputTitle">Title</label>
@@ -324,7 +325,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputStartDate">Start Date</label>
-                {/* <input type="text" class="form-control" id="inputStartDate" name="StartDate" placeholder="MM/DD/YYYY" onChange={e => setStartDate(e.target.value)} value={StartDate} /> */}
                 <DatePicker value={StartDate} className="form-control" selected={selectedStartDate} onChange={date => onChangeStartDateHandler(date)} placeholderText="Start Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
               </div>
               <CSSTransition in={state.startDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
@@ -332,7 +332,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
               </CSSTransition>
               <div class="form-group col-md-6">
                 <label for="inputEndDate">End Date</label>
-                {/* <input type="text" class="form-control" id="inputEndDate" name="EndDate" placeholder="MM/DD/YYYY" onChange={e => setEndDate(e.target.value)} value={EndDate} /> */}
                 <DatePicker value={EndDate} className="form-control" selected={selectedEndDate} onChange={date => onChangeEndDateHandler(date)}  placeholderText="End Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
               </div>
               <CSSTransition in={state.endDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
@@ -373,12 +372,12 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
               <div className="alert alert-danger small liveValidateMessage">{state.location.message}</div>
             </CSSTransition>
             </div>
-          </form>
+          </form> */}
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-block btn-primary" onClick={e => updateSchedule(e)}>
+          {/* <button className="btn btn-block btn-primary" onClick={e => updateSchedule(e)}>
             Update Schedule
-          </button>
+          </button> */}
           <button className="btn btn-block btn-danger" onClick={e => deleteSchedule(e)}>
             Delete Schedule
           </button>

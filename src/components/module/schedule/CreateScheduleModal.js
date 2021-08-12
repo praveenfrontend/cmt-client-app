@@ -14,36 +14,46 @@ import "react-datepicker/dist/react-datepicker.css";
 function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
   const [loading, setLoading] = useState(false);
   const [UserID, setUserId] = useState("");
-  const [Title, setTitle] = useState("");
-  const [ProgramName, setProgramName] = useState("");
-  const [StartDate, setStartDate] = useState("");
-  const [EndDate, setEndDate] = useState("");
+  const [Description, setDescription] = useState("");
+  const [FromDate, setFromDate] = useState("");
+  const [ToDate, setToDate] = useState("");
   const [StartTime, setStartTime] = useState("");
   const [EndTime, setEndTime] = useState("");
-  const [Instructor, setInstructor] = useState("");
-  const [Location, setLocation] = useState("");
 
   const [submitCount, setSubmitCount] = useState(0);
-  const [selectedStartDate, setSelectedStartDate] = useState("");
-  const [selectedEndDate, setSelectedEndDate] = useState("");
+  const [selectedStartTime, setSelectedStartTime] = useState("");
+  const [selectedEndTime, setSelectedEndTime] = useState("");
+  const [selectedFromDate, setSelectedFromDate] = useState("");
+  const [selectedToDate, setSelectedToDate] = useState("");
+
+  const [categoryAndProgramList, setCategoryAndProgramList] = useState({});
+  const [categoryList, setCategoryList] = useState([]);
+  const [programList, setProgramList] = useState([]);
+  const [Category, setCategory] = useState("");
+  const [ProgramName, setProgramName] = useState("");
 
   const initialState = {
-    title: {
+    description: {
       value: "",
       hasErrors: false,
       message: "",
+    },
+    category: {
+      value: "",
+      hasErrors: false,
+      message: ""
     },
     programName: {
       value: "",
       hasErrors: false,
       message: ""
     },
-    startDate: {
+    fromDate: {
       value: "",
       hasErrors: false,
       message: ""
     },
-    endDate: {
+    toDate: {
       value: "",
       hasErrors: false,
       message: ""
@@ -57,32 +67,36 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       value: "",
       hasErrors: false,
       message: ""
-    },
-    instructorName: {
-      value: "",
-      hasErrors: false,
-      message: ""
-    },
-    location: {
-      value: "",
-      hasErrors: false,
-      message: ""
     }
   };
 
   function ourReducer(draft, action) {
     switch (action.type) {
-      case "titleImmediately":
-        draft.title.hasErrors = false;
-        draft.title.value = action.value;
-        if (/\d/.test(draft.title.value)) {
-          draft.title.hasErrors = true;
-          draft.title.message = "Title cannot contain number.";
+      case "descriptionImmediately":
+        draft.description.hasErrors = false;
+        draft.description.value = action.value;
+        if (/\d/.test(draft.description.value)) {
+          draft.description.hasErrors = true;
+          draft.description.message = "Description cannot contain number.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(draft.title.value)) {
-          draft.title.hasErrors = true;
-          draft.title.message = "Title cannot be empty.";
+        if (!/^[a-zA-Z]+$/.test(draft.description.value)) {
+          draft.description.hasErrors = true;
+          draft.description.message = "Description cannot be empty.";
+          return;
+        }
+        return;
+      case "categoryImmediately":
+        draft.category.hasErrors = false;
+        draft.category.value = action.value;
+        if (/\d/.test(draft.category.value)) {
+          draft.category.hasErrors = true;
+          draft.category.message = "Category Name cannot contain number.";
+          return;
+        }
+        if (!/^[a-zA-Z]+$/.test(draft.category.value)) {
+          draft.category.hasErrors = true;
+          draft.category.message = "Category Name cannot be empty.";
           return;
         }
         return;
@@ -100,25 +114,25 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
           return;
         }
         return;
-      case "startDateImmediately":
-        draft.startDate.hasErrors = false;
-        draft.startDate.value = action.value;
-        if (draft.startDate.value.length === 0) {
-          draft.startDate.hasErrors = true;
-          draft.startDate.message = "Start Date cannot be empty.";
+      case "fromDateImmediately":
+        draft.fromDate.hasErrors = false;
+        draft.fromDate.value = action.value;
+        if (draft.fromDate.value.length === 0) {
+          draft.fromDate.hasErrors = true;
+          draft.fromDate.message = "From Date Date cannot be empty.";
           return;
         }
-        setStartDate( draft.startDate.value)
+        setFromDate( draft.fromDate.value)
         return;
-      case "endDateImmediately":
-        draft.endDate.hasErrors = false;
-        draft.endDate.value = action.value;
-        if (draft.endDate.value.length === 0) {
-          draft.endDate.hasErrors = true;
-          draft.endDate.message = "End Date cannot be empty.";
+      case "toDateImmediately":
+        draft.toDate.hasErrors = false;
+        draft.toDate.value = action.value;
+        if (draft.toDate.value.length === 0) {
+          draft.toDate.hasErrors = true;
+          draft.toDate.message = "To Date cannot be empty.";
           return;
         }
-        setEndDate( draft.endDate.value);
+        setToDate( draft.toDate.value);
         return;
 
       case "startTimeImmediately":
@@ -138,38 +152,8 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
           }
           return;
 
-      
-      case "instructorImmediately":
-        draft.instructorName.hasErrors = false;
-        draft.instructorName.value = action.value;
-        if (/\d/.test(draft.instructorName.value)) {
-          draft.instructorName.hasErrors = true;
-          draft.instructorName.message = "Instructor cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.instructorName.value)) {
-          draft.instructorName.hasErrors = true;
-          draft.instructorName.message = "Instructor cannot be empty.";
-          return;
-        }
-        return;
-      case "locationImmediately":
-          draft.location.hasErrors = false;
-          draft.location.value = action.value;
-          if (/\d/.test(draft.location.value)) {
-            draft.location.hasErrors = true;
-            draft.location.message = "Location cannot contain number.";
-            return;
-          }
-          if (!/^[a-zA-Z]+$/.test(draft.location.value)) {
-            draft.location.hasErrors = true;
-            draft.location.message = "Location cannot be empty.";
-            return;
-          }
-          return;
-
       case "submitForm":
-        if (!draft.title.hasErrors && !draft.programName.hasErrors && !draft.startDate.hasErrors && !draft.endDate.hasErrors && !draft.startTime.hasErrors && !draft.endTime.hasErrors && !draft.instructorName.hasErrors && !draft.location.hasErrors ) {
+        if (!draft.description.hasErrors && !draft.category.hasErrors && !draft.programName.hasErrors && !draft.fromDate.hasErrors && !draft.toDate.hasErrors && !draft.startTime.hasErrors && !draft.endTime.hasErrors ) {
           setSubmitCount(1);
         }
         return;
@@ -187,7 +171,8 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       async function fetchResults() {
         setLoading(true);
         try {
-          const response = await Axios.post("/add_schedule", { UserID, Title, ProgramName, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
+          // const response = await Axios.post("/add_schedule", { UserID, Title, ProgramName, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
+          const response = await Axios.post("/add_schedule", { UserID, Description, Category, ProgramName, FromDate: FromDate + ' ' + selectedStartTime, ToDate: ToDate + ' ' + selectedEndTime });
     
           if (response.data.id !== "" || response.data.id !== null) {
             setLoading(false);
@@ -196,68 +181,115 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
               setLoading(true);
               window.location.reload();
             });
+          } else {
+            swal("Something went wrong", "Make sure start time must be after 5 hours from now.", "error")/* .then(response => {
+              setLoading(true);
+              window.location.reload();
+            }); */
           }
         } catch (e) {
-          swal("Something went wrong", e.response.error, "error");
+          swal("Something went wrong", "Make sure start time must be after 5 hours from now.", "error");
           setLoading(false);
         }
       }
       fetchResults();
       setSubmitCount(0);
     }
-  }, [EndDate, EndTime, Instructor, Location, ProgramName, StartDate, StartTime, Title, UserID, closeModalForm, dispatch, submitCount]);
+  }, [ToDate, EndTime, ProgramName, FromDate, StartTime, Description, UserID, closeModalForm, dispatch, submitCount, Category]);
 
 
+  useEffect(() => {
+    const categoryDropDown = async () => {
+      setLoading(true);
+      await Axios.get("/showprograms")
+        .then(response => {
+          setCategoryAndProgramList(response.data.data);
+          const category = Object.keys(response.data.data);
+          setCategoryList([...categoryList, ...category]);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.log(error.response);
+          setLoading(false);
+        });
+    };
+    categoryDropDown();
+  }, []);
+
+  const categoryHandleChange = value => {
+    setCategory(value);
+    setProgramList(categoryAndProgramList[value]);
+  };
+
+  const programHandleChange = value => {
+    setProgramName(value);
+  };
 
 
   useEffect(() => {
     if (scheduleModal === true) {
-      const irfUserID = localStorage.getItem("irfUserID");
-      setUserId(irfUserID);
-      setTitle("");
+      const id = localStorage.getItem("id");
+      setUserId(id);
+      setDescription("");
+      setCategory("");
       setProgramName("");
-      setStartDate("");
-      setEndDate("");
+      setFromDate("");
+      setToDate("");
       setStartTime("");
       setEndTime("");
-      setInstructor("");
-      setLocation("");
     }
   }, [scheduleModal]);
 
-  const onChangeStartDateHandler = input => {
+  const onChangeStartTimeHandler = input => {
+    const hours = ( new Date(input).getHours() < 10 ? '0' : '' ) + new Date(input).getHours();
+    const minutes = ( new Date(input).getMinutes() < 10 ? '0' : '' ) + new Date(input).getMinutes();
+    const time = hours.toString() + ':' + minutes.toString() + ':00'
+
+    setSelectedStartTime(time);
+    dispatch({ type: "startTimeImmediately", value: time });
+  };
+
+  const onChangeEndTimeHandler = input => {
+    const hours = ( new Date(input).getHours() < 10 ? '0' : '' ) + new Date(input).getHours();
+    const minutes = ( new Date(input).getMinutes() < 10 ? '0' : '' ) + new Date(input).getMinutes();
+    const time = hours.toString() + ':' + minutes.toString() + ':00'
+
+    setSelectedEndTime(time);
+    dispatch({ type: "endTimeImmediately", value: time });
+  };
+
+  const onChangeFromDateHandler = input => {
     const year = new Date(input).getFullYear();
     let month = (new Date(input).getMonth() + 1).toString().padStart(2, "0");
     let day = new Date(input).getDate().toString().padStart(2, "0");
     let date = month + "/" + day + "/" + year;
 
-    setSelectedStartDate(input);
-    dispatch({ type: "startDateImmediately", value: date });
+    setSelectedFromDate(input);
+    dispatch({ type: "fromDateImmediately", value: date });
   };
 
-  const onChangeEndDateHandler = input => {
+  const onChangeToDateHandler = input => {
       const year = new Date(input).getFullYear();
       let month = (new Date(input).getMonth() + 1).toString().padStart(2, "0");
       let day = new Date(input).getDate().toString().padStart(2, "0");
       let date = month + "/" + day + "/" + year;
 
-      setSelectedEndDate(input);
-      dispatch({ type: "endDateImmediately", value: date });
+      setSelectedToDate(input);
+      dispatch({ type: "toDateImmediately", value: date });
     };
   
 
   const createSchedule = async e => {
     e.preventDefault();
-    
-    dispatch({ type: "titleImmediately", value: state.title.value });
-      dispatch({ type: "programNameImmediately", value: state.programName.value });
-      dispatch({ type: "startDateImmediately", value: state.startDate.value });
-      dispatch({ type: "endDateImmediately", value: state.endDate.value });
-      dispatch({ type: "startTimeImmediately", value: state.startTime.value });
-      dispatch({ type: "endTimeImmediately", value: state.endTime.value });
-      dispatch({ type: "instructorImmediately", value: state.instructorName.value });
-      dispatch({ type: "locationImmediately", value: state.location.value });
-      dispatch({ type: "submitForm" });
+
+    dispatch({ type: "categoryImmediately", value: state.category.value });
+    dispatch({ type: "programNameImmediately", value: state.programName.value });
+    dispatch({ type: "fromDateImmediately", value: state.fromDate.value });
+    dispatch({ type: "toDateImmediately", value: state.toDate.value });
+    dispatch({ type: "startTimeImmediately", value: state.startTime.value });
+    dispatch({ type: "endTimeImmediately", value: state.endTime.value });
+    dispatch({ type: "descriptionImmediately", value: state.description.value });
+    dispatch({ type: "submitForm" });
    
   };
 
@@ -269,59 +301,61 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
         </Modal.Header>
         <Modal.Body>
           <form>
-            {/* <div class="form-group">
-              <label for="inputUserID">User ID</label>
-              <input type="text" class="form-control" id="inputUserID" name="UserID" onChange={e => setUserId(e.target.value)} value={UserID} />
-            </div> */}
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputTitle">Title</label>
-                <input type="text" class="form-control" id="inputTitle" name="Title" onChange={e => setTitle(e.target.value)} onInput={e => dispatch({ type: "titleImmediately", value: e.target.value })} value={Title} />
-              </div>
-              <CSSTransition in={state.title.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                <div className="alert alert-danger small liveValidateMessage">{state.title.message}</div>
-              </CSSTransition>
 
+            <div  class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputProgramName">Program Name</label>
-                <input type="text" class="form-control" id="inputProgramName" name="ProgramName" onChange={e => setProgramName(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })} value={ProgramName} />
+                <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
+                  <option>Select Category Name</option>;
+                  {categoryList.map(category => {
+                    return <option value={category}>{category}</option>;
+                  })}
+                </select>
+              </div>
+              <CSSTransition in={state.category.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                  <div className="alert alert-danger small liveValidateMessage">{state.category.message}</div>
+              </CSSTransition>
+              <div class="form-group col-md-6">
+                <select name="account" className="form-control" onChange={e => programHandleChange(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
+                  <option>Select Program Name</option>;
+                  {programList.map(program => {
+                    return <option value={program}>{program}</option>;
+                  })}
+                </select>
               </div>
               <CSSTransition in={state.programName.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                <div className="alert alert-danger small liveValidateMessage">{state.programName.message}</div>
+                  <div className="alert alert-danger small liveValidateMessage">{state.programName.message}</div>
               </CSSTransition>
             </div>
 
+            
+
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputStartDate">Start Date</label>
                 {/* <input type="text" class="form-control" id="inputStartDate" name="StartDate" placeholder="MM/DD/YYYY" onChange={e => setStartDate(e.target.value)} value={StartDate} /> */}
-                <DatePicker className="form-control" selected={selectedStartDate} onChange={date => onChangeStartDateHandler(date)} placeholderText="Start Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                <DatePicker className="form-control" selected={selectedFromDate} onChange={date => onChangeFromDateHandler(date)} placeholderText="From Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
               </div>
-              <CSSTransition in={state.startDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                  <div className="alert alert-danger small liveValidateMessage">{state.startDate.message}</div>
+              <CSSTransition in={state.fromDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                  <div className="alert alert-danger small liveValidateMessage">{state.fromDate.message}</div>
               </CSSTransition>
               <div class="form-group col-md-6">
-                <label for="inputEndDate">End Date</label>
                 {/* <input type="text" class="form-control" id="inputEndDate" name="EndDate" placeholder="MM/DD/YYYY" onChange={e => setEndDate(e.target.value)} value={EndDate} /> */}
-                <DatePicker className="form-control" selected={selectedEndDate} onChange={date => onChangeEndDateHandler(date)}  placeholderText="End Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                <DatePicker className="form-control" selected={selectedToDate} onChange={date => onChangeToDateHandler(date)}  placeholderText="To Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
                 </div>
-                <CSSTransition in={state.endDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                    <div className="alert alert-danger small liveValidateMessage">{state.endDate.message}</div>
+                <CSSTransition in={state.toDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                    <div className="alert alert-danger small liveValidateMessage">{state.toDate.message}</div>
                 </CSSTransition> 
             </div>
 
             
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputStartTime">Start Time</label>
-                <input type="text" class="form-control" id="inputStartTime" name="StartTime" placeholder="HH:MM" onChange={e => setStartTime(e.target.value)} onInput={e => dispatch({ type: "startTimeImmediately", value: e.target.value })} value={StartTime} />
+                <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedStartTime}  onChange={time => onChangeStartTimeHandler(time)} placeholderText="Start Time" timeFormat="HH:mm" timeIntervals={30} /* minTime={new Date() } */ />
               </div>
               <CSSTransition in={state.startTime.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.startTime.message}</div>
               </CSSTransition>
               <div class="form-group col-md-6">
-                <label for="inputEndTime">End Time</label>
-                <input type="text" class="form-control" id="inputEndTime" name="EndTime" placeholder="HH:MM" onChange={e => setEndTime(e.target.value)} onInput={e => dispatch({ type: "endTimeImmediately", value: e.target.value })} value={EndTime} />
+                <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedEndTime}  onChange={time => onChangeEndTimeHandler(time)} placeholderText="End Time" timeFormat="HH:mm" timeIntervals={30}  /* minTime={new Date(selectedStartTime)} */ />
               </div>
               <CSSTransition in={state.endTime.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.endTime.message}</div>
@@ -329,21 +363,15 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
             </div>
 
             <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputInstructor">Instructor Name</label>
-                <input type="text" class="form-control" id="inputInstructor" name="Instructor" onChange={e => setInstructor(e.target.value)} onInput={e => dispatch({ type: "instructorImmediately", value: e.target.value })} value={Instructor} />
+              <div class="form-group col-md-12">
+                <input type="text" class="form-control" id="inputDescription" name="Description" placeholder="Description" onChange={e => setDescription(e.target.value)} onInput={e => dispatch({ type: "descriptionImmediately", value: e.target.value })} value={Description} />
               </div>
-              <CSSTransition in={state.instructorName.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                <div className="alert alert-danger small liveValidateMessage">{state.instructorName.message}</div>
+              <CSSTransition in={state.description.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                <div className="alert alert-danger small liveValidateMessage">{state.description.message}</div>
               </CSSTransition>
-              <div class="form-group col-md-6">
-                <label for="inputLocation">Location</label>
-                <input type="text" class="form-control" id="inputLocation" name="Location" onChange={e => setLocation(e.target.value)} onInput={e => dispatch({ type: "locationImmediately", value: e.target.value })} value={Location} />
-              </div>
-              <CSSTransition in={state.location.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                <div className="alert alert-danger small liveValidateMessage">{state.location.message}</div>
-              </CSSTransition>
+
             </div>
+
           </form>
         </Modal.Body>
         <Modal.Footer>
