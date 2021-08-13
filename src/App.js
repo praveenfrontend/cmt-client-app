@@ -123,6 +123,7 @@ function App(props) {
           // setLoading(false);
           if (response.data.user !== null) {
             // setUser(response.data.user);
+            localStorage.setItem("id", response.data.user.id);
             localStorage.setItem("irfUserID", response.data.user.IRFuserId);
             localStorage.setItem("roleType", response.data.user.roleType);
             localStorage.setItem("email", response.data.user.email);
