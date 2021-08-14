@@ -23,14 +23,14 @@ function SideNavigation({ menuHandleValue, roleType }) {
         {/* <!-- Sidebar Navigation Menus--> */}
         <div className="main-menu">
           <ul id="side-main-menu" className="side-menu list-unstyled">
-           {(roleType === "admin" || roleType === "agent") &&
-            (
-              <>
-              <li>
+          <li>
               <Link to="/profile">
                 <i className="fa fa-user text-success"></i>Profile
               </Link>
             </li>
+           {(roleType === "admin" || roleType === "agent") &&
+            (
+              <>
               <li>
               <Link to="/initial-registration-form">
                 <i className="fa fa-wpforms text-success"></i>IRF
