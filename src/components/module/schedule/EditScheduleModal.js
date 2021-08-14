@@ -191,7 +191,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
       fetchResults();
       setSubmitCount(0);
     }
-  }, [ToDate, ProgramName, FromDate, Description, UserID, closeModalForm, dispatch, id, submitCount, Category]);
+  }, [ToDate, ProgramName, FromDate, Description, UserID, closeModalForm, dispatch, id, submitCount, Category, selectedStartTime, selectedEndTime]);
 
 
   useEffect(() => {
@@ -304,8 +304,8 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     dispatch({ type: "descriptionImmediately", value: state.description.value });
     dispatch({ type: "categoryImmediately", value: state.category.value });
     dispatch({ type: "programNameImmediately", value: state.programName.value });
-    dispatch({ type: "fromDateImmediately", value: state.startDate.value });
-    dispatch({ type: "toDateImmediately", value: state.endDate.value });
+    // dispatch({ type: "fromDateImmediately", value: state.startDate.value });
+    // dispatch({ type: "toDateImmediately", value: state.endDate.value });
     dispatch({ type: "startTimeImmediately", value: state.startTime.value });
     dispatch({ type: "endTimeImmediately", value: state.endTime.value });
     dispatch({ type: "submitForm" });
