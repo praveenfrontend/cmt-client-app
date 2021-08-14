@@ -41,9 +41,14 @@ import Loader from "react-loader-spinner";
 // Axios.defaults.baseURL = "http://localhost:8080";
 // Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
 // Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
-Axios.defaults.baseURL = "https://peaceful-plains-21019.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
+// Axios.defaults.baseURL = "https://peaceful-plains-21019.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
 
 function App(props) {
+
+  const [menuHandleValue, setMenuHandleValue] = useState("");
+  const [pageValue, setPageValue] = useState("");
+  const [roleType, setRoleType] = useState("");
+
   const initialState = {
     signIn: true,
     flashMessages: [],
@@ -72,6 +77,7 @@ function App(props) {
         return;
       case "logout":
         draft.loggedIn = false;
+        setRoleType("");
         console.log("LOGGED OUT DRAFT: " + draft.loggedIn);
         return;
       case "flashMessage":
@@ -140,9 +146,7 @@ function App(props) {
     }
   });
 
-  const [menuHandleValue, setMenuHandleValue] = useState("");
-  const [pageValue, setPageValue] = useState("");
-  const [roleType, setRoleType] = useState("");
+  
 
   const menuToggle = () => {
     if (window.outerWidth > 991) {
@@ -164,7 +168,8 @@ function App(props) {
               {state.loggedIn ? <Header menuHandle={menuToggle} /> : null}
               <Switch>
                 <Route exact path="/">
-                  {!state.loggedIn ? (state.signIn ? <SignIn /> : <SignUp />) : (roleType === 'Participant' ? <Redirect to="/profile" /> : <Redirect to="/initial-registration-form" />)}
+                  {/* !state.loggedIn ? (state.signIn ? <SignIn /> : <SignUp />) : (roleType === 'Participant' ? <Redirect to="/profile" /> : <Redirect to="/initial-registration-form" />) */}
+                  {!state.loggedIn ? (state.signIn ? <SignIn /> : <SignUp />) : <Redirect to="/profile" />}
                 </Route>
 
                 <GuardedRoute path="/initial-registration-form" component={IRF} auth={state.loggedIn} />

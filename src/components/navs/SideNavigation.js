@@ -27,6 +27,11 @@ function SideNavigation({ menuHandleValue, roleType }) {
             (
               <>
               <li>
+              <Link to="/profile">
+                <i className="fa fa-user text-success"></i>Profile
+              </Link>
+            </li>
+              <li>
               <Link to="/initial-registration-form">
                 <i className="fa fa-wpforms text-success"></i>IRF
               </Link>
@@ -61,11 +66,7 @@ function SideNavigation({ menuHandleValue, roleType }) {
             </li>
             </>
              )}
-             <li>
-              <Link to="/profile">
-                <i className="fa fa-user text-success"></i>Profile
-              </Link>
-            </li>
+             
             <li>
               <Link to="/schedule">
                 <i className="fa fa-calendar text-success"></i>Schedule
