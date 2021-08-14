@@ -17,8 +17,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
   const [Description, setDescription] = useState("");
   const [FromDate, setFromDate] = useState("");
   const [ToDate, setToDate] = useState("");
-  const [StartTime, setStartTime] = useState("");
-  const [EndTime, setEndTime] = useState("");
 
   const [submitCount, setSubmitCount] = useState(0);
   const [selectedStartTime, setSelectedStartTime] = useState("");
@@ -171,7 +169,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       async function fetchResults() {
         setLoading(true);
         try {
-          // const response = await Axios.post("/add_schedule", { UserID, Title, ProgramName, StartDate, EndDate, StartTime, EndTime, Instructor, Location });
           const response = await Axios.post("/add_schedule", { UserID, Description, Category, ProgramName, FromDate: FromDate + ' ' + selectedStartTime, ToDate: ToDate + ' ' + selectedEndTime });
     
           if (response.data.id !== "" || response.data.id !== null) {
@@ -195,7 +192,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       fetchResults();
       setSubmitCount(0);
     }
-  }, [ToDate, /* EndTime, */ ProgramName, FromDate, /* StartTime, */ Description, UserID, closeModalForm, dispatch, submitCount, Category]);
+  }, [ToDate, ProgramName, FromDate, Description, UserID, closeModalForm, dispatch, submitCount, Category, selectedStartTime, selectedEndTime]);
 
 
   useEffect(() => {
@@ -235,8 +232,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       setProgramName("");
       setFromDate("");
       setToDate("");
-      setStartTime("");
-      setEndTime("");
     }
   }, [scheduleModal]);
 
