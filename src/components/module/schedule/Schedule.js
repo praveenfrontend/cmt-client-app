@@ -35,16 +35,20 @@ function Schedule() {
           setEvents([]);
           let eventArray = [];
           response.data.map(program => {
+
+            const fromDate = program.FromDate.split(" ");
+            const ToDate = program.ToDate.split(" ");
+
             const event = {
               id: program.id,
               categoryName: program.Category,
               programName: program.ProgramName,
               userId: program.UserID,
               title: program.Description,
-              start: program.FromDate,
-              end: program.ToDate/* ,
-              startTime: program.StartTime,
-              endTime: program.EndTime, */
+              start: fromDate[0],
+              end: ToDate[0],
+              startTime: fromDate[1],
+              endTime: ToDate[1],
             };
             eventArray.push(event);
           });
@@ -71,6 +75,8 @@ function Schedule() {
     setEventObj({});
   };
 
+  const eventObjValues = eventObj;
+
   return (
     <>
       <Page title="Schedule" schedule={true} clickHandler={scheduleModalForm}>
@@ -85,7 +91,7 @@ function Schedule() {
           />
       </Page>
       <CreateScheduleModal scheduleModal={scheduleModal} setScheduleModal={setScheduleModal} />
-      <EditScheduleModal editModal={editModal} setEditModal={setEditModal} eventObj={eventObj} setEventObj={handleEventObj} />
+      <EditScheduleModal editModal={editModal} setEditModal={setEditModal} eventObj={eventObjValues} setEventObj={handleEventObj} />
     </>
   );
 }

@@ -195,7 +195,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       fetchResults();
       setSubmitCount(0);
     }
-  }, [ToDate, EndTime, ProgramName, FromDate, StartTime, Description, UserID, closeModalForm, dispatch, submitCount, Category]);
+  }, [ToDate, /* EndTime, */ ProgramName, FromDate, /* StartTime, */ Description, UserID, closeModalForm, dispatch, submitCount, Category]);
 
 
   useEffect(() => {
