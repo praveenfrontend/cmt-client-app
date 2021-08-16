@@ -10,7 +10,7 @@ import swal from "sweetalert";
 
 function UploadPhotoModal({ uploadModal, setUploadModal }) {
   const [loading, setLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState("");
   const [selectedFileName, setSelectedFileName] = useState("");
 
   const fileHandler = e => {
@@ -22,6 +22,8 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
 
   const closeModalForm = () => {
     setUploadModal(false);
+    setSelectedFile("");
+    setSelectedFileName("")
   };
 
   const uploadFile = async e => {
@@ -85,7 +87,7 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-block btn-primary" onClick={e => uploadFile(e)}>
+          <button disabled={ (selectedFile === "") ? true : false} className="btn btn-block btn-primary" onClick={e => uploadFile(e)}>
             Upload Photo
           </button>   
         </Modal.Footer>
