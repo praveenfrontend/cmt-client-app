@@ -32,6 +32,8 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
 
   const [id, setId] = useState("");
 
+  const roleType = localStorage.getItem('roleType');
+
   const initialState = {
     description: {
       value: eventObj.title,
@@ -336,14 +338,14 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <Modal show={editModal} onHide={closeModalForm}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit schedule</Modal.Title>
+          <Modal.Title>Schedule</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
 
             <div  class="form-row">
               <div class="form-group col-md-6">
-                <select name="account" className="form-control" value={Category} onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
+                <select readOnly={ (roleType === 'Participant') ? true: false}  name="account" className="form-control" value={Category} onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
                   <option>Select Category Name</option>;
                   {categoryList.map(category => {
                     return <option value={category}>{category}</option>;
@@ -354,7 +356,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
                   <div className="alert alert-danger small liveValidateMessage">{state.category.message}</div>
               </CSSTransition>
               <div class="form-group col-md-6">
-                <select name="account" className="form-control" value={ProgramName} onChange={e => programHandleChange(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
+                <select readOnly={ (roleType === 'Participant') ? true: false}  name="account" className="form-control" value={ProgramName} onChange={e => programHandleChange(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
                   <option>Select Program Name</option>;
                   {programList.map(program => {
                     return <option value={program}>{program}</option>;
@@ -369,14 +371,14 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
             <div class="form-row">
             <div class="form-group col-md-6">
               {/* <input type="text" class="form-control" id="inputStartDate" name="StartDate" placeholder="MM/DD/YYYY" onChange={e => setStartDate(e.target.value)} value={StartDate} /> */}
-              <DatePicker className="form-control" selected={selectedFromDate} value={FromDate} onChange={date => onChangeFromDateHandler(date)} placeholderText="From Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+              <DatePicker readOnly={ (roleType === 'Participant') ? true: false} className="form-control" selected={selectedFromDate} value={FromDate} onChange={date => onChangeFromDateHandler(date)} placeholderText="From Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
             </div>
             <CSSTransition in={state.fromDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.fromDate.message}</div>
             </CSSTransition>
             <div class="form-group col-md-6">
               {/* <input type="text" class="form-control" id="inputEndDate" name="EndDate" placeholder="MM/DD/YYYY" onChange={e => setEndDate(e.target.value)} value={EndDate} /> */}
-              <DatePicker className="form-control" selected={selectedToDate} value={ToDate} onChange={date => onChangeToDateHandler(date)}  placeholderText="To Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+              <DatePicker readOnly={ (roleType === 'Participant') ? true: false} className="form-control" selected={selectedToDate} value={ToDate} onChange={date => onChangeToDateHandler(date)}  placeholderText="To Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
               </div>
               <CSSTransition in={state.toDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                   <div className="alert alert-danger small liveValidateMessage">{state.toDate.message}</div>
@@ -386,13 +388,13 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
           
           <div class="form-row">
             <div class="form-group col-md-6">
-              <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedStartTime}  onChange={time => onChangeStartTimeHandler(time)} placeholderText="Start Time" timeFormat="HH:mm" timeIntervals={30} /* minTime={new Date() } */ />
+              <DatePicker readOnly={ (roleType === 'Participant') ? true: false}  className="form-control" showTimeSelect  showTimeSelectOnly value={selectedStartTime}  onChange={time => onChangeStartTimeHandler(time)} placeholderText="Start Time" timeFormat="HH:mm" timeIntervals={30} /* minTime={new Date() } */ />
             </div>
             <CSSTransition in={state.startTime.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
               <div className="alert alert-danger small liveValidateMessage">{state.startTime.message}</div>
             </CSSTransition>
             <div class="form-group col-md-6">
-              <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedEndTime}  onChange={time => onChangeEndTimeHandler(time)} placeholderText="End Time" timeFormat="HH:mm" timeIntervals={30}  /* minTime={new Date(selectedStartTime)} */  />
+              <DatePicker readOnly={ (roleType === 'Participant') ? true: false}  className="form-control" showTimeSelect  showTimeSelectOnly value={selectedEndTime}  onChange={time => onChangeEndTimeHandler(time)} placeholderText="End Time" timeFormat="HH:mm" timeIntervals={30}  /* minTime={new Date(selectedStartTime)} */  />
             </div>
             <CSSTransition in={state.endTime.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
               <div className="alert alert-danger small liveValidateMessage">{state.endTime.message}</div>
@@ -401,7 +403,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <input type="text" class="form-control" id="inputDescription" name="Description" placeholder="Description" onChange={e => setDescription(e.target.value)} onInput={e => dispatch({ type: "descriptionImmediately", value: e.target.value })} value={Description} />
+              <input readOnly={ (roleType === 'Participant') ? true: false}  type="text" class="form-control" id="inputDescription" name="Description" placeholder="Description" onChange={e => setDescription(e.target.value)} onInput={e => dispatch({ type: "descriptionImmediately", value: e.target.value })} value={Description} />
             </div>
             <CSSTransition in={state.description.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
               <div className="alert alert-danger small liveValidateMessage">{state.description.message}</div>
@@ -412,14 +414,17 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
             
           </form>
         </Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-block btn-primary" onClick={e => updateSchedule(e)}>
-            Update Schedule
-          </button>
-          <button className="btn btn-block btn-danger" onClick={e => deleteSchedule(e)}>
-            Delete Schedule
-          </button>
-        </Modal.Footer>
+        { 
+          ( roleType !== 'Participant' ) && 
+            <Modal.Footer>
+              <button className="btn btn-block btn-primary" onClick={e => updateSchedule(e)}>
+                Update Schedule
+              </button>
+              <button className="btn btn-block btn-danger" onClick={e => deleteSchedule(e)}>
+                Delete Schedule
+              </button>
+            </Modal.Footer>
+        }
       </Modal>
     </LoadingOverlay>
   );

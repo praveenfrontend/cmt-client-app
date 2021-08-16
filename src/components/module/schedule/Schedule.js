@@ -77,9 +77,11 @@ function Schedule() {
 
   const eventObjValues = eventObj;
 
+  const roleType = localStorage.getItem('roleType');
+
   return (
-    <>
-      <Page title="Schedule" schedule={true} clickHandler={scheduleModalForm}>
+    <LoadingOverlay active={loading} /* spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />} */>
+      <Page title="Schedule" schedule={ (roleType === 'Participant') ? false: true } clickHandler={scheduleModalForm}>
         <Calendar 
           popup
           selectable 
@@ -92,7 +94,7 @@ function Schedule() {
       </Page>
       <CreateScheduleModal scheduleModal={scheduleModal} setScheduleModal={setScheduleModal} />
       <EditScheduleModal editModal={editModal} setEditModal={setEditModal} eventObj={eventObjValues} setEventObj={handleEventObj} />
-    </>
+    </LoadingOverlay>
   );
 }
 
