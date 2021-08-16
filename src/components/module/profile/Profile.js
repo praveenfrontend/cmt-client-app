@@ -4,6 +4,7 @@ import swal from "sweetalert";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 
+import UploadPhotoModal from "./UploadPhotoModal";
 import "./profile.scss";
 
 function Profile() {
@@ -23,6 +24,7 @@ function Profile() {
   };
   const [user, setUser] = useState(userObj);
   const [loading, setLoading] = useState(false);
+  const [uploadPhotoModal, setUploadPhotoModal] = useState(false);
 
   useEffect(() => {
     async function getProfile() {
@@ -53,12 +55,12 @@ function Profile() {
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                      <img src="/img/profile.png" alt="Admin" class="rounded-circle" width="150" />
+                      <img src={user.profilepic} alt="Admin" class="rounded-circle" width="150" />
                       <div class="mt-3">
                         <h4>{user.firstName + " " + user.lastName}</h4>
                         <p class="text-secondary mb-1">{user.roleType}</p>
                         <p class="text-muted font-size-sm">{user.gender}</p>
-                        <button class="btn btn-primary">Upload photo</button>
+                        <button class="btn btn-primary" onClick={e => setUploadPhotoModal(true)}>Upload photo</button>
                       </div>
                     </div>
                   </div>
@@ -114,6 +116,7 @@ function Profile() {
             </div>
           </div>
         </div>
+        <UploadPhotoModal uploadModal={uploadPhotoModal} setUploadModal={setUploadPhotoModal}/>
       </div>
       {/* </Loader> */}
     </LoadingOverlay>
