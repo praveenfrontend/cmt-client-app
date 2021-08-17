@@ -12,6 +12,7 @@ import FormButton from "../FormFields/FormButton";
 import DispatchContext from "../../DispatchContext";
 
 import ResetPassword from "./ResetPassword";
+import UpdatePassword from "./UpdatePassword";
 
 function SignIn() {
   const appDispatch = useContext(DispatchContext);
@@ -20,6 +21,7 @@ function SignIn() {
   const [submitCount, setSubmitCount] = useState(0);
   
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false);
 
   const initialState = {
     email: {
@@ -141,6 +143,10 @@ function SignIn() {
     dispatch({ type: "submitForm" });
   }
 
+  function handleUpdatePassword(value) {
+    setUpdatePassword(value);
+  }
+
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <div className="page login-page">
@@ -163,7 +169,7 @@ function SignIn() {
                 <br />
               </form>
               <Link to="/" className="forgot-pass" onClick={e => setForgotPasswordModal(true)}>
-                Forgot Password?
+                Reset Password?
               </Link>
               <small>Do not have an account? </small>
               <FormButton buttonValue="Register" />
@@ -171,7 +177,8 @@ function SignIn() {
           </div>
         </div>
       </div>
-      <ResetPassword forgotPasswordModal={forgotPasswordModal} setForgotPasswordModal={setForgotPasswordModal}/>
+      <ResetPassword forgotPasswordModal={forgotPasswordModal} setForgotPasswordModal={setForgotPasswordModal} handleUpdatePassword={handleUpdatePassword}/>
+      <UpdatePassword updatePassword={updatePassword} setUpdatePassword={setUpdatePassword} />
     </LoadingOverlay>
   );
 }

@@ -9,7 +9,7 @@ import swal from "sweetalert";
 
 import FormInput from "../FormFields/FormInput";
 
-function ResetPassword({ forgotPasswordModal, setForgotPasswordModal, handleUpdatePassword }) {
+function UpdatePassword({ updatePassword, setUpdatePassword }) {
 
   const [loading, setLoading] = useState(false);
   const [submitCount, setSubmitCount] = useState(0);
@@ -48,7 +48,7 @@ function ResetPassword({ forgotPasswordModal, setForgotPasswordModal, handleUpda
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
 
   const closeModalForm = () => {
-    setForgotPasswordModal(false);
+    setUpdatePassword(false);
   };
 
   useEffect(() => {
@@ -65,12 +65,13 @@ function ResetPassword({ forgotPasswordModal, setForgotPasswordModal, handleUpda
             closeModalForm();
             setSubmitCount(0);
             swal("Password reset mail has been sent.", "", "success").then(res => {
-              setLoading(false);
-              handleUpdatePassword(true);
+              setLoading(true);
+              window.location.reload();
+              setUpdatePassword(true);
             });
           } else {
             swal(response.data.message, "Please complete registration.", "error").then(res => {
-              setLoading(false);
+              setLoading(true);
               window.location.reload();
             });
             setLoading(false);
@@ -94,24 +95,28 @@ function ResetPassword({ forgotPasswordModal, setForgotPasswordModal, handleUpda
   async function handleSubmit(e) {
     e.preventDefault();
 
-    dispatch({ type: "emailImmediately", value: state.email.value });
-    dispatch({ type: "submitForm" });
+    
+    // dispatch({ type: "emailImmediately", value: state.email.value });
+    // dispatch({ type: "submitForm" });
+
+    closeModalForm();
   }
 
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
-      <Modal show={forgotPasswordModal} onHide={closeModalForm}>
+      <Modal show={updatePassword} onHide={closeModalForm}>
         <Modal.Header closeButton className="reset-password">
           <Modal.Title>
-            <h1 className="text-primary">RESET PASSWORD</h1>
+            <h1 className="text-primary">CREATE NEW PASSWORD</h1>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-inner">
               
               <form onSubmit={handleSubmit}>
-                <FormInput type="email" icon="fas fa-envelope" placeholder="Email Address" changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} />
-                <input type="submit" value="Reset Password" className="btn btn-primary btn-block" disabled={ (state.email.value === "") ? true : false } />
+                <FormInput type="password" icon="fas fa-lock" placeholder="Enter Password" /* changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} */ />
+                <FormInput type="password" icon="fas fa-lock" placeholder="Re-Enter Password" /* changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} */ />
+                {/* <input type="submit" value="Create New Password" className="btn btn-primary btn-block" disabled={ (state.email.value === "") ? true : false } /> */}
                 <br />
               </form>
           </div>
@@ -121,4 +126,4 @@ function ResetPassword({ forgotPasswordModal, setForgotPasswordModal, handleUpda
   );
 }
 
-export default ResetPassword;
+export default UpdatePassword;
