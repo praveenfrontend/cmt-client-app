@@ -11,13 +11,15 @@ import FormInput from "../FormFields/FormInput";
 import FormButton from "../FormFields/FormButton";
 import DispatchContext from "../../DispatchContext";
 
+import ResetPassword from "./ResetPassword";
+
 function SignIn() {
   const appDispatch = useContext(DispatchContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitCount, setSubmitCount] = useState(0);
+  
+  const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
 
   const initialState = {
     email: {
@@ -160,7 +162,7 @@ function SignIn() {
                 <input type="submit" value="Login" className="btn btn-primary btn-block" />
                 <br />
               </form>
-              <Link to="/" className="forgot-pass">
+              <Link to="/" className="forgot-pass" onClick={e => setForgotPasswordModal(true)}>
                 Forgot Password?
               </Link>
               <small>Do not have an account? </small>
@@ -169,6 +171,7 @@ function SignIn() {
           </div>
         </div>
       </div>
+      <ResetPassword forgotPasswordModal={forgotPasswordModal} setForgotPasswordModal={setForgotPasswordModal}/>
     </LoadingOverlay>
   );
 }
