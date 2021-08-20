@@ -120,15 +120,15 @@ function ProgramDetailsNew() {
     displayAssignments();
   };
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    function loadAssignments() {
-      displayAssignments();
-      setGradeSuccess(false);
-    };
-    loadAssignments();
+  //   function loadAssignments() {
+  //     displayAssignments();
+  //     setGradeSuccess(false);
+  //   };
+  //   loadAssignments();
 
-  }, [gradeSuccess]);
+  // }, [gradeSuccess]);
 
   const subscribeProgram = async e => {
     e.preventDefault();
