@@ -87,11 +87,6 @@ function BasicDetails({ values, inputChange, nextStep, page }) {
           draft.middleName.message = "Enter middle name without numbers.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(values.middleName)) {
-          draft.middleName.hasErrors = true;
-          draft.middleName.message = "Middle name cannot be empty.";
-          return;
-        }
         return;
       case "lastNameImmediately":
         draft.lastName.hasErrors = false;
@@ -145,7 +140,7 @@ function BasicDetails({ values, inputChange, nextStep, page }) {
           draft.city.message = "City cannot contain number.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(values.city)) {
+        if (values.city.length === 0) {
           draft.city.hasErrors = true;
           draft.city.message = "City cannot be empty.";
           return;
@@ -159,7 +154,7 @@ function BasicDetails({ values, inputChange, nextStep, page }) {
           draft.province.message = "Province cannot contain number.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(values.province)) {
+        if (values.province.length === 0) {
           draft.province.hasErrors = true;
           draft.province.message = "Province cannot be empty.";
           return;

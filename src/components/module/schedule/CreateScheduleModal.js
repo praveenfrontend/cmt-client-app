@@ -73,12 +73,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       case "descriptionImmediately":
         draft.description.hasErrors = false;
         draft.description.value = action.value;
-        if (/\d/.test(draft.description.value)) {
-          draft.description.hasErrors = true;
-          draft.description.message = "Description cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.description.value)) {
+        if (draft.description.length === 0) {
           draft.description.hasErrors = true;
           draft.description.message = "Description cannot be empty.";
           return;
