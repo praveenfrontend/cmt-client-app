@@ -33,6 +33,8 @@ function ProgramDetailsNew() {
   const [subscribe, setSubscribe] = useState(false);
   const [unsubscribe, setUnSubscribe] = useState(false);
 
+  const [showAssignmentsBtn, setShowAssignmentsBtn] = useState(true);
+
   useEffect(() => {
 
     const roleType = localStorage.getItem("roleType");
@@ -61,6 +63,7 @@ function ProgramDetailsNew() {
 
   const programHandleChange = value => {
     setProgramValue(value);
+    setShowAssignmentsBtn(false);
   };
 
   async function displayAssignments() {
@@ -231,7 +234,7 @@ function ProgramDetailsNew() {
 
               <div className="row">
                 <div className="col-md-3">
-                  <button className="btn btn-block btn-primary" onClick={e => showAssignments(e)}>
+                  <button className="btn btn-block btn-primary" onClick={e => showAssignments(e)} disabled={showAssignmentsBtn}>
                     Show Assignments
                   </button>
                 </div>
