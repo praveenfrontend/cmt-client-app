@@ -239,7 +239,7 @@ function UploadModal({ uploadModal, setUploadModal }) {
               </CSSTransition>
 
               <div class="form-group col-md-12">
-                <FormInput icon="fa fa-list-alt" type="text" placeholder="Assignment Name" changeHandler={e => fileHandleChange(e.target.value)} inputHandler={e => dispatch({ type: "assignmentNameImmediately", value: e.target.value })} message={state.assignmentName.message} inputField={state.assignmentName.hasErrors} value={state.firstName} />
+                <FormInput icon="fa fa-list-alt" type="text" placeholder="Assignment Name" changeHandler={e => fileHandleChange(e.target.value)} inputHandler={e => dispatch({ type: "assignmentNameImmediately", value: e.target.value })} message={state.assignmentName.message} inputField={state.assignmentName.hasErrors}  />
               </div>
 
               <div class="form-group col-md-12">
