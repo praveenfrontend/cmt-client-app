@@ -14,16 +14,6 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
       value: "",
       hasErrors: false,
       message: ""
-    },
-    Others: {
-      value: "",
-      hasErrors: false,
-      message: ""
-    },
-    notes: {
-      value: "",
-      hasErrors: false,
-      message: ""
     }
   };
 
@@ -38,28 +28,8 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         }
         return;
 
-      case "OthersImmediately":
-        draft.Others.hasErrors = false;
-        draft.Others.value = action.value;
-        if (values.Others.length === 0) {
-          draft.Others.hasErrors = true;
-          draft.Others.message = "Others, if any cannot be empty.";
-          return;
-        }
-        return;
-
-      case "notesImmediately":
-        draft.notes.hasErrors = false;
-        draft.notes.value = action.value;
-        if (values.notes.length === 0) {
-          draft.notes.hasErrors = true;
-          draft.notes.message = "Others, if any cannot be empty.";
-          return;
-        }
-        return;
-
       case "submitForm":
-        if (!draft.after_school_program.hasErrors && !draft.Others.hasErrors && !draft.notes.hasErrors) {
+        if (!draft.after_school_program.hasErrors ) {
           setContinueCount(1);
         }
         return;
@@ -78,8 +48,6 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
     e.preventDefault();
 
     dispatch({ type: "afterSchoolImmediately", value: state.after_school_program.value });
-    dispatch({ type: "OthersImmediately", value: state.Others.value });
-    dispatch({ type: "notesImmediately", value: state.notes.value });
     dispatch({ type: "submitForm" });
   }
 
@@ -191,19 +159,13 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         <label htmlFor="othersTextArea" className="text-muted">
           Others, if any
         </label>
-        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")} onInput={e => dispatch({ type: "OthersImmediately", value: e.target.value })} message={state.Others.message} inputField={state.Others.hasErrors} value={values.Others}></textarea>
-        <CSSTransition in={state.Others.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-          <div className="alert alert-danger small liveValidateMessage">{state.Others.message}</div>
-        </CSSTransition>
+        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")}  ></textarea>
       </div>
       <div className="form-group">
         <label htmlFor="notes" className="text-muted">
           Agent Notes
         </label>
-        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")} onInput={e => dispatch({ type: "notesImmediately", value: e.target.value })} message={state.notes.message} inputField={state.notes.hasErrors} value={values.notes}></textarea>
-        <CSSTransition in={state.notes.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-          <div className="alert alert-danger small liveValidateMessage">{state.notes.message}</div>
-        </CSSTransition>
+        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")} ></textarea>
       </div>
 
       <br />
