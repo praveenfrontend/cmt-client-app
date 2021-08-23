@@ -173,9 +173,14 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
           draft.myVisitToFamilyDoctor.message = "Doctor visit cannot be empty.";
           return;
         }
-        if (!/\d{1,3}/.test(values.myVisitToFamilyDoctor)) {
+        if (values.myVisitToFamilyDoctor > 365) {
           draft.myVisitToFamilyDoctor.hasErrors = true;
-          draft.myVisitToFamilyDoctor.message = "Enter digits.";
+          draft.myVisitToFamilyDoctor.message = "Please enter number less than 365";
+          return;
+        }
+        if (!/^\d+?$/.test(values.myVisitToFamilyDoctor)) {
+          draft.myVisitToFamilyDoctor.hasErrors = true;
+          draft.myVisitToFamilyDoctor.message = "Enter only positive number.";
           return;
         }
         return;
@@ -187,9 +192,14 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
           draft.myVisitToClinic.message = "Clinic visit cannot be empty.";
           return;
         }
-        if (!/\d{1,3}/.test(values.myVisitToClinic)) {
+        if (values.myVisitToClinic > 365) {
           draft.myVisitToClinic.hasErrors = true;
-          draft.myVisitToClinic.message = "Enter digits.";
+          draft.myVisitToClinic.message = "Please enter number less than 365";
+          return;
+        }
+        if (!/^\d+?$/.test(values.myVisitToClinic)) {
+          draft.myVisitToClinic.hasErrors = true;
+          draft.myVisitToClinic.message = "Enter only positive number.";
           return;
         }
         return;
@@ -201,9 +211,14 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
           draft.myVisitToEmergency.message = "Emergency visit cannot be empty.";
           return;
         }
-        if (!/\d{1,3}/.test(values.myVisitToEmergency)) {
+        if (values.myVisitToEmergency > 365) {
           draft.myVisitToEmergency.hasErrors = true;
-          draft.myVisitToEmergency.message = "Enter digits.";
+          draft.myVisitToEmergency.message = "Please enter number less than 365";
+          return;
+        }
+        if (!/^\d+?$/.test(values.myVisitToEmergency)) {
+          draft.myVisitToEmergency.hasErrors = true;
+          draft.myVisitToEmergency.message = "Enter only positive number.";
           return;
         }
         return;
@@ -215,9 +230,14 @@ function MemberDetails({ values, inputChange, nextStep, prevStep }) {
           draft.myVisitToHospital.message = "Hospital visit cannot be empty.";
           return;
         }
-        if (!/\d{1,3}/.test(values.myVisitToHospital)) {
+        if (values.myVisitToHospital > 365) {
           draft.myVisitToHospital.hasErrors = true;
-          draft.myVisitToHospital.message = "Enter digits.";
+          draft.myVisitToHospital.message = "Please enter number less than 365";
+          return;
+        }
+        if (!/^\d+?$/.test(values.myVisitToHospital)) {
+          draft.myVisitToHospital.hasErrors = true;
+          draft.myVisitToHospital.message = "Enter only positive number.";
           return;
         }
         return;
