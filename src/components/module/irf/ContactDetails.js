@@ -85,12 +85,7 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
       case "phoneHomeImmediately":
         draft.phoneHome.hasErrors = false;
         draft.phoneHome.value = action.value;
-        if (values.phoneHome.length === 0) {
-          draft.phoneHome.hasErrors = true;
-          draft.phoneHome.message = "Home Phone cannot be empty.";
-          return;
-        }
-        if (!/^[0-9]{10}$/.test(values.phoneHome)) {
+        if ( (values.phoneHome.length > 0) && (!/^[0-9]{10}$/.test(values.phoneHome))) {
           draft.phoneHome.hasErrors = true;
           draft.phoneHome.message = "Enter 10 digits phone number.";
           return;
@@ -99,12 +94,7 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
       case "phoneWorkImmediately":
         draft.phoneWork.hasErrors = false;
         draft.phoneWork.value = action.value;
-        if (values.phoneWork.length === 0) {
-          draft.phoneWork.hasErrors = true;
-          draft.phoneWork.message = "Work Phone cannot be empty.";
-          return;
-        }
-        if (!/^[0-9]{10}$/.test(values.phoneWork)) {
+        if ( (values.phoneHome.length > 0) && (!/^[0-9]{10}$/.test(values.phoneWork))) {
           draft.phoneWork.hasErrors = true;
           draft.phoneWork.message = "Enter 10 digits phone number.";
           return;
