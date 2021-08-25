@@ -1,5 +1,6 @@
 /* eslint-disable default-case */
 import React, { useState, useEffect } from "react";
+import {Tooltip, OverlayTrigger} from 'react-bootstrap'
 import Axios from "axios";
 import { useImmerReducer } from "use-immer";
 import swal from "sweetalert";
@@ -24,8 +25,16 @@ function AdminAddProgram() {
   const [submitCountAddPgm, setSubmitCountAddPgm] = useState(0);
   const [submitCountDelPgm, setSubmitCountDelPgm] = useState(0);
 
+  const [categoryDropDownInput, setCategoryDropDownInput] = useState(false);
+  const [categoryInputField, setCategoryInputField] = useState(false);
+
   const initialState = {
     addCategoryName: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    addNewCategoryName: {
       value: "",
       hasErrors: false,
       message: ""
@@ -52,26 +61,51 @@ function AdminAddProgram() {
       case "addCategoryNameImmediately":
         draft.addCategoryName.hasErrors = false;
         draft.addCategoryName.value = action.value;
-        if (/\d/.test(draft.addCategoryName.value)) {
-          draft.addCategoryName.hasErrors = true;
-          draft.addCategoryName.message = "Category cannot contain number.";
-          return;
+        if(draft.addCategoryName.value !== "") {
+          setCategoryDropDownInput(true)
         }
-        if (!/^[a-zA-Z]+$/.test(draft.addCategoryName.value)) {
+        
+        if (draft.addCategoryName.value === "" ) {
           draft.addCategoryName.hasErrors = true;
           draft.addCategoryName.message = "Select or Add New Category.";
-          return;
+          setCategoryDropDownInput(false);
+          // return;
         }
+        if(categoryInputField || draft.addCategoryName.value !== "") {
+          draft.addCategoryName.hasErrors = false;
+          draft.addCategoryName.message = "";
+        }
+        if(categoryDropDownInput){
+          draft.addNewCategoryName.hasErrors = false;
+          draft.addNewCategoryName.message = "";
+        }
+        
         return;
+      case "addNewCategoryNameImmediately":
+          draft.addNewCategoryName.hasErrors = false;
+          draft.addNewCategoryName.value = action.value;
+          if(draft.addNewCategoryName.value.length > 0) {
+            setCategoryInputField(true)
+          }
+          if (draft.addNewCategoryName.value.length === 0) {
+            draft.addNewCategoryName.hasErrors = true;
+            draft.addNewCategoryName.message = "Category cannot be empty.";
+            setCategoryInputField(false);
+            // return;
+          }
+          if(categoryDropDownInput || draft.addNewCategoryName.value.length !== 0) {
+            draft.addNewCategoryName.hasErrors = false;
+            draft.addNewCategoryName.message = "";
+          }
+          if(categoryInputField){
+            draft.addCategoryName.hasErrors = false;
+            draft.addCategoryName.message = "";
+          }
+          return;
       case "addProgramNameImmediately":
         draft.addProgramName.hasErrors = false;
         draft.addProgramName.value = action.value;
-        if (/\d/.test(draft.addProgramName.value)) {
-          draft.addProgramName.hasErrors = true;
-          draft.addProgramName.message = "Program cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.addProgramName.value)) {
+        if (draft.addProgramName.value.length === 0) {
           draft.addProgramName.hasErrors = true;
           draft.addProgramName.message = "Program cannot be empty.";
           return;
@@ -181,6 +215,9 @@ function AdminAddProgram() {
       }
       fetchResults();
       setSubmitCountAddPgm(0);
+      setCategoryDropDownInput(false);
+      setCategoryInputField(false);
+
     }
   }, [categoryValue, dispatch, programValueForAdd, submitCountAddPgm]);
 
@@ -189,6 +226,7 @@ function AdminAddProgram() {
     e.preventDefault();
 
     dispatch({ type: "addCategoryNameImmediately", value: state.addCategoryName.value });
+    dispatch({ type: "addNewCategoryNameImmediately", value: state.addNewCategoryName.value });
     dispatch({ type: "addProgramNameImmediately", value: state.addProgramName.value });
     dispatch({ type: "submitFormAddPgm" });
   };
@@ -229,6 +267,12 @@ function AdminAddProgram() {
     dispatch({ type: "submitFormDelPgm" });
   };
 
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Category that was added lastly will be choosen.
+    </Tooltip>
+  );
+
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <section className="forms">
@@ -247,12 +291,14 @@ function AdminAddProgram() {
                           return <option value={category}>{category}</option>;
                         })}
                       </select>
+                      <CSSTransition in={state.addCategoryName.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
+                        <div className="alert alert-danger small liveValidateMessage">{state.addCategoryName.message}</div>
+                    </CSSTransition>
                     </div>
+                    
                   </div>
                 </div>
-                <CSSTransition in={state.addCategoryName.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
-                    <div className="alert alert-danger small liveValidateMessage">{state.addCategoryName.message}</div>
-                </CSSTransition>
+                
 
                 <div className="col-md-1">
                   <p className="display-6 text-muted mt-2">[OR]</p>
@@ -262,7 +308,8 @@ function AdminAddProgram() {
                   <div className={`form-group row`}>
                     <label className="col-sm-4 form-control-label">Add Category</label>
                     <div className="col-sm-8 mb-3">
-                      <FormInput icon="fa fa-list-alt" type="text" placeholder="Add New Category" changeHandler={e => categoryHandleChange(e.target.value)} />
+                      <FormInput icon="fa fa-list-alt" type="text" placeholder="Add New Category" changeHandler={e => categoryHandleChange(e.target.value)} 
+                      inputHandler={e => dispatch({ type: "addNewCategoryNameImmediately", value: e.target.value })} message={state.addNewCategoryName.message} inputField={state.addNewCategoryName.hasErrors}  />
                     </div>
                   </div>
                 </div>
@@ -279,8 +326,23 @@ function AdminAddProgram() {
                 </div>
               </div>
 
-              <div className="col-md-2">
-                <button className="btn btn-block btn-primary">Add Program</button>
+              <div className="row">
+                <div className="col-md-2">
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip}
+                  style={{
+                    backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                    padding: '2px 10px',
+                    color: 'white',
+                    borderRadius: 3,
+                    // ...props.style,
+                  }}
+                  >
+                    <button className="btn btn-block btn-primary">Add Program</button>
+                  </OverlayTrigger>
+                </div>
               </div>
             </form>
           </Page>
