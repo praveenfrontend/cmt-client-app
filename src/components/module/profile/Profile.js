@@ -5,6 +5,7 @@ import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 
 import UploadPhotoModal from "./UploadPhotoModal";
+import EditProfileModal from "./EditProfileModal";
 import "./profile.scss";
 
 function Profile() {
@@ -22,9 +23,11 @@ function Profile() {
     city: "",
     postal: ""
   };
-  const [user, setUser] = useState(userObj);
+  // const [user, setUser] = useState(userObj);
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [uploadPhotoModal, setUploadPhotoModal] = useState(false);
+  const [editProfileModal, setEditProfileModal] = useState(false);
 
   useEffect(() => {
     async function getProfile() {
@@ -44,6 +47,8 @@ function Profile() {
     getProfile();
   }, []);
 
+  const values = user;
+
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       {/* <Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true}> */}
@@ -57,8 +62,8 @@ function Profile() {
                     <div class="d-flex flex-column align-items-center text-center">
                       <img src={user.profilepic} alt="Admin" class="rounded-circle" width="150" />
                       <div class="mt-3">
-                        <h4>{user.firstName + " " + user.lastName}</h4>
-                        <p class="text-secondary mb-1">{user.roleType}</p>
+                        <h4>{values.firstName + " " + values.lastName}</h4>
+                        <p class="text-secondary mb-1">{values.roleType}</p>
                         <p class="text-muted font-size-sm">{user.gender}</p>
                         <button class="btn btn-primary" onClick={e => setUploadPhotoModal(true)}>Upload photo</button>
                       </div>
@@ -110,13 +115,16 @@ function Profile() {
                       </div>
                       <div class="col-sm-9 text-secondary">{user.city + ", " + user.province + ", " + user.postal + ", " + user.country}</div>
                     </div>
+                    <hr />
                   </div>
+                  <button class="btn btn-primary" onClick={e => setEditProfileModal(true)}>Edit Profile</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <UploadPhotoModal uploadModal={uploadPhotoModal} setUploadModal={setUploadPhotoModal}/>
+        <EditProfileModal editModal={editProfileModal} setEditModal={setEditProfileModal} values={values}/>
       </div>
       {/* </Loader> */}
     </LoadingOverlay>
