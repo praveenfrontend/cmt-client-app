@@ -243,7 +243,7 @@ class IRF extends Component {
 
       swal({
         title: "Are you sure?",
-        text: "Do you want to delete all your child information?",
+        text: "Child information will not be included!",
         icon: "warning",
         buttons: true,
         dangerMode: true
