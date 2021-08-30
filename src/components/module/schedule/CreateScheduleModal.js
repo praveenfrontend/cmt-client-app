@@ -283,6 +283,13 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
    
   };
 
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <Modal show={scheduleModal} onHide={closeModalForm}>
@@ -339,13 +346,13 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
             
             <div class="form-row">
               <div class="form-group col-md-6">
-                <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedStartTime}  onChange={time => onChangeStartTimeHandler(time)} placeholderText="Start Time" timeFormat="HH:mm" timeIntervals={30} /* minTime={new Date() } */ />
+                <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedStartTime}  onChange={time => onChangeStartTimeHandler(time)} placeholderText="Start Time" timeFormat="HH:mm" timeIntervals={30} /* minTime={new Date() } */ /* filterTime={filterPassedTime} */ />
               </div>
               <CSSTransition in={state.startTime.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.startTime.message}</div>
               </CSSTransition>
               <div class="form-group col-md-6">
-                <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedEndTime}  onChange={time => onChangeEndTimeHandler(time)} placeholderText="End Time" timeFormat="HH:mm" timeIntervals={30}  /* minTime={new Date(selectedStartTime)} */ />
+                <DatePicker className="form-control" showTimeSelect  showTimeSelectOnly value={selectedEndTime}  onChange={time => onChangeEndTimeHandler(time)} placeholderText="End Time" timeFormat="HH:mm" timeIntervals={30}  /* minTime={selectedStartTime} */ />
               </div>
               <CSSTransition in={state.endTime.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                 <div className="alert alert-danger small liveValidateMessage">{state.endTime.message}</div>

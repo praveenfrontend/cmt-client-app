@@ -39,17 +39,41 @@ function Schedule() {
             const fromDate = program.FromDate.split(" ");
             const ToDate = program.ToDate.split(" ");
 
+            const startDate = fromDate[0].split("/");
+            const startDay = startDate[1]
+            const startMonth = startDate[0] - 1; 
+            const startYear = startDate[2];
+            
+            const endDate = ToDate[0].split("/");
+            const endDay = endDate[1]
+            const endMonth = endDate[0] - 1; 
+            const endYear = endDate[2];
+
+            const timeStart = fromDate[1].split(":");
+            const startHour = timeStart[0];
+            const startMinute = timeStart[1];
+            const startSecond = timeStart[2];
+
+            const timeEnd = ToDate[1].split(":");
+            const endHour = timeEnd[0];
+            const endMinute = timeEnd[1];
+            const endSecond = timeEnd[2];
+
+
             const event = {
               id: program.id,
               categoryName: program.Category,
               programName: program.ProgramName,
               userId: program.UserID,
               title: program.Description,
-              start: fromDate[0],
-              end: ToDate[0],
+              // start: fromDate[0],
+              // end: ToDate[0],
+              start: new Date(startYear, startMonth, startDay, startHour, startMinute, startSecond),
+              end: new Date(endYear, endMonth, endDay, endHour, endMinute, endSecond),
               startTime: fromDate[1],
               endTime: ToDate[1],
             };
+            console.log('event: ', event);
             eventArray.push(event);
           });
           setEvents([...eventArray]);

@@ -231,8 +231,11 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     setProgramName(eventObj.programName);
     setCategory(eventObj.categoryName);
 
-    setFromDate(eventObj.start);
-    setToDate(eventObj.end);
+    const fromDate = dateConvertor(eventObj.start);
+    const toDate = dateConvertor(eventObj.end);
+
+    setFromDate(fromDate);
+    setToDate(toDate);
 
     setSelectedStartTime(eventObj.startTime);
     setSelectedEndTime(eventObj.endTime);
@@ -279,22 +282,25 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     dispatch({ type: "endTimeImmediately", value: time });
   };
 
-  const onChangeFromDateHandler = input => {
+  const dateConvertor = input => {
+
     const year = new Date(input).getFullYear();
     let month = (new Date(input).getMonth() + 1).toString().padStart(2, "0");
     let day = new Date(input).getDate().toString().padStart(2, "0");
     let date = month + "/" + day + "/" + year;
+    return date;
+  }
 
+  const onChangeFromDateHandler = input => {
+    
+    const date = dateConvertor(input);
     setSelectedFromDate(input);
     dispatch({ type: "fromDateImmediately", value: date });
   };
 
   const onChangeToDateHandler = input => {
-    const year = new Date(input).getFullYear();
-    let month = (new Date(input).getMonth() + 1).toString().padStart(2, "0");
-    let day = new Date(input).getDate().toString().padStart(2, "0");
-    let date = month + "/" + day + "/" + year;
 
+    const date = dateConvertor(input);
     setSelectedToDate(input);
     dispatch({ type: "toDateImmediately", value: date });
   };
