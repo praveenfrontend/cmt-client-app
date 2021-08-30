@@ -329,7 +329,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
               </CSSTransition>
               <div class="form-group col-md-6">
                 {/* <input type="text" class="form-control" id="inputEndDate" name="EndDate" placeholder="MM/DD/YYYY" onChange={e => setEndDate(e.target.value)} value={EndDate} /> */}
-                <DatePicker className="form-control" selected={selectedToDate} onChange={date => onChangeToDateHandler(date)}  placeholderText="To Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                <DatePicker className="form-control" selected={selectedToDate} onChange={date => onChangeToDateHandler(date)}  placeholderText="To Date" dateFormat="MM/dd/yyyy" minDate={selectedFromDate} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
                 </div>
                 <CSSTransition in={state.toDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                     <div className="alert alert-danger small liveValidateMessage">{state.toDate.message}</div>
