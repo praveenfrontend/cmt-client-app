@@ -360,7 +360,7 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
               </button>
             </div>
             <div className="col col-sm-4 col-md-3 col-lg-2">
-              <button className="btn btn-block btn-primary" onClick={nextHandler}>
+              <button className="btn btn-block btn-primary" onClick={nextHandler} disabled={(values.childProgramAddRemove && values.child_program.length) || (values.childProgramAddRemove === false) ? false : true}>
                 Continue
               </button>
             </div>
