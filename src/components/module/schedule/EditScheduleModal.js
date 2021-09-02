@@ -42,11 +42,13 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     },
     category: {
       value: eventObj.categoryName,
+      // value: Category,
       hasErrors: false,
       message: ""
     },
     programName: {
       value: eventObj.programName,
+      // value: ProgramName,
       hasErrors: false,
       message: ""
     },
@@ -86,28 +88,28 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
       case "categoryImmediately":
         draft.category.hasErrors = false;
         draft.category.value = action.value;
-        if (/\d/.test(draft.category.value)) {
+        // if (/\d/.test(draft.category.value)) {
+        //   draft.category.hasErrors = true;
+        //   draft.category.message = "Category Name cannot contain number.";
+        //   return;
+        // }
+        if (draft.category.value === "") {
           draft.category.hasErrors = true;
-          draft.category.message = "Category Name cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.category.value)) {
-          draft.category.hasErrors = true;
-          draft.category.message = "Category Name cannot be empty.";
+          draft.category.message = "Select Category.";
           return;
         }
         return;
       case "programNameImmediately":
         draft.programName.hasErrors = false;
         draft.programName.value = action.value;
-        if (/\d/.test(draft.programName.value)) {
+        // if (/\d/.test(draft.programName.value)) {
+        //   draft.programName.hasErrors = true;
+        //   draft.programName.message = "Program Name cannot contain number.";
+        //   return;
+        // }
+        if (draft.programName.value === "") {
           draft.programName.hasErrors = true;
-          draft.programName.message = "Program Name cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.programName.value)) {
-          draft.programName.hasErrors = true;
-          draft.programName.message = "Program Name cannot be empty.";
+          draft.programName.message = "Select Program.";
           return;
         }
         return;
@@ -228,6 +230,8 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     setUserId(eventObj.userId);
 
     setDescription(eventObj.title);
+    // console.log('program name, ', eventObj.programName)
+    // console.log('category Name, ', eventObj.categoryName)
     setProgramName(eventObj.programName);
     setCategory(eventObj.categoryName);
 
@@ -240,9 +244,21 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     setSelectedStartTime(eventObj.startTime);
     setSelectedEndTime(eventObj.endTime);
 
-    // setProgramList(categoryAndProgramList[Category]);
+    // console.log('eventObj ', eventObj);
 
-  }, [/* Category, categoryAndProgramList, */ eventObj]);
+    // setProgramList(categoryAndProgramList[Category]);
+    // console.log('categoryAndProgramList: ', categoryAndProgramList);
+
+  }, [/* categoryAndProgramList, */ eventObj]);
+
+  useEffect(() => {
+    const value = categoryAndProgramList[eventObj.categoryName];
+    setProgramList(value); 
+  }, [categoryAndProgramList, eventObj])
+
+  // useEffect(() => {
+  //   console.log('programList ', programList)
+  // }, [programList])
 
   /* const onChangeStartDateHandler = input => {
     const year = new Date(input).getFullYear();
@@ -351,10 +367,10 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
 
             <div  class="form-row">
               <div class="form-group col-md-6">
-                <select readOnly={ (roleType === 'Participant') ? true: false}  name="account" className="form-control" value={Category} onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
+                <select readOnly={ (roleType === 'Participant') ? true: false}  name="account" className="form-control" /* value={Category} */ onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
                   <option>Select Category Name</option>;
                   {categoryList.map(category => {
-                    return <option value={category}>{category}</option>;
+                    return <option value={category} selected={Category === category ? true : false} >{category}</option>;
                   })}
                 </select>
               </div>
@@ -362,10 +378,10 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
                   <div className="alert alert-danger small liveValidateMessage">{state.category.message}</div>
               </CSSTransition>
               <div class="form-group col-md-6">
-                <select readOnly={ (roleType === 'Participant') ? true: false}  name="account" className="form-control" value={ProgramName} onChange={e => programHandleChange(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
+                <select readOnly={ (roleType === 'Participant') ? true: false}  name="account" className="form-control" /* value={ProgramName} */ onChange={e => programHandleChange(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
                   <option>Select Program Name</option>;
-                  {programList.map(program => {
-                    return <option value={program}>{program}</option>;
+                  {programList && programList.map(program => {
+                    return <option value={program} selected={ProgramName === program ? true : false}>{program}</option>;
                   })}
                 </select>
               </div>

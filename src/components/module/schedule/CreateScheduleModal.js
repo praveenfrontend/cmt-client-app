@@ -82,28 +82,28 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       case "categoryImmediately":
         draft.category.hasErrors = false;
         draft.category.value = action.value;
-        if (/\d/.test(draft.category.value)) {
+        // if (/\d/.test(draft.category.value)) {
+        //   draft.category.hasErrors = true;
+        //   draft.category.message = "Category Name cannot contain number.";
+        //   return;
+        // }
+        if (draft.category.value === "") {
           draft.category.hasErrors = true;
-          draft.category.message = "Category Name cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.category.value)) {
-          draft.category.hasErrors = true;
-          draft.category.message = "Category Name cannot be empty.";
+          draft.category.message = "Select Category.";
           return;
         }
         return;
       case "programNameImmediately":
         draft.programName.hasErrors = false;
         draft.programName.value = action.value;
-        if (/\d/.test(draft.programName.value)) {
+        // if (/\d/.test(draft.programName.value)) {
+        //   draft.programName.hasErrors = true;
+        //   draft.programName.message = "Program Name cannot contain number.";
+        //   return;
+        // }
+        if (draft.programName.value === "") {
           draft.programName.hasErrors = true;
-          draft.programName.message = "Program Name cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.programName.value)) {
-          draft.programName.hasErrors = true;
-          draft.programName.message = "Program Name cannot be empty.";
+          draft.programName.message = "Select Program.";
           return;
         }
         return;
