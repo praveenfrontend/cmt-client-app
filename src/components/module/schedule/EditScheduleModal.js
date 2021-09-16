@@ -10,8 +10,11 @@ import swal from "sweetalert";
 import { CSSTransition } from "react-transition-group";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ParticipantsModal from "./ParticipantsModal";
 
 function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
+
+  const [participantModal, setParticipantModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [UserID, setUserId] = useState("");
   const [Description, setDescription] = useState("");
@@ -356,6 +359,10 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     }
   };
 
+  const participantModalForm = (val) => {
+    setParticipantModal(val);
+  };
+
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
       <Modal show={editModal} onHide={closeModalForm}>
@@ -430,10 +437,12 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
             <CSSTransition in={state.description.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
               <div className="alert alert-danger small liveValidateMessage">{state.description.message}</div>
             </CSSTransition>
-
           </div>
 
-            
+          <div class="form-row">
+            <button type="button" class="btn btn-link" onClick={() => participantModalForm(true)}>Show Participants</button>
+          </div>
+
           </form>
         </Modal.Body>
         { 
@@ -448,6 +457,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
             </Modal.Footer>
         }
       </Modal>
+      <ParticipantsModal participantModal={participantModal} setParticipantModal={participantModalForm} programName={ProgramName}/>
     </LoadingOverlay>
   );
 }

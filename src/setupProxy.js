@@ -2,6 +2,12 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/ProgramUsers", {
+      target: "http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/req-password-reset", {
       target: "http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true
