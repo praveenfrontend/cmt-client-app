@@ -236,7 +236,7 @@ function AdminAddProgram() {
       async function fetchResults() {
         setLoading(true);
         try {
-          const response = await Axios.delete("/delete_adpgm", { programName: programValueForDelete });
+          const response = await Axios.delete("/delete_adpgm", { data: { programName: programValueForDelete } } );
           setLoading(false);
     
           if (response.data.success === true) {
