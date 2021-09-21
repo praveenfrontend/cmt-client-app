@@ -2,6 +2,12 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/irfprogramlist", {
+      target: "http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/ProgramUsers", {
       target: "http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true
@@ -269,7 +275,7 @@ module.exports = function (app) {
   );
   app.use(
     createProxyMiddleware("/irf_register", {
-      target: "http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api",
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true
     })
   );

@@ -5,26 +5,10 @@ import TableRow from "../../Table/TableRow";
 import Table from "../../Table/Table";
 
 function Overview({ values, inputChange, prevStep, handleSubmit }) {
-  const { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, health, employment, staff, neighbourhood_net, Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness } = values;
+  const { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, userprograms, /* health, employment, staff, neighbourhood_net, */ Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness } = values;
 
   let child_program_value = child_program.map((child, index) => {
     return child.childFirstName + ", " + child.childLastName + ", " + child.childBirthDate;
-  });
-
-  let health_value = Object.keys(health).map((key, value) => {
-    return health[key].isChecked ? health[key].value + ", " : null;
-  });
-
-  let employment_value = Object.keys(employment).map((key, value) => {
-    return employment[key].isChecked ? employment[key].value + ", " : null;
-  });
-
-  let neighbourhood_value = Object.keys(neighbourhood_net).map((key, value) => {
-    return neighbourhood_net[key].isChecked ? neighbourhood_net[key].value + ", " : null;
-  });
-
-  let staff_value = Object.keys(staff).map((key, value) => {
-    return staff[key].isChecked ? staff[key].value + ", " : null;
   });
 
   const tableHeader = ["S.No", "Label", "Value"];
@@ -55,15 +39,16 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
     "Child Details": child_program_value
   };
 
-  const communityDetailsRows = {
-    "After School Program (3:30 - 6)": after_school_program,
-    Health: health_value,
-    Employment: employment_value,
-    Staff: staff_value,
-    "Neighbourhood Net": neighbourhood_value,
-    "Others, if any": Others,
-    "Agent Notes": notes
-  };
+  let communityDetailsRows = {
+    "After School Program (3:30 - 6)": after_school_program
+  }
+  Object.entries(values.userprograms).map(([programName,programs]) => {
+    communityDetailsRows[programName] = Object.entries(programs).map(([key, value]) => {
+      return value.isChecked && value.value + ", ";
+    });
+  })
+  communityDetailsRows['Others, if any'] = Others;
+  communityDetailsRows['Agent Notes'] = notes;
 
   const memberDetailsRows = {
     "My Overall health": myHealth,

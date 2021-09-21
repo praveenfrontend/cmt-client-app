@@ -48,63 +48,7 @@ class IRF extends Component {
 
     // Community Matters Program
     after_school_program: "",
-    health: {
-      healthZumba: { isChecked: false, value: "Zumba" },
-      healthYoga: { isChecked: false, value: "Yoga" },
-      healthDental: { isChecked: false, value: "Dental" },
-      healthKarate: { isChecked: false, value: "Karate" },
-      healthMeditation: { isChecked: false, value: "Meditation" },
-      healthFoodMarket: { isChecked: false, value: "Food Market" },
-      healthBellyDancing: { isChecked: false, value: "Belly Dancing" },
-      healthAdultPlus: { isChecked: false, value: "Adult Plus" },
-      healthEnglishCafe: { isChecked: false, value: "English Cafe" },
-      healthBasicEnglish: { isChecked: false, value: "Basic English" },
-      healthHomeVistits: { isChecked: false, value: "Home Vistits" },
-      healthSocialGroup: { isChecked: false, value: "Social Group" },
-      healthHealthySmiles: { isChecked: false, value: "Healthy Smiles" },
-      healthVolleyBall: { isChecked: false, value: "Volley Ball" },
-      healthHeartAndStroke: { isChecked: false, value: "Heart and Stroke" },
-      healthBollywoodDance: { isChecked: false, value: "Bollywood Dance" },
-      healthFoodShareBus: { isChecked: false, value: "Food Share Bus" },
-      healthDieticianSessions: { isChecked: false, value: "Dietician Sessions" },
-      healthFoodHandling: { isChecked: false, value: "Food Handling" },
-      healthAdultNutrition: { isChecked: false, value: "Adult Nutrition" },
-      healthDiabetesSessions: { isChecked: false, value: "Diabetes Sessions" },
-      healthHealthyChoices: { isChecked: false, value: "Healthy Choices" },
-      healthHomeManagement: { isChecked: false, value: "Home Management" },
-      healthStressManagement: { isChecked: false, value: "Stress Management" },
-      healthCancerScreeningSpa: { isChecked: false, value: "Cancer Screening/Spa" },
-      healthDiabetesManagement: { isChecked: false, value: "Diabetes Management" },
-      healthSwimmingChildren: { isChecked: false, value: "Swimming Children" },
-      healthSwimmingLadies: { isChecked: false, value: "Swimming Ladies" },
-      healthSwimmingAquaFitMale: { isChecked: false, value: "Swimming AquaFit Male" },
-      healthSwimmingAquaFitFemale: { isChecked: false, value: "Swimming AquaFit Female" }
-    },
-
-    employment: {
-      tutoring: { isChecked: false, value: "Tutoring" },
-      jobClub: { isChecked: false, value: "Job Club" },
-      childMinding: { isChecked: false, value: "Child Minding" },
-      computerBasic: { isChecked: false, value: "Computer Basic" },
-      citizenshipRefugees: { isChecked: false, value: "Citizenship/Refugees" },
-      communityAssistant: { isChecked: false, value: "Community Assistant" },
-      computerIntermediate: { isChecked: false, value: "Computer Intermediate" },
-      interestedInVolunteering: { isChecked: false, value: "Interested in Volunteering" },
-      publicSpeaking: { isChecked: false, value: "Public Speaking Level 1 & 2" },
-      foreignTrainedHealthProfessionals: { isChecked: false, value: "Foreign Trained Health Professionals" }
-    },
-
-    staff: {
-      staffVolunteer: { isChecked: false, value: "Volunteer" },
-      staffCommunityAssistant: { isChecked: false, value: "Community Assistant" }
-    },
-
-    neighbourhood_net: {
-      neighbourhoodCitizenship: { isChecked: false, value: "Citizenship" },
-      neighbourhoodIncomeTax: { isChecked: false, value: "IncomeTax" },
-      neighbourhoodOther: { isChecked: false, value: "Other" }
-    },
-
+    userprograms: {},
     Others: "",
     notes: "",
 
@@ -122,20 +66,28 @@ class IRF extends Component {
     myVisitToHospital: "",
     myDiseaseAwareness: "",
     myCmtProgramAwareness: "",
-    myPhysicalActiveness: ""
+    myPhysicalActiveness: ""    
   };
+
+  async componentDidMount() {
+      const response = await Axios.get("http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api/irfprogramlist");
+      this.setState({
+        userprograms: {...this.state.userprograms, ...response.data.Programs}
+      })
+  }
+
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    const { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, health, employment, staff, neighbourhood_net, Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness } = this.state;
+    const { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, userprograms, /* health, employment, staff, neighbourhood_net, */ Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness } = this.state;
 
-    const userprograms = {
-      health,
-      employment,
-      neighbourhood_net,
-      staff
-    };
+    // const userprograms = {
+    //   health,
+    //   employment,
+    //   neighbourhood_net,
+    //   staff
+    // };
 
     try {
       this.setState({ loading: true });
@@ -275,7 +227,7 @@ class IRF extends Component {
 
   inputCheckBoxHandler = inputParam => e => {
     const id = e.target.id;
-    let input = this.state[inputParam];
+    let input = this.state.userprograms[inputParam];
     input[id].isChecked = !input[id].isChecked;
     this.setState({ [input]: input });
   };
