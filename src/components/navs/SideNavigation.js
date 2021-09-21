@@ -88,7 +88,7 @@ function SideNavigation({ menuHandleValue, roleType }) {
               <ul id="exampledropdownDropdownAdmin" class="collapse list-unstyled">
                 <li>
                   <Link to="/adminAddProgram">
-                    <i className="fa fa-file-text-o text-success"></i>Add Program
+                    <i className="fa fa-file-text-o text-success"></i>Add/Delete Program
                   </Link>
                 </li>
                 <li>
