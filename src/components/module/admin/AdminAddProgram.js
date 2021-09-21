@@ -115,30 +115,30 @@ function AdminAddProgram() {
       case "deleteCategoryNameImmediately":
         draft.deleteCategoryName.hasErrors = false;
         draft.deleteCategoryName.value = action.value;
-        if (/\d/.test(draft.deleteCategoryName.value)) {
-          draft.deleteCategoryName.hasErrors = true;
-          draft.deleteCategoryName.message = "Category cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.deleteCategoryName.value)) {
+        if (draft.deleteCategoryName.value === "" ) {
           draft.deleteCategoryName.hasErrors = true;
           draft.deleteCategoryName.message = "Select Category.";
           return;
         }
+        // if (!/^[a-zA-Z]+$/.test(draft.deleteCategoryName.value)) {
+        //   draft.deleteCategoryName.hasErrors = true;
+        //   draft.deleteCategoryName.message = "Select Category.";
+        //   return;
+        // }
         return;
       case "deleteProgramNameImmediately":
         draft.deleteProgramName.hasErrors = false;
         draft.deleteProgramName.value = action.value;
-        if (/\d/.test(draft.deleteProgramName.value)) {
-          draft.deleteProgramName.hasErrors = true;
-          draft.deleteProgramName.message = "Program cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.deleteProgramName.value)) {
+        if (draft.deleteProgramName.value === "") {
           draft.deleteProgramName.hasErrors = true;
           draft.deleteProgramName.message = "Select Program.";
           return;
         }
+        // if (!/^[a-zA-Z]+$/.test(draft.deleteProgramName.value)) {
+        //   draft.deleteProgramName.hasErrors = true;
+        //   draft.deleteProgramName.message = "Select Program.";
+        //   return;
+        // }
         return;
 
       case "submitFormAddPgm":
