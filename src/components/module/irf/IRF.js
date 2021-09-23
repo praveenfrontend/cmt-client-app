@@ -70,7 +70,7 @@ class IRF extends Component {
   };
 
   async componentDidMount() {
-      const response = await Axios.get("http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api/irfprogramlist");
+      const response = await Axios.get("/irfprogramlist");
       this.setState({
         userprograms: {...this.state.userprograms, ...response.data.Programs}
       })
