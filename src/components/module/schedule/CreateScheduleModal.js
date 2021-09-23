@@ -82,11 +82,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       case "categoryImmediately":
         draft.category.hasErrors = false;
         draft.category.value = action.value;
-        // if (/\d/.test(draft.category.value)) {
-        //   draft.category.hasErrors = true;
-        //   draft.category.message = "Category Name cannot contain number.";
-        //   return;
-        // }
         if (draft.category.value === "") {
           draft.category.hasErrors = true;
           draft.category.message = "Select Category.";
@@ -96,11 +91,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       case "programNameImmediately":
         draft.programName.hasErrors = false;
         draft.programName.value = action.value;
-        // if (/\d/.test(draft.programName.value)) {
-        //   draft.programName.hasErrors = true;
-        //   draft.programName.message = "Program Name cannot contain number.";
-        //   return;
-        // }
         if (draft.programName.value === "") {
           draft.programName.hasErrors = true;
           draft.programName.message = "Select Program.";
@@ -375,9 +365,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
           <button className="btn btn-block btn-primary" onClick={e => createSchedule(e)}>
             Create Schedule
           </button>
-          {/* <button className="btn btn-block btn-secondary" onClick={() => closeModalForm()}>
-          Close
-        </button> */}
         </Modal.Footer>
       </Modal>
     </LoadingOverlay>

@@ -101,18 +101,13 @@ function GradeModal({ gradeModal, gradeModalForm, participantObj, setGradeSucces
     }
   }, [closeModalForm, commentValue, dispatch, gradeValue, submitCount]);
 
-
   const addGrade = async e => {
     e.preventDefault();
 
     dispatch({ type: "gradeImmediately", value: state.grade.value });
     dispatch({ type: "commentsImmediately", value: state.comments.value });
     dispatch({ type: "submitForm" });
-
-    
   };
-
-  
 
   return (
       <Modal show={gradeModal} onHide={closeModalForm}>

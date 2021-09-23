@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import Axios from "axios";
-import { useImmerReducer } from "use-immer";
-
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 import swal from "sweetalert";

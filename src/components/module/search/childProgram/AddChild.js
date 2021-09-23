@@ -181,11 +181,6 @@ class AddChild extends Component {
               inputChangeDate={this.inputChangeDate} loadingHandler={this.loadingHandler} responseHandler={this.responseHandler} />
                */}
             
-            
-            
-            
-            
-            
               <Container title="Child Details">
               <div className="row form-group">
                 <div className="col-md-7 col-lg-6">

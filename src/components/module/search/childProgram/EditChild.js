@@ -8,8 +8,6 @@ import swal from "sweetalert";
 import Page from "../../../common/Page";
 import Container from "../../../common/Container";
 import FormInput from "../../../FormFields/FormInput";
-import FormRadio from "../../../FormFields/FormRadio";
-import FormCheckbox from "../../../FormFields/FormCheckbox";
 
 class EditChild extends Component {
   state = {

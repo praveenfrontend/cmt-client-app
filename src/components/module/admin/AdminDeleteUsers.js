@@ -8,8 +8,6 @@ import Loader from "react-loader-spinner";
 import { CSSTransition } from "react-transition-group";
 
 import Page from "../../common/Page";
-import Container from "../../common/Container";
-import FormInput from "../../FormFields/FormInput";
 
 function AdminDeleteUsers() {
   const [loading, setLoading] = useState(false);

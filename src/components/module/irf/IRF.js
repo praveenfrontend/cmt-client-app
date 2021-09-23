@@ -82,13 +82,6 @@ class IRF extends Component {
 
     const { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, userprograms, /* health, employment, staff, neighbourhood_net, */ Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness } = this.state;
 
-    // const userprograms = {
-    //   health,
-    //   employment,
-    //   neighbourhood_net,
-    //   staff
-    // };
-
     try {
       this.setState({ loading: true });
       const response = await Axios.post("/irf_register", { firstName, middleName, lastName, gender, age, streetAddress, city, province, zipCode, country, phoneCell, phoneHome, phoneWork, EmerContactName, EmerContactNo, email, firstLang, aboutUs, ChildValue, child_program, after_school_program, userprograms, Others, notes, myHealth, myLifeSatisfaction, mySocialNetwork, myCommunityNetwork, myStressLevel, myHealthIssues, myFamilyDoctor, myVisitToFamilyDoctor, myVisitToClinic, myVisitToEmergency, myVisitToHospital, myDiseaseAwareness, myCmtProgramAwareness, myPhysicalActiveness });

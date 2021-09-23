@@ -673,18 +673,6 @@ class EditProgramDetails extends Component {
 
               <EditCommunityMattersProgram inputChange={this.inputChange} inputCheckBoxHandler={this.inputCheckBoxHandler} values={values} loadingHandler={this.loadingHandler} responseHandler={this.responseHandler}/>
 
-              {/* <div className="row justify-content-center">
-                <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/search" onClick={this.handleSubmit}>
-                    <button className="btn btn-block btn-success">Submit</button>
-                  </Link>
-                </div>
-                <div className="col col-sm-4 col-md-3 col-lg-2">
-                  <Link to="/search">
-                    <button className="btn btn-block btn-danger">Back</button>
-                  </Link>
-                </div>
-              </div> */}
             </Page>
           </div>
         </section>

@@ -91,11 +91,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
       case "categoryImmediately":
         draft.category.hasErrors = false;
         draft.category.value = action.value;
-        // if (/\d/.test(draft.category.value)) {
-        //   draft.category.hasErrors = true;
-        //   draft.category.message = "Category Name cannot contain number.";
-        //   return;
-        // }
         if (draft.category.value === "") {
           draft.category.hasErrors = true;
           draft.category.message = "Select Category.";
@@ -105,11 +100,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
       case "programNameImmediately":
         draft.programName.hasErrors = false;
         draft.programName.value = action.value;
-        // if (/\d/.test(draft.programName.value)) {
-        //   draft.programName.hasErrors = true;
-        //   draft.programName.message = "Program Name cannot contain number.";
-        //   return;
-        // }
         if (draft.programName.value === "") {
           draft.programName.hasErrors = true;
           draft.programName.message = "Select Program.";
@@ -233,8 +223,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     setUserId(eventObj.userId);
 
     setDescription(eventObj.title);
-    // console.log('program name, ', eventObj.programName)
-    // console.log('category Name, ', eventObj.categoryName)
     setProgramName(eventObj.programName);
     setCategory(eventObj.categoryName);
 
@@ -247,10 +235,7 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     setSelectedStartTime(eventObj.startTime);
     setSelectedEndTime(eventObj.endTime);
 
-    // console.log('eventObj ', eventObj);
-
     // setProgramList(categoryAndProgramList[Category]);
-    // console.log('categoryAndProgramList: ', categoryAndProgramList);
 
   }, [/* categoryAndProgramList, */ eventObj]);
 

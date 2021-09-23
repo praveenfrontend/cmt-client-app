@@ -39,7 +39,6 @@ import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 
 // Axios.defaults.baseURL = "http://localhost:8080";
-// Axios.defaults.baseURL = "https://test4cmt.000webhostapp.com/api";
 // Axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/http://cmtbackend-env.eba-zkcq7ycr.ap-south-1.elasticbeanstalk.com/api";
 Axios.defaults.baseURL = "https://peaceful-plains-21019.herokuapp.com/http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api";
 
@@ -146,8 +145,6 @@ function App(props) {
     }
   });
 
-  
-
   const menuToggle = () => {
     if (window.outerWidth > 991) {
       setMenuHandleValue(menuHandleValue === "shrink" ? "" : "shrink");
@@ -187,7 +184,6 @@ function App(props) {
                 <GuardedRoute path="/editChild" component={EditChild} auth={state.loggedIn} registrationId={state.registrationId} />
                 <GuardedRoute path="/editProgram" component={EditProgramDetails} auth={state.loggedIn} programDetails={state.programDetails} registrationId={state.registrationId} />
                 <GuardedRoute path="/updateHealth" component={UpdateHealthDetails} auth={state.loggedIn} healthDetails={state.healthDetails} registrationId={state.registrationId} />
-
                 <GuardedRoute path="/programReport" component={ProgramReport} auth={state.loggedIn} />
                 <GuardedRoute path="/goalsReport" component={GoalsReport} auth={state.loggedIn} />
                 <GuardedRoute path="/notesReport" component={NotesReport} auth={state.loggedIn} />

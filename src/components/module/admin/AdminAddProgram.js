@@ -9,7 +9,6 @@ import Loader from "react-loader-spinner";
 import { CSSTransition } from "react-transition-group";
 
 import Page from "../../common/Page";
-import Container from "../../common/Container";
 import FormInput from "../../FormFields/FormInput";
 
 function AdminAddProgram() {
@@ -120,11 +119,6 @@ function AdminAddProgram() {
           draft.deleteCategoryName.message = "Select Category.";
           return;
         }
-        // if (!/^[a-zA-Z]+$/.test(draft.deleteCategoryName.value)) {
-        //   draft.deleteCategoryName.hasErrors = true;
-        //   draft.deleteCategoryName.message = "Select Category.";
-        //   return;
-        // }
         return;
       case "deleteProgramNameImmediately":
         draft.deleteProgramName.hasErrors = false;
@@ -134,11 +128,6 @@ function AdminAddProgram() {
           draft.deleteProgramName.message = "Select Program.";
           return;
         }
-        // if (!/^[a-zA-Z]+$/.test(draft.deleteProgramName.value)) {
-        //   draft.deleteProgramName.hasErrors = true;
-        //   draft.deleteProgramName.message = "Select Program.";
-        //   return;
-        // }
         return;
 
       case "submitFormAddPgm":
