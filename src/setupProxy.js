@@ -2,6 +2,12 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/profileUpdate", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/irfprogramlist", {
       target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true
