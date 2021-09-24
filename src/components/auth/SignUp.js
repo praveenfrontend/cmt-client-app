@@ -153,11 +153,6 @@ function SignUp() {
           draft.middleName.message = "Enter middle name without numbers.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(draft.middleName.value)) {
-          draft.middleName.hasErrors = true;
-          draft.middleName.message = "Middle name cannot be empty or contains space.";
-          return;
-        }
         return;
       case "lastNameImmediately":
         draft.lastName.hasErrors = false;
