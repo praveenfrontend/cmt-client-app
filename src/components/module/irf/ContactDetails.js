@@ -108,7 +108,7 @@ function ContactDetails({ values, inputChange, nextStep, prevStep, addChild, rem
           draft.EmerContactName.message = "Contact name cannot contain number.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(values.EmerContactName)) {
+        if (values.EmerContactName === "") {
           draft.EmerContactName.hasErrors = true;
           draft.EmerContactName.message = "Contact name cannot be empty.";
           return;
