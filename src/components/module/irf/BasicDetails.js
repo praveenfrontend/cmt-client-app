@@ -73,7 +73,7 @@ function BasicDetails({ values, inputChange, nextStep, page }) {
           draft.firstName.message = "Enter first name without numbers.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(values.firstName)) {
+        if (values.firstName === "") {
           draft.firstName.hasErrors = true;
           draft.firstName.message = "First name cannot be empty.";
           return;
@@ -96,7 +96,7 @@ function BasicDetails({ values, inputChange, nextStep, page }) {
           draft.lastName.message = "Enter last name without numbers.";
           return;
         }
-        if (!/^[a-zA-Z]+$/.test(values.lastName)) {
+        if (values.lastName === "") {
           draft.lastName.hasErrors = true;
           draft.lastName.message = "Last name cannot be empty.";
           return;
