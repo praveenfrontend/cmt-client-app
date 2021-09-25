@@ -29,7 +29,7 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         return;
 
       case "submitForm":
-        if (!draft.after_school_program.hasErrors ) {
+        if (!draft.after_school_program.hasErrors) {
           setContinueCount(1);
         }
         return;
@@ -72,45 +72,34 @@ function CommunityMattersProgram({ values, inputChange, inputCheckBoxHandler, ne
         </CSSTransition>
       </div>
 
-      {
-        Object.entries(values.userprograms).map(([programName,programs]) => {
-          return (
-            <div className="row">
-              <div className="form-group">
-                <div className="col">
-                  <label className="text-muted mr-2">{programName}</label>
-                </div>
-                <div className="col">
-                  {
-                    Object.entries(programs).map(([key, value]) => {
-                      return <FormCheckbox 
-                        classNameValue="col col-sm-4 col-md-3 col-lg-2" 
-                        inputId={key}
-                        inputValue={key}
-                        inputLabel={value.value}
-                        changeHandler={inputCheckBoxHandler(programName)} 
-                        checkedValue={value.isChecked} 
-                      />
-                    })
-                  }
-                </div>
+      {Object.entries(values.userprograms).map(([programName, programs]) => {
+        return (
+          <div className="row">
+            <div className="form-group">
+              <div className="col">
+                <label className="text-muted mr-2">{programName}</label>
               </div>
-            </div> 
-          )
-        })
-      }
+              <div className="col">
+                {Object.entries(programs).map(([key, value]) => {
+                  return <FormCheckbox classNameValue="col col-sm-3 col-md-3 col-lg-auto" inputId={key} inputValue={key} inputLabel={value.value} changeHandler={inputCheckBoxHandler(programName)} checkedValue={value.isChecked} />;
+                })}
+              </div>
+            </div>
+          </div>
+        );
+      })}
 
       <div className="form-group">
         <label htmlFor="othersTextArea" className="text-muted">
           Others, if any
         </label>
-        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")}  ></textarea>
+        <textarea className="form-control col col-md-6" id="Others" rows="2" col="10" placeholder="Your interests" onChange={inputChange("Others")}></textarea>
       </div>
       <div className="form-group">
         <label htmlFor="notes" className="text-muted">
           Agent Notes
         </label>
-        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")} ></textarea>
+        <textarea className="form-control col col-md-10" id="notes" rows="4" placeholder="Reminder Notes upto 1000 characters allowed" maxLength="1000" onChange={inputChange("notes")}></textarea>
       </div>
 
       <br />
