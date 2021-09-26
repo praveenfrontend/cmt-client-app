@@ -126,9 +126,10 @@ function SignUp() {
         }
         return;
       case "passwordAfterDelay":
-        if (draft.password.value.length < 6) {
+        const password = draft.password.value;
+        if ( !/[a-z]/g.test(password) || !/[A-Z]/g.test(password)  || !/[0-9]/g.test(password) || password.length < 6 ) {
           draft.password.hasErrors = true;
-          draft.password.message = "Password must be atleast 6 characters.";
+          draft.password.message = "Password must contain minimum 6 characters that includes 1 lowercase, 1 uppercase and 1 number.";
         }
         return;
       case "firstNameImmediately":
