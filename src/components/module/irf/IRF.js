@@ -187,8 +187,8 @@ class IRF extends Component {
       // eslint-disable-next-line no-restricted-globals
 
       swal({
-        title: "Are you sure?",
-        text: "Child information will not be included!",
+        // title: "Are you sure not to include Child's program?",
+        text: "Are you sure not to include Child's program?",
         icon: "warning",
         buttons: true,
         dangerMode: true
@@ -199,7 +199,7 @@ class IRF extends Component {
             childProgramAddRemove: false,
             child_program: []
           });
-          swal("Your child details has been deleted!", {
+          swal("Child information will not be included!", {
             icon: "success"
           });
         }
