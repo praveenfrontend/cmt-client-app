@@ -10,7 +10,7 @@ function SideNavigation({ menuHandleValue, roleType }) {
         <div className="sidenav-header d-flex align-items-center justify-content-center">
           {/* <!-- Brand Info--> */}
           <div className="sidenav-header-inner text-center">
-            <img src="https://dummyimage.com/600x600/ffffff/007bff.jpg&text=CMT" alt="logo" className="img-fluid rounded-circle" />
+            <img src="https://i.ibb.co/cDkYcjP/communitylogo1.png" alt="logo" className="img-fluid rounded-circle" />
             <h2 className="h5">Community Matters</h2>
           </div>
           {/* <!-- Small Brand information, appears on minimized sidebar--> */}
