@@ -43,9 +43,11 @@ function Overview({ values, inputChange, prevStep, handleSubmit }) {
     "After School Program (3:30 - 6)": after_school_program
   }
   Object.entries(values.userprograms).map(([programName,programs]) => {
-    communityDetailsRows[programName] = Object.entries(programs).map(([key, value]) => {
-      return value.isChecked && value.value + ", ";
+    const result = [];
+    Object.entries(programs).map(([key, value]) => {
+      value.isChecked && result.push(value.value );
     });
+    communityDetailsRows[programName] = result.join();
   })
   communityDetailsRows['Others, if any'] = Others;
   communityDetailsRows['Agent Notes'] = notes;
