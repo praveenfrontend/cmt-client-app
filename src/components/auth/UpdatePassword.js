@@ -15,7 +15,17 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
   const [submitCount, setSubmitCount] = useState(0);
 
   const initialState = {
-    email: {
+    otp: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    password: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    rePassword: {
       value: "",
       hasErrors: false,
       message: ""
@@ -24,21 +34,42 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
 
   function ourReducer(draft, action) {
     switch (action.type) {
-      case "emailImmediately":
-        draft.email.hasErrors = false;
-        draft.email.value = action.value;
-        if (draft.email.length === 0) {
-          draft.email.hasErrors = true;
-          draft.email.message = "Email cannot be empty.";
+      case "otpImmediately":
+        draft.otp.hasErrors = false;
+        draft.otp.value = action.value;
+        if (draft.otp.value.length === 0) {
+          draft.otp.hasErrors = true;
+          draft.otp.message = "Please enter Email OTP";
           return;
         }
-        if (!/^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+\.([a-zA-Z]+)$/.test(draft.email.value)) {
-          draft.email.hasErrors = true;
-          draft.email.message = "You must provide a valid email address.";
+        return;
+      case "passwordImmediately":
+        draft.password.hasErrors = false;
+        draft.password.value = action.value;
+        if (draft.password.value.length > 50) {
+          draft.password.hasErrors = true;
+          draft.password.message = "Password cannot exceed 50 characters.";
+        }
+        return;
+      case "passwordAfterDelay":
+        const password = draft.password.value;
+        if ( !/[a-z]/g.test(password) || !/[A-Z]/g.test(password)  || !/[0-9]/g.test(password) || password.length < 6 ) {
+          draft.password.hasErrors = true;
+          draft.password.message = "Password must contain minimum 6 characters that includes 1 lowercase, 1 uppercase and 1 number.";
+          return;
+        }
+        return;
+      case "rePasswordImmediately":
+        draft.rePassword.hasErrors = false;
+        draft.rePassword.value = action.value;
+        if (draft.rePassword.value !== draft.password.value) {
+          draft.rePassword.hasErrors = true;
+          draft.rePassword.message = "Passwords do not match";
+          return;
         }
         return;
       case "submitForm":
-        if ( !draft.email.hasErrors ) {
+        if ( !draft.otp.hasErrors && !draft.password.hasErrors && !draft.rePassword.hasErrors ) {
           setSubmitCount(1);
         }
         return;
@@ -56,21 +87,22 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
       async function fetchResults() {
         setLoading(true);
         try {
-          const response = await Axios.post("/req-password-reset", {
-            email: state.email.value,
+          const response = await Axios.post("/update-password", {
+            token: state.otp.value,
+            password: state.password.value
           });
 
-          if (response.data.message === "Password reset mail has been sent.") {
+          if (response.data.success === true) {
             setLoading(false);
             closeModalForm();
             setSubmitCount(0);
-            swal("Password reset mail has been sent.", "", "success").then(res => {
+            swal(response.data.message, "", "success").then(res => {
               setLoading(true);
               window.location.reload();
-              setUpdatePassword(true);
+              // setUpdatePassword(true);
             });
           } else {
-            swal(response.data.message, "Please complete registration.", "error").then(res => {
+            swal("Something went wrong", response.data.message, "error").then(res => {
               setLoading(true);
               window.location.reload();
             });
@@ -90,16 +122,18 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
       }
       fetchResults();
     }
-  }, [dispatch, state.email.value, submitCount ]);
+  }, [dispatch, state.otp.value, state.password.value, submitCount ]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     
-    // dispatch({ type: "emailImmediately", value: state.email.value });
-    // dispatch({ type: "submitForm" });
+    dispatch({ type: "otpImmediately", value: state.otp.value });
+    dispatch({ type: "passwordImmediately", value: state.password.value });
+    dispatch({ type: "rePasswordImmediately", value: state.rePassword.value });
+    dispatch({ type: "submitForm" });
 
-    closeModalForm();
+    // closeModalForm();
   }
 
   return (
@@ -114,9 +148,10 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
           <div className="form-inner">
               
               <form onSubmit={handleSubmit}>
-                <FormInput type="password" icon="fas fa-lock" placeholder="Enter Password" /* changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} */ />
-                <FormInput type="password" icon="fas fa-lock" placeholder="Re-Enter Password" /* changeHandler={e => dispatch({ type: "emailImmediately", value: e.target.value })} message={state.email.message} inputField={state.email.hasErrors} */ />
-                {/* <input type="submit" value="Create New Password" className="btn btn-primary btn-block" disabled={ (state.email.value === "") ? true : false } /> */}
+                <FormInput type="text" icon="fas fa-lock" placeholder="Enter Email OTP" changeHandler={e => dispatch({ type: "otpImmediately", value: e.target.value })} message={state.otp.message} inputField={state.otp.hasErrors} />
+                <FormInput type="password" icon="fas fa-lock" placeholder="Enter Password" changeHandler={e => dispatch({ type: "passwordImmediately", value: e.target.value })} message={state.password.message} inputField={state.password.hasErrors} />
+                <FormInput type="password" icon="fas fa-lock" placeholder="Re-Enter Password" changeHandler={e => dispatch({ type: "rePasswordImmediately", value: e.target.value })} message={state.rePassword.message} inputField={state.rePassword.hasErrors} />
+                <input type="submit" value="Create New Password" className="btn btn-primary btn-block" />
                 <br />
               </form>
           </div>

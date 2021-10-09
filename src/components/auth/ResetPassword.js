@@ -27,7 +27,7 @@ function ResetPassword({ forgotPasswordModal, setForgotPasswordModal, handleUpda
       case "emailImmediately":
         draft.email.hasErrors = false;
         draft.email.value = action.value;
-        if (draft.email.length === 0) {
+        if (draft.email.value.length === 0) {
           draft.email.hasErrors = true;
           draft.email.message = "Email cannot be empty.";
           return;

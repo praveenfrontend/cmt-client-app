@@ -20,6 +20,12 @@ module.exports = function (app) {
     })
   );
   app.use(
+    createProxyMiddleware("/update-password", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/req-password-reset", {
       target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true
