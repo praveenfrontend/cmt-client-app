@@ -52,7 +52,7 @@ function AdminDeleteUsers() {
       case "deleteEmailImmediately":
         draft.deleteEmail.hasErrors = false;
         draft.deleteEmail.value = action.value;
-        if (!/^[a-zA-Z]+$/.test(draft.deleteEmail.value)) {
+        if (draft.deleteEmail.value === "") {
           draft.deleteEmail.hasErrors = true;
           draft.deleteEmail.message = "Select Email.";
           return;
@@ -106,7 +106,7 @@ function AdminDeleteUsers() {
       async function fetchResults() {
         setLoading(true);
         try {
-          const response = await Axios.post("/delete_aduser", { firstName: userValue, email: emailValue });
+          const response = await Axios.delete("/delete_aduser", { data: { email: emailValue } });
           setLoading(false);
     
           if (response.data.success === true) {
