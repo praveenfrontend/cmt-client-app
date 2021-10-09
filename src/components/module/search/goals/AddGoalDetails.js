@@ -13,7 +13,7 @@ import Container from "../../../common/Container";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function AddGoalDetails({ values, inputChange, inputChangeProgramDefault, inputChangeDate, loadingHandler, responseHandler }) {
+function AddGoalDetails({ values, categoryHandleChange, programHandleChange, inputChange, inputChangeDate, loadingHandler, responseHandler }) {
 
     const [submitCount, setSubmitCount] = useState(0);
     const [selectedStartDate, setSelectedStartDate] = useState("");
@@ -211,7 +211,8 @@ function AddGoalDetails({ values, inputChange, inputChangeProgramDefault, inputC
             <div className={`form-group row`}>
               <label class="col-sm-4 form-control-label">Category Name</label>
               <div class="col-sm-8 mb-3">
-                <select name="account" class="form-control" value={values.CategoryName} onChange={e => inputChangeProgramDefault(e)}>
+                <select name="account" className="form-control" onChange={e => categoryHandleChange(e)} >
+                  <option value="">Select Category</option>;
                   {values.categoryList.map(category => {
                     return <option value={category}>{category}</option>;
                   })}
@@ -223,12 +224,11 @@ function AddGoalDetails({ values, inputChange, inputChangeProgramDefault, inputC
             <div className={`form-group row`}>
               <label class="col-sm-4 form-control-label">Programs List</label>
               <div class="col-sm-8 mb-3">
-                <select name="account" class="form-control" value={values.ProgramName} onChange={inputChange("ProgramName")}>
-                  {values.CategoryName === "Health" && values.healthList.map(value => <option>{value}</option>)}
-                  {values.CategoryName === "Employment" && values.employmentList.map(value => <option>{value}</option>)}
-                  {values.CategoryName === "Neighbourhood Net" && values.neighbourhoodList.map(value => <option>{value}</option>)}
-                  {values.CategoryName === "Staff" && values.staffList.map(value => <option>{value}</option>)}
-                  {values.CategoryName === "After School" && values.afterSchoolList.map(value => <option>{value}</option>)}
+                <select name="account" className="form-control" onChange={e => programHandleChange(e)} >
+                  <option value="">Select Program</option>;
+                  {values.programList.map(program => {
+                    return <option value={program}>{program}</option>;
+                  })}
                 </select>
               </div>
             </div>
@@ -255,7 +255,7 @@ function AddGoalDetails({ values, inputChange, inputChangeProgramDefault, inputC
                             <i className="fas fa-calendar"></i>
                             </span>
                         </div>
-                        <DatePicker className="form-control" selected={selectedStartDate} onChange={date => onChangeStartDateHandler(date)} placeholderText="Start Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                        <DatePicker className="form-control" selected={selectedStartDate} onChange={date => onChangeStartDateHandler(date)} placeholderText="Start Date" dateFormat="MM/dd/yyyy" minDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
                     </div>
                     <CSSTransition in={state.startDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                         <div className="alert alert-danger small liveValidateMessage">{state.startDate.message}</div>
@@ -275,7 +275,7 @@ function AddGoalDetails({ values, inputChange, inputChangeProgramDefault, inputC
                             <i className="fas fa-calendar"></i>
                             </span>
                         </div>
-                        <DatePicker className="form-control" selected={selectedEndDate} onChange={date => onChangeEndDateHandler(date)}  placeholderText="End Date" dateFormat="MM/dd/yyyy" maxDate={new Date()} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
+                        <DatePicker className="form-control" selected={selectedEndDate} onChange={date => onChangeEndDateHandler(date)}  placeholderText="End Date" dateFormat="MM/dd/yyyy" minDate={selectedStartDate} peekNextMonth showMonthDropdown showYearDropdown dropdownMode="select" />
                     </div>
                     <CSSTransition in={state.endDate.hasErrors} timeout={330} classNames="liveValidateMessage" unmountOnExit>
                         <div className="alert alert-danger small liveValidateMessage">{state.endDate.message}</div>
