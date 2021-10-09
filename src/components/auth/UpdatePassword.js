@@ -78,6 +78,13 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
 
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
 
+  useEffect(() => {
+    if (state.password.value) {
+      const delay = setTimeout(() => dispatch({ type: "passwordAfterDelay" }), 800);
+      return () => clearTimeout(delay);
+    }
+  }, [dispatch, state.password.value]);
+
   const closeModalForm = () => {
     setUpdatePassword(false);
   };
@@ -102,7 +109,7 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
               // setUpdatePassword(true);
             });
           } else {
-            swal("Something went wrong", response.data.message, "error").then(res => {
+            swal("Something went wrong", "Please check the otp.", "error").then(res => {
               setLoading(true);
               window.location.reload();
             });
@@ -130,6 +137,7 @@ function UpdatePassword({ updatePassword, setUpdatePassword }) {
     
     dispatch({ type: "otpImmediately", value: state.otp.value });
     dispatch({ type: "passwordImmediately", value: state.password.value });
+    dispatch({ type: "passwordAfterDelay", value: state.password.value });
     dispatch({ type: "rePasswordImmediately", value: state.rePassword.value });
     dispatch({ type: "submitForm" });
 
