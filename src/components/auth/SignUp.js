@@ -365,11 +365,18 @@ function SignUp() {
           );
           setLoading(false);
           setSubmitCount(0);
-          swal("User was successfully created", "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email.", "success");
-          // appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });
+          swal("User was successfully created", "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email.", "success").then(res => {              
+            window.location.reload();
+          });
+          // appDispatch({ type: "flashMessage", value: "Thank you for registering with us. Please click on the confirmation link that has been sent to your registered email." });          
         } catch (e) {
           setSubmitCount(0);
-          swal("Registration Failed!", e.response.data, "error");
+
+          if(e.response.data === "{\"email\":[\"The email has already been taken.\"]}" ) {
+            swal("Registration Failed!", "The email has already been taken. Please resend verification to your email from login screen.", "error").then(res => {              
+              window.location.reload();
+            });
+          }
           setLoading(false);
           // dispatch({ type: "emailUniqueResults", value: e.response.data.email });
         }

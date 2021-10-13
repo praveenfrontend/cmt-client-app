@@ -13,6 +13,7 @@ import DispatchContext from "../../DispatchContext";
 
 import ResetPassword from "./ResetPassword";
 import UpdatePassword from "./UpdatePassword";
+import ResendEmailVerification from "./ResendEmailVerification";
 
 function SignIn() {
   const appDispatch = useContext(DispatchContext);
@@ -22,6 +23,7 @@ function SignIn() {
   
   const [forgotPasswordModal, setForgotPasswordModal] = useState(false);
   const [updatePassword, setUpdatePassword] = useState(false);
+  const [resendVerificationEmailModal, setResendVerificationEmailModal] = useState(false);
 
   const initialState = {
     email: {
@@ -166,10 +168,12 @@ function SignIn() {
                 <FormInput type="password" icon="fas fa-lock" placeholder="Password" changeHandler={e => dispatch({ type: "passwordImmediately", value: e.target.value })} message={state.password.message} inputField={state.password.hasErrors} />
 
                 <input type="submit" value="Login" className="btn btn-primary btn-block" />
-                <br />
               </form>
               <Link to="/" className="forgot-pass" onClick={e => setForgotPasswordModal(true)}>
-                Reset Password?
+                Reset Password
+              </Link>
+              <Link to="/" className="forgot-pass" onClick={e => setResendVerificationEmailModal(true)}>
+                Resend email verification
               </Link>
               <small>Do not have an account? </small>
               <FormButton buttonValue="Register" />
@@ -179,6 +183,7 @@ function SignIn() {
       </div>
       <ResetPassword forgotPasswordModal={forgotPasswordModal} setForgotPasswordModal={setForgotPasswordModal} handleUpdatePassword={handleUpdatePassword}/>
       <UpdatePassword updatePassword={updatePassword} setUpdatePassword={setUpdatePassword} />
+      <ResendEmailVerification resendVerificationEmailModal={resendVerificationEmailModal} setResendVerificationEmailModal={setResendVerificationEmailModal} />
     </LoadingOverlay>
   );
 }
