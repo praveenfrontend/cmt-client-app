@@ -78,6 +78,7 @@ function Schedule() {
           });
           setEvents([...eventArray]);
         }
+        setLoading(false);
       } catch (e) {
         swal("Something went wrong", e.response.error, "error");
         setLoading(false);
