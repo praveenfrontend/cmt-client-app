@@ -100,7 +100,6 @@ function SideNavigation({ menuHandleValue, roleType }) {
             </li>
             }
           </ul>
-        <div className="side-nav-footer"><p>All rights reserved.<br/> SoCoS Inc Canada.</p></div>
         </div>
       </div>
     </nav>

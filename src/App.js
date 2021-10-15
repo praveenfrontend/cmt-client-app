@@ -188,6 +188,15 @@ function App(props) {
                 <GuardedRoute path="/goalsReport" component={GoalsReport} auth={state.loggedIn} />
                 <GuardedRoute path="/notesReport" component={NotesReport} auth={state.loggedIn} />
               </Switch>
+            <footer class="main-footer">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p>&copy; 2021 SoCoS Inc, Canada. All rights reserved.</p>
+                  </div>
+                </div>
+              </div>
+            </footer>
             </div>
           </LoadingOverlay>
         </HashRouter>
