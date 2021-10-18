@@ -33,7 +33,6 @@ function UploadModal({ uploadModal, setUploadModal }) {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };

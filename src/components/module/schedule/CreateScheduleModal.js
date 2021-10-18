@@ -191,7 +191,6 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };

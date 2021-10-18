@@ -24,7 +24,6 @@ function EditScheduleModal({ participantModal, setParticipantModal, programName 
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };

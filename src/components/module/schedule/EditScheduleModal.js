@@ -202,7 +202,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };
@@ -243,10 +242,6 @@ function EditScheduleModal({ editModal, setEditModal, eventObj, setEventObj }) {
     const value = categoryAndProgramList[eventObj.categoryName];
     setProgramList(value); 
   }, [categoryAndProgramList, eventObj])
-
-  // useEffect(() => {
-  //   console.log('programList ', programList)
-  // }, [programList])
 
   /* const onChangeStartDateHandler = input => {
     const year = new Date(input).getFullYear();

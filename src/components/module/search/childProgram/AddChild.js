@@ -95,7 +95,6 @@ class AddChild extends Component {
   };
 
   inputChangeChildProgram = input => e => {
-    console.log("childprogram.............", input);
     if (e.target.value === "No") {
       // eslint-disable-next-line no-restricted-globals
       const result = confirm("Are you sure you want to delete all your child information?");

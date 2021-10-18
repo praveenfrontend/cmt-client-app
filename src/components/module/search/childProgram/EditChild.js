@@ -24,8 +24,6 @@ class EditChild extends Component {
   componentDidMount() {
     const { editChildDetails } = this.props.location.state;
 
-    console.log(editChildDetails);
-
     this.setState({ childId: editChildDetails.childId });
     this.setState({ childFirstName: editChildDetails.childFirstname });
     this.setState({ childLastName: editChildDetails.childLastname });

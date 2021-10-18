@@ -158,7 +158,6 @@ function AdminAddProgram() {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };

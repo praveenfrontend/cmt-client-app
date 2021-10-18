@@ -81,8 +81,6 @@ class EditProgramDetails extends Component {
   componentDidMount() {
     let program_details = this.props.programDetails;
 
-    // console.log(program_details);
-
     program_details.map(prog => {
       if (prog.programName === "Zumba") {
         this.setState(prevState => ({
@@ -650,8 +648,6 @@ class EditProgramDetails extends Component {
 
   render() {
     const values = this.state;
-
-    console.log("program_details: ", this.state.program_details);
 
     return this.state.response ? (
       <Redirect to={{ pathname: "/search" }} />

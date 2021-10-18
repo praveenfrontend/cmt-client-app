@@ -43,7 +43,6 @@ function SignIn() {
   function ourReducer(draft, action) {
     switch (action.type) {
       case "emailImmediately":
-        console.log("inside emailImmediately");
         draft.email.hasErrors = false;
         draft.email.value = action.value;
         return;
@@ -81,7 +80,6 @@ function SignIn() {
         return;
       case "submitForm":
         if (/* !draft.email.hasErrors && draft.email.isUnique && */ !draft.password.hasErrors) {
-          console.log("inside submitform error count");
           setSubmitCount(1);
         }
         return;
@@ -125,7 +123,6 @@ function SignIn() {
           }
         } catch (e) {
           setSubmitCount(0);
-          console.log("There was a problem or the request was cancelled.", e.response.data.error);
           swal("Something went wrong!", e.response.data.error, "error");
           appDispatch({ type: "loading", value: false });
           // dispatch({ type: "emailUniqueResults", value: e.response.data.email });

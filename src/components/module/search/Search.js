@@ -88,7 +88,6 @@ function Search() {
         return;
       case "submitForm":
         if ( !draft.email.hasErrors && !draft.registrationId.hasErrors) {
-          console.log("inside submitform");
           setSubmitCount(1);
         }
         return;
@@ -151,7 +150,6 @@ function Search() {
   }, [appDispatch]);
 
   useEffect(() => {
-    console.log('inside use effect 1')
     if(submitCount){
       async function fetchResults() {
         setLoading(true);

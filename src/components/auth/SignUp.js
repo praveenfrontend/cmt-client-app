@@ -102,7 +102,6 @@ function SignUp() {
           draft.email.message = "Provide a valid email.";
         }
         // if (!draft.email.hasErrors && !action.noRequest) {
-        //   console.log("inside no request...");
         //   draft.email.checkCount++;
         // }
         return;
@@ -274,7 +273,6 @@ function SignUp() {
         }
         return;
       case "submitForm":
-        console.log("inside submitform");
         // setSubmitCount(1);
         if (!draft.email.hasErrors /* && draft.email.isUnique */ && !draft.password.hasErrors && !draft.firstName.hasErrors && !draft.middleName.hasErrors && !draft.lastName.hasErrors && !draft.city.hasErrors && !draft.province.hasErrors && !draft.postal.hasErrors && !draft.country.hasErrors && !draft.birthDate.hasErrors && !draft.gender.hasErrors && !draft.roleType.hasErrors) {
           setSubmitCount(1);
@@ -318,10 +316,8 @@ function SignUp() {
   //     const ourRequest = Axios.CancelToken.source();
   //     async function fetchResults() {
   //       try {
-  //         console.log("before email response...");
   //         const response = await Axios.post("/checkemail", { email: state.email.value } /* , { cancelToken: ourRequest.token } */);
   //         const result = response.data[0];
-  //         console.log("after email response before emailUniqueResults: " + result);
   //         if (result === "True") {
   //           dispatch({ type: "emailUniqueResults", value: true });
   //         }
@@ -329,8 +325,6 @@ function SignUp() {
   //           dispatch({ type: "emailUniqueResults", value: false });
   //         }
   //       } catch (e) {
-  //         console.log(e.response.data);
-  //         console.log("There was a problem or the request was cancelled.");
   //       }
   //     }
   //     fetchResults();

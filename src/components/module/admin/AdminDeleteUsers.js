@@ -78,13 +78,9 @@ function AdminDeleteUsers() {
           setUsersAndEmailList(response.data.data);
           const users = Object.keys(response.data.data);
           setUsersList([...usersList, ...users]);
-
-          console.log(usersAndEmailList["Test"]);
-
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };

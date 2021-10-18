@@ -73,7 +73,6 @@ function Schedule() {
               startTime: fromDate[1],
               endTime: ToDate[1],
             };
-            console.log('event: ', event);
             eventArray.push(event);
           });
           setEvents([...eventArray]);
