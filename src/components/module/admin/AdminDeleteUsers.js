@@ -93,7 +93,12 @@ function AdminDeleteUsers() {
 
   const userHandleChange = value => {
     setUserValue(value);
-    setEmailList(usersAndEmailList[value]);
+    if( value === "") {
+      setEmailList([]);
+      setEmailValue("");
+    } else {
+      setEmailList(usersAndEmailList[value]);
+    }
   };
   const emailHandleChange = value => {
     setEmailValue(value);
