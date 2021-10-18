@@ -97,12 +97,7 @@ function UploadModal({ uploadModal, setUploadModal }) {
       case "categoryImmediately":
         draft.category.hasErrors = false;
         draft.category.value = action.value;
-        if (/\d/.test(draft.category.value)) {
-          draft.category.hasErrors = true;
-          draft.category.message = "Category Name cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.category.value)) {
+        if (draft.category.value === "") {
           draft.category.hasErrors = true;
           draft.category.message = "Category Name cannot be empty.";
           return;
@@ -111,12 +106,7 @@ function UploadModal({ uploadModal, setUploadModal }) {
       case "programNameImmediately":
         draft.programName.hasErrors = false;
         draft.programName.value = action.value;
-        if (/\d/.test(draft.programName.value)) {
-          draft.programName.hasErrors = true;
-          draft.programName.message = "Program Name cannot contain number.";
-          return;
-        }
-        if (!/^[a-zA-Z]+$/.test(draft.programName.value)) {
+        if (draft.programName.value === "") {
           draft.programName.hasErrors = true;
           draft.programName.message = "Program Name cannot be empty.";
           return;
