@@ -26,7 +26,6 @@ function NotesReport() {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };
@@ -39,7 +38,6 @@ function NotesReport() {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };
@@ -52,7 +50,6 @@ function NotesReport() {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     };
@@ -67,28 +64,20 @@ function NotesReport() {
       setLoading(true);
       let url = "";
       if (categoryValue !== "" && programValue !== "" && zipValue !== "" && categoryValue !== "Select" && programValue !== "Select" && zipValue !== "Select") {
-        console.log("effect: ", categoryValue + " " + programValue + " " + zipValue);
         url = `/notesreport?category=${categoryValue}&programName=${programValue}&zipCode=${zipValue}`;
       } else if (categoryValue !== "" && programValue !== "" && categoryValue !== "Select" && programValue !== "Select") {
-        console.log("effect: ", categoryValue + " " + programValue);
         url = `/notesreport?category=${categoryValue}&programName=${programValue}`;
       } else if (categoryValue !== "" && zipValue !== "" && categoryValue !== "Select" && zipValue !== "Select") {
-        console.log("effect: ", categoryValue + " " + zipValue);
         url = `/notesreport?category=${categoryValue}&zipCode=${zipValue}`;
       } else if (programValue !== "" && zipValue !== "" && programValue !== "Select" && zipValue !== "Select") {
-        console.log("effect: ", programValue + " " + zipValue);
         url = `/notesreport?programName=${programValue}&zipCode=${zipValue}`;
       } else if (categoryValue !== "" && categoryValue !== "Select") {
-        console.log("effect: ", categoryValue);
         url = `/notesreport?category=${categoryValue}`;
       } else if (programValue !== "" && programValue !== "Select") {
-        console.log("effect: ", programValue);
         url = `/notesreport?programName=${programValue}`;
       } else if (zipValue !== "" && zipValue !== "Select") {
-        console.log("effect: ", zipValue);
         url = `/notesreport?zipCode=${zipValue}`;
       } else {
-        console.log("effect all");
         url = "/notesreport";
       }
 
@@ -98,12 +87,70 @@ function NotesReport() {
           setLoading(false);
         })
         .catch(error => {
-          console.log(error.response);
           setLoading(false);
         });
     }
     fetchResults();
   }, [categoryValue, programValue, zipValue]);
+
+  useEffect(() => {
+    async function fetchResults() {
+      setLoading(true);
+
+      let urlForPrograms = "", urlForZipCode = "";
+
+      const category = (categoryValue !== "" && categoryValue !== "Select" ) ? `category=${categoryValue}&` : ``;
+      const program = (programValue !== "" && programValue !== "Select" ) ? `programName=${programValue}` : ``;
+      const zip = (zipValue !== "" && zipValue !== "Select" ) ? `zipCode=${zipValue}` : ``;
+
+      urlForPrograms = '/reportprograms?' +  category + zip;
+      urlForZipCode = '/returnzipcode?' +  category + program;
+                        
+      await Axios.get(urlForPrograms)
+          .then(response => {
+            setProgramList([...response.data.reportprograms]);
+            setLoading(false);
+          })
+          .catch(error => {
+            setLoading(false);
+          });
+
+      await Axios.get(urlForZipCode)
+          .then(response => {
+            setZipCodeList([...response.data.reportcodes]);
+            setLoading(false);
+          })
+          .catch(error => {
+            setLoading(false);
+          });
+
+    }
+    fetchResults();
+  }, [categoryValue]);
+
+  useEffect(() => {
+    async function fetchResults() {
+      setLoading(true);
+
+      let urlForZipCode = "";
+
+      const category = (categoryValue !== "" && categoryValue !== "Select" ) ? `category=${categoryValue}&` : ``;
+      const program = (programValue !== "" && programValue !== "Select" ) ? `programName=${programValue}` : ``;
+
+      urlForZipCode = '/returnzipcode?' +  category + program;
+                        
+      await Axios.get(urlForZipCode)
+          .then(response => {
+            setZipCodeList([...response.data.reportcodes]);
+            setLoading(false);
+          })
+          .catch(error => {
+            setLoading(false);
+          });
+
+    }
+    fetchResults();
+  }, [programValue]);
 
   const categoryHandleChange = value => {
     setCategoryValue(value);
