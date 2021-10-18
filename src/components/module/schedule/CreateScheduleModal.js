@@ -200,7 +200,13 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
 
   const categoryHandleChange = value => {
     setCategory(value);
-    setProgramList(categoryAndProgramList[value]);
+    if( value === "") {
+      setProgramList([]);
+      setProgramName("");
+    } else {
+      setProgramList(categoryAndProgramList[value]);
+    }
+
   };
 
   const programHandleChange = value => {
@@ -292,7 +298,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
             <div  class="form-row">
               <div class="form-group col-md-6">
                 <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
-                  <option>Select Category Name</option>;
+                  <option value="">Select Category Name</option>;
                   {categoryList.map(category => {
                     return <option value={category}>{category}</option>;
                   })}
@@ -303,7 +309,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
               </CSSTransition>
               <div class="form-group col-md-6">
                 <select name="account" className="form-control" onChange={e => programHandleChange(e.target.value)} onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
-                  <option>Select Program Name</option>;
+                  <option value="">Select Program Name</option>;
                   {programList.map(program => {
                     return <option value={program}>{program}</option>;
                   })}
