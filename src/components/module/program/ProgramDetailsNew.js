@@ -58,12 +58,22 @@ function ProgramDetailsNew() {
 
   const categoryHandleChange = value => {
     setCategoryValue(value);
-    setProgramList(categoryAndProgramList[value]);
+    if( value === "") {
+      setProgramList([]);
+      setProgramValue("");
+      setShowAssignmentsBtn(true);
+    } else {
+      setProgramList(categoryAndProgramList[value]);
+    }
   };
 
   const programHandleChange = value => {
     setProgramValue(value);
-    setShowAssignmentsBtn(false);
+    if( value === "" ) {
+      setShowAssignmentsBtn(true);  
+    } else {
+      setShowAssignmentsBtn(false);
+    }
   };
 
   async function displayAssignments() {
@@ -211,7 +221,7 @@ function ProgramDetailsNew() {
                     <label className="col-sm-5 form-control-label">Category Name</label>
                     <div className="col-sm-7 mb-3">
                       <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)}>
-                        <option>Select Category</option>;
+                        <option value="">Select Category</option>;
                         {categoryList.map(category => {
                           return <option value={category}>{category}</option>;
                         })}
@@ -225,7 +235,7 @@ function ProgramDetailsNew() {
                     <label className="col-sm-5 form-control-label">Program Name</label>
                     <div className="col-sm-7 mb-3">
                       <select name="account" className="form-control" onChange={e => programHandleChange(e.target.value)}>
-                        <option>Select Program</option>;
+                        <option value="">Select Program</option>;
                         {programList.map(program => {
                           return <option value={program}>{program}</option>;
                         })}

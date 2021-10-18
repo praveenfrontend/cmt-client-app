@@ -46,7 +46,12 @@ function UploadModal({ uploadModal, setUploadModal }) {
 
   const categoryHandleChange = value => {
     // setCategoryValue(value);
-    setProgramList(categoryAndProgramList[value]);
+    if( value === "") {
+      setProgramList([]);
+      setProgramValue("");
+    } else {
+      setProgramList(categoryAndProgramList[value]);
+    }
   };
 
   const programHandleChange = value => {
@@ -206,7 +211,7 @@ function UploadModal({ uploadModal, setUploadModal }) {
             <div class="form-row">
               <div class="form-group col-md-12">
                 <select name="account" className="form-control" onChange={e => categoryHandleChange(e.target.value)} onInput={e => dispatch({ type: "categoryImmediately", value: e.target.value })}>
-                  <option>Select Category Name</option>;
+                  <option value="">Select Category Name</option>;
                   {categoryList.map(category => {
                     return <option value={category}>{category}</option>;
                   })}
@@ -218,7 +223,7 @@ function UploadModal({ uploadModal, setUploadModal }) {
 
               <div class="form-group col-md-12">
                 <select name="account" className="form-control" onChange={e => programHandleChange(e.target.value)}  onInput={e => dispatch({ type: "programNameImmediately", value: e.target.value })}>
-                  <option>Select Program Name</option>;
+                  <option value="">Select Program Name</option>;
                   {programList.map(program => {
                     return <option value={program}>{program}</option>;
                   })}
