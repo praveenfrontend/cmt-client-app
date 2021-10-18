@@ -170,7 +170,12 @@ function AdminAddProgram() {
   };
   const categoryHandleChangeForDelete = value => {
     setCategoryValue(value);
-    setProgramList(categoryAndProgramList[value]);
+    if( value === "") {
+      setProgramList([]);
+      setProgramValueForDelete("");
+    } else {
+      setProgramList(categoryAndProgramList[value]);
+    }
   };
   const programHandleChangeForAdd = value => {
     setProgramValueForAdd(value);
