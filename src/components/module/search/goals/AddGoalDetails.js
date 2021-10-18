@@ -59,12 +59,7 @@ function AddGoalDetails({ values, categoryHandleChange, programHandleChange, inp
         case "locationImmediately":
           draft.location.hasErrors = false;
           draft.location.value = action.value;
-          if (/\d/.test(draft.location.value)) {
-            draft.location.hasErrors = true;
-            draft.location.message = "Location cannot contain number.";
-            return;
-          }
-          if (!/^[a-zA-Z]+$/.test(draft.location.value)) {
+          if (draft.location.value === "") {
             draft.location.hasErrors = true;
             draft.location.message = "Location cannot be empty.";
             return;
@@ -78,7 +73,7 @@ function AddGoalDetails({ values, categoryHandleChange, programHandleChange, inp
             draft.instructor.message = "Instructor cannot contain number.";
             return;
           }
-          if (!/^[a-zA-Z]+$/.test(draft.instructor.value)) {
+          if (draft.instructor.value === "") {
             draft.instructor.hasErrors = true;
             draft.instructor.message = "Instructor cannot be empty.";
             return;
