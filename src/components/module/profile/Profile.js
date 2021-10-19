@@ -48,6 +48,7 @@ function Profile() {
   }, []);
 
   const values = user;
+  const midName = user.middleName !== null ? user.middleName : ""
 
   return (
     <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
@@ -78,7 +79,8 @@ function Profile() {
                       <div class="col-sm-3">
                         <h6 class="mb-0">Full Name</h6>
                       </div>
-                      <div class="col-sm-9 text-secondary">{user.firstName + " " + user.middleName + " " + user.lastName}</div>
+                      
+                      <div class="col-sm-9 text-secondary">{user.firstName + " " +  midName + " " + user.lastName}</div>
                     </div>
                     <hr />
                     <div class="row">
