@@ -157,7 +157,7 @@ function Search() {
           const searchInput = state.registrationId.value || state.email.value;
           const response = await Axios.get(`/irf_search/${searchInput}`);
           if (response.data.success === true) {
-            localStorage.setItem("regIdAfterUpdate", JSON.stringify(state.registrationId.value));
+            localStorage.setItem("regIdAfterUpdate", JSON.stringify(searchInput));
             setSearchData(response.data.data);
             appDispatch({ type: "userDetails", value: response.data.data.User_Details });
             appDispatch({ type: "goalDetails", value: response.data.data.GoalDetails });
