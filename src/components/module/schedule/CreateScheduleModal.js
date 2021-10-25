@@ -204,6 +204,7 @@ function CreateScheduleModal({ scheduleModal, setScheduleModal }) {
       setProgramName("");
     } else {
       setProgramList(categoryAndProgramList[value]);
+      setProgramName("");
     }
 
   };

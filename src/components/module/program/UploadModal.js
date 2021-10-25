@@ -50,6 +50,7 @@ function UploadModal({ uploadModal, setUploadModal }) {
       setProgramValue("");
     } else {
       setProgramList(categoryAndProgramList[value]);
+      setProgramValue("");
     }
   };
 

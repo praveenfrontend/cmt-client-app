@@ -64,6 +64,7 @@ function ProgramDetailsNew() {
       setShowAssignmentsBtn(true);
     } else {
       setProgramList(categoryAndProgramList[value]);
+      setProgramValue("");
     }
   };
 
