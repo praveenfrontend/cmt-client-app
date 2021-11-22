@@ -18,6 +18,7 @@ import Profile from "./components/module/profile/Profile";
 import Search from "./components/module/search/Search";
 import Reports from "./components/module/reports/Reports";
 import Schedule from "./components/module/schedule/Schedule";
+import Feed from "./components/module/feed/Feed";
 import EditUserDetails from "./components/module/search/userDetails/EditUserDetails";
 import AddGoal from "./components/module/search/goals/AddGoal";
 import EditGoal from "./components/module/search/goals/EditGoal";
@@ -72,12 +73,10 @@ function App(props) {
       case "login":
         draft.loggedIn = true;
         draft.user = action.data;
-        console.log("LOGGED IN DRAFT: " + draft.loggedIn);
         return;
       case "logout":
         draft.loggedIn = false;
         setRoleType("");
-        console.log("LOGGED OUT DRAFT: " + draft.loggedIn);
         return;
       case "flashMessage":
         draft.flashMessages.push(action.value);
@@ -177,6 +176,7 @@ function App(props) {
                 <GuardedRoute path="/profile" component={Profile} auth={state.loggedIn} />
                 <GuardedRoute path="/reports" component={Reports} auth={state.loggedIn} />
                 <GuardedRoute path="/schedule" component={Schedule} auth={state.loggedIn} />
+                <GuardedRoute path="/feed" component={Feed} auth={state.loggedIn} />
                 <GuardedRoute path="/editUserDetails" component={EditUserDetails} auth={state.loggedIn} userDetails={state.userDetails} />
                 <GuardedRoute path="/addGoal" component={AddGoal} auth={state.loggedIn} goalDetails={state.goalDetails} registrationId={state.registrationId} />
                 <GuardedRoute path="/editGoal" component={EditGoal} auth={state.loggedIn} registrationId={state.registrationId} />

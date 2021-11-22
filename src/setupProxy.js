@@ -2,6 +2,60 @@
 
 module.exports = function (app) {
   app.use(
+    createProxyMiddleware("/displayallcomments", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/addcomment", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/displaylikes", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/addlike", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/deletepost", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/myposts", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/userPosts", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/allPosts", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    createProxyMiddleware("/addpost", {
+      target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
+      changeOrigin: true
+    })
+  );
+  app.use(
     createProxyMiddleware("/profileUpdate", {
       target: "http://cmtapis-env.eba-km2pdkb3.ap-south-1.elasticbeanstalk.com/api",
       changeOrigin: true

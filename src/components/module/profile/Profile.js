@@ -4,6 +4,7 @@ import swal from "sweetalert";
 import LoadingOverlay from "react-loading-overlay";
 import Loader from "react-loader-spinner";
 
+import ViewMyPostModal from "./ViewMyPostModal";
 import UploadPhotoModal from "./UploadPhotoModal";
 import EditProfileModal from "./EditProfileModal";
 import "./profile.scss";
@@ -26,6 +27,7 @@ function Profile() {
   // const [user, setUser] = useState(userObj);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
+  const [viewMyPostModal, setViewMyPostModal] = useState(false);
   const [uploadPhotoModal, setUploadPhotoModal] = useState(false);
   const [editProfileModal, setEditProfileModal] = useState(false);
 
@@ -61,12 +63,15 @@ function Profile() {
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                      <img src={user.profilepic} alt="Admin" class="rounded-circle" width="110"  />
+                      <img src={user.profilepic} alt="Profile Pic" class="rounded-circle" width="110"  />
                       <div class="mt-3">
                         <h4>{values.firstName + " " + values.lastName}</h4>
                         <p class="text-secondary mb-1">{values.roleType}</p>
                         <p class="text-muted font-size-sm">{user.gender}</p>
-                        <button class="btn btn-primary" onClick={e => setUploadPhotoModal(true)}>Upload photo</button>
+                        <div className="d-flex justify-content-between">
+                        <div><button class="btn btn-primary" onClick={e => setUploadPhotoModal(true)}>Upload photo</button></div>
+                        <div><button class="btn btn-primary" onClick={e => setViewMyPostModal(true)}>View My Posts</button></div>                                                    
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -125,6 +130,7 @@ function Profile() {
             </div>
           </div>
         </div>
+        <ViewMyPostModal viewMyPostModal={viewMyPostModal} setViewMyPostModal={setViewMyPostModal}/>
         <UploadPhotoModal uploadModal={uploadPhotoModal} setUploadModal={setUploadPhotoModal}/>
         <EditProfileModal editModal={editProfileModal} setEditModal={setEditProfileModal} values={values}/>
       </div>

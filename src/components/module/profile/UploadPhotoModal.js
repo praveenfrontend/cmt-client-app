@@ -11,7 +11,7 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
   const [selectedFile, setSelectedFile] = useState("");
   const [selectedFileName, setSelectedFileName] = useState("");
 
-  const fileHandler = e => {
+  const fileHandler = (e) => {
     setSelectedFile(e.target.files[0]);
     const fileName = e.target.files[0].name;
     setSelectedFileName(fileName);
@@ -21,10 +21,10 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
   const closeModalForm = () => {
     setUploadModal(false);
     setSelectedFile("");
-    setSelectedFileName("")
+    setSelectedFileName("");
   };
 
-  const uploadFile = async e => {
+  const uploadFile = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -40,22 +40,24 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
       if (response.data.success === true) {
         setLoading(false);
         closeModalForm();
-        swal(response.data.message, "", "success").then(res => {
+        swal(response.data.message, "", "success").then((res) => {
           setLoading(true);
           window.location.reload();
         });
       } else {
         setLoading(false);
         closeModalForm();
-        swal("Something went wrong", response.data.message, "warning").then(res => {
-          setLoading(true);
-          window.location.reload();
-        });
-      } 
+        swal("Something went wrong", response.data.message, "warning").then(
+          (res) => {
+            setLoading(true);
+            window.location.reload();
+          }
+        );
+      }
     } catch (e) {
       setLoading(false);
       closeModalForm();
-      swal("Something went wrong", e.response, "error").then(res => {
+      swal("Something went wrong", e.response, "error").then((res) => {
         setLoading(true);
         window.location.reload();
       });
@@ -63,7 +65,18 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
   };
 
   return (
-    <LoadingOverlay active={loading} spinner={<Loader type="ThreeDots" color="#00BFFF" height={100} width={100} visible={true} />}>
+    <LoadingOverlay
+      active={loading}
+      spinner={
+        <Loader
+          type="ThreeDots"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          visible={true}
+        />
+      }
+    >
       <Modal show={uploadModal} onHide={closeModalForm}>
         <Modal.Header closeButton>
           <Modal.Title>Upload Photo</Modal.Title>
@@ -71,23 +84,32 @@ function UploadPhotoModal({ uploadModal, setUploadModal }) {
         <Modal.Body>
           <form>
             <div class="form-row">
-
               <div class="form-group col-md-12">
                 <div className="custom-file">
-                  <input type="file" name="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" onChange={e => fileHandler(e)} />
+                  <input
+                    type="file"
+                    name="file"
+                    className="custom-file-input"
+                    id="inputGroupFile01"
+                    aria-describedby="inputGroupFileAddon01"
+                    onChange={(e) => fileHandler(e)}
+                  />
                   <label className="custom-file-label" for="inputGroupFile01">
                     {selectedFileName ? selectedFileName : "Choose file"}
                   </label>
                 </div>
               </div>
-
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <button disabled={ (selectedFile === "") ? true : false} className="btn btn-block btn-primary" onClick={e => uploadFile(e)}>
+          <button
+            disabled={selectedFile === "" ? true : false}
+            className="btn btn-block btn-primary"
+            onClick={(e) => uploadFile(e)}
+          >
             Upload Photo
-          </button>   
+          </button>
         </Modal.Footer>
       </Modal>
     </LoadingOverlay>
